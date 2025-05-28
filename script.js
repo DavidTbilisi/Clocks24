@@ -1,6 +1,6 @@
 // List of 24 clocks, oldest→newest. We skipped “Binns Clock” here.
 const clocks = [
-  { src: 'images/Torre dell’Orologio - Padua, Italy.jpg',        desc: 'Torre dell’Orologio (Padua, Italy) – installed 1344', link: 'https://en.wikipedia.org/wiki/Torre_dell%27Orologio,_Padua' },
+  { src: 'images/960px-Padova_Piazza_dei_Signori_Torre_dell\'Orologio_6.jpg',        desc: 'Torre dell’Orologio (Padua, Italy) – installed 1344', link: 'https://en.wikipedia.org/wiki/Torre_dell%27Orologio,_Padua' },
   { src: 'images/Zytglogge – Bern, Switzerland.jpg',             desc: 'Zytglogge (Bern, Switzerland) – c. 1405', link: 'https://en.wikipedia.org/wiki/Zytglogge' },
   { src: 'images/Prague Astronomical Clock.jpg',                desc: 'Prague Astronomical Clock – 1410', link: 'https://en.wikipedia.org/wiki/Prague_astronomical_clock' },
   { src: 'images/St Mark\'s Clock, San Marco, Venice.jpg',      desc: 'St Mark’s Clock (Venice, Italy) – 1499', link: 'https://en.wikipedia.org/wiki/St_Mark%27s_Clocktower' },
