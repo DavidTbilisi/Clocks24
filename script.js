@@ -8,7 +8,7 @@ const clocks = [
   { src: 'images/Sighișoara Clock Tower – Sighișoara, Romania.jpg', desc: 'Sighișoara Clock Tower – 1648', link: 'https://en.wikipedia.org/wiki/Sighi%C8%99oara_Clock_Tower' },
   { src: 'images/Astronomical Clock of Lyon.jpg',               desc: 'Astronomical Clock of Lyon – 1661', link: 'https://en.wikipedia.org/wiki/Astronomical_clock_of_Lyon' },
   { src: 'images/Spasskaya (Saviour’s) Tower Clock – Moscow, Russia.jpg', desc: 'Spasskaya Tower Clock – 1852', link: 'https://en.wikipedia.org/wiki/Spasskaya_Tower' },
-  { src: 'images/daytonian-in-manhattan%3a-tiffany-co-1853-atlas-clock.jpg', desc: 'Atlas Clock (Tiffany, NYC) – 1853', link: 'https://en.wikipedia.org/wiki/Atlas_Clock' },
+  { src: 'images/daytonian-in-manhattan_a-tiffany-co-1853-atlas-clock.jpg', desc: 'Atlas Clock (Tiffany, NYC) – 1853', link: 'https://en.wikipedia.org/wiki/Atlas_Clock' },
   { src: 'images/BigBen.jpg',                                   desc: 'Big Ben (London) – 1859', link: 'https://en.wikipedia.org/wiki/Big_Ben' },
   { src: 'images/Église_Sainte-Croix_-_Nantes_-_01.jpg',         desc: 'Église Sainte-Croix Clock (Nantes) – 1860', link: 'https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Croix_de_Nantes' },
   { src: 'images/Dolmabahçe Clock Tower – Istanbul, Turkey.jpg', desc: 'Dolmabahçe Clock Tower – 1895', link: 'https://en.wikipedia.org/wiki/Dolmabah%C3%A7e_Clock_Tower' },
