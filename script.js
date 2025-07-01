@@ -4,7 +4,7 @@ const clocks = [
   { src: 'images/Zytglogge – Bern, Switzerland.jpg',             desc: 'Zytglogge (Bern, Switzerland) – c. 1405', link: 'https://en.wikipedia.org/wiki/Zytglogge' },
   { src: 'images/Prague Astronomical Clock.jpg',                desc: 'Prague Astronomical Clock – 1410', link: 'https://en.wikipedia.org/wiki/Prague_astronomical_clock' },
   { src: 'images/St Mark\'s Clock, San Marco, Venice.jpg',      desc: 'St Mark’s Clock (Venice, Italy) – 1499', link: 'https://en.wikipedia.org/wiki/St_Mark%27s_Clocktower' },
-  { src: 'images/Astronomical clock tower , Town Hall of Ulm, Baden-Wurttemberg,.jpg', desc: 'Ulm Town Hall Astronomical Clock – 1520', link: 'https://en.wikipedia.org/wiki/Ulm_Town_Hall' },
+  { src: 'images/Astronomical clock tower , Town Hall of Ulm, Baden-Wurttemberg,.jpg', desc: 'Ulm Town Hall Astronomical Clock – 1520', link: 'https://panoramastreetline.com/ulm-city-hall-ulm-germany-P17274' },
   { src: 'images/Sighișoara Clock Tower – Sighișoara, Romania.jpg', desc: 'Sighișoara Clock Tower – 1648', link: 'https://en.wikipedia.org/wiki/Sighi%C8%99oara_Clock_Tower' },
   { src: 'images/Astronomical Clock of Lyon.jpg',               desc: 'Astronomical Clock of Lyon – 1661', link: 'https://en.wikipedia.org/wiki/Astronomical_clock_of_Lyon' },
   { src: 'images/Spasskaya (Saviour’s) Tower Clock – Moscow, Russia.jpg', desc: 'Spasskaya Tower Clock – 1852', link: 'https://en.wikipedia.org/wiki/Spasskaya_Tower' },
@@ -22,7 +22,7 @@ const clocks = [
   { src: 'images/Binns Clock.jpg_large',                        desc: 'Binns Clock (Edinburgh, Scotland) - 1960s', link: 'https://www.atlasobscura.com/places/binns-clock' },
   { src: 'images/Allen-Bradley Clock Tower – Milwaukee, USA.jpg', desc: 'Allen-Bradley Clock Tower – 1962', link: 'https://en.wikipedia.org/wiki/Allen-Bradley_Clock_Tower' },
   { src: 'images/World Clock (Urania) – Berlin, Germany.jpg',   desc: 'World Clock (Urania, Berlin) – 1969', link: 'https://en.wikipedia.org/wiki/World_clock' },
-  { src: 'images/Leaning Clock Tower of Tbilisi – Tbilisi, Georgia.jpg', desc: 'Leaning Clock Tower (Tbilisi) – 2011', link: 'https://en.wikipedia.org/wiki/Leaning_Clock_Tower_(Tbilisi)' },
+  { src: 'images/Leaning Clock Tower of Tbilisi – Tbilisi, Georgia.jpg', desc: 'Leaning Clock Tower (Tbilisi) – 2011', link: 'https://www.atlasobscura.com/places/leaning-tower-tbilisi' },
   { src: 'images/Makkah Royal Clock Tower – Mecca, Saudi Arabia.jpg', desc: 'Makkah Royal Clock Tower – 2011', link: 'https://en.wikipedia.org/wiki/Abraj_Al_Bait' },
 ];
 
@@ -48,10 +48,16 @@ function showClockByHour() {
   clock.textContent = `${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 }
 
+
+
+
 // initialize on load
 window.addEventListener('DOMContentLoaded', showClockByHour);
 // and refresh every 5 minutes to catch the next hour:
 setInterval(showClockByHour, 5 * 60 * 1000);
+
+
+
 
 // --- Owl Carousel for all clocks ---
 window.addEventListener('DOMContentLoaded', function() {
