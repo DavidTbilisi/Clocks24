@@ -1,6 +1,6 @@
 // List of 24 clocks, oldest→newest. We skipped “Binns Clock” here.
 const clocks = [
-  { src: 'images/960px-Padova_Piazza_dei_Signori_Torre_dell\'Orologio_6.jpg',        desc: 'Torre dell’Orologio (Padua, Italy) – installed 1344', link: 'https://en.wikipedia.org/wiki/Torre_dell%27Orologio,_Padua' },
+  { src: 'https://thirdeyetraveller.com/wp-content/uploads/Wells-Cathedral-Clock-5.jpg',        desc: 'Wells Cathedral clock (England) 1392', link: 'https://en.wikipedia.org/wiki/Wells_Cathedral_clock' },
   { src: 'images/Zytglogge – Bern, Switzerland.jpg',             desc: 'Zytglogge (Bern, Switzerland) – c. 1405', link: 'https://en.wikipedia.org/wiki/Zytglogge' },
   { src: 'images/Prague Astronomical Clock.jpg',                desc: 'Prague Astronomical Clock – 1410', link: 'https://en.wikipedia.org/wiki/Prague_astronomical_clock' },
   { src: 'images/St Mark\'s Clock, San Marco, Venice.jpg',      desc: 'St Mark’s Clock (Venice, Italy) – 1499', link: 'https://en.wikipedia.org/wiki/St_Mark%27s_Clocktower' },
@@ -19,11 +19,11 @@ const clocks = [
   { src: 'images/Anker Clock Vienna.jpg',                       desc: 'Anker Clock (Vienna) – 1914', link: 'https://en.wikipedia.org/wiki/Ankeruhr' },
   { src: 'images/Peace Tower – Ottawa, Canada.webp',            desc: 'Peace Tower (Ottawa) – 1920', link: 'https://en.wikipedia.org/wiki/Peace_Tower' },
   { src: 'images/Oxford Street, London, England.jpg',           desc: 'Selfridges Clock, Oxford St – 1931', link: 'https://en.wikipedia.org/wiki/Selfridges,_Oxford_Street' },
-  { src: 'images/World Clock (Urania) – Berlin, Germany.jpg',   desc: 'World Clock (Urania, Berlin) – 1969', link: 'https://en.wikipedia.org/wiki/World_clock' },
+  { src: 'images/Binns Clock.jpg_large',                        desc: 'Binns Clock (Edinburgh, Scotland) - 1960s', link: 'https://www.atlasobscura.com/places/binns-clock' },
   { src: 'images/Allen-Bradley Clock Tower – Milwaukee, USA.jpg', desc: 'Allen-Bradley Clock Tower – 1962', link: 'https://en.wikipedia.org/wiki/Allen-Bradley_Clock_Tower' },
+  { src: 'images/World Clock (Urania) – Berlin, Germany.jpg',   desc: 'World Clock (Urania, Berlin) – 1969', link: 'https://en.wikipedia.org/wiki/World_clock' },
   { src: 'images/Leaning Clock Tower of Tbilisi – Tbilisi, Georgia.jpg', desc: 'Leaning Clock Tower (Tbilisi) – 2011', link: 'https://en.wikipedia.org/wiki/Leaning_Clock_Tower_(Tbilisi)' },
   { src: 'images/Makkah Royal Clock Tower – Mecca, Saudi Arabia.jpg', desc: 'Makkah Royal Clock Tower – 2011', link: 'https://en.wikipedia.org/wiki/Abraj_Al_Bait' },
-  { src: 'images/Binns Clock.jpg_large',                        desc: 'Binns Clock (Edinburgh, Scotland) - 1960s', link: 'https://www.atlasobscura.com/places/binns-clock' }
 ];
 
 function showClockByHour() {
