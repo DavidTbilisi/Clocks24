@@ -7,6 +7,7 @@ A beautiful web application that displays 24 historic clocks from around the wor
 - **Hourly Clock Display**: Shows a different historic clock every hour (12:00 displays the oldest clock from 1344)
 - **Live Time**: Displays current time that updates every 5 minutes
 - **Interactive Carousel**: Browse all 24 clocks with navigation controls and dots
+- **Dark/Light Theme**: Toggle between beautiful light and dark themes with persistent preference
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 - **Vue.js 3**: Built with modern Vue.js using Composition API
 - **No Dependencies**: Self-contained Vue app with no external libraries needed
@@ -14,6 +15,8 @@ A beautiful web application that displays 24 historic clocks from around the wor
 ## Technology Stack
 
 - **Vue.js 3**: Modern reactive framework with Composition API
+- **CSS Variables**: Dynamic theming system for light/dark modes
+- **LocalStorage**: Theme preference persistence
 - **Vanilla CSS**: Custom styled with beautiful gradients and animations
 - **Pure JavaScript**: No jQuery or external carousel libraries
 
@@ -23,12 +26,47 @@ A beautiful web application that displays 24 historic clocks from around the wor
 - Main application component
 - Manages current time and clock display
 - Updates every 5 minutes to show the correct hourly clock
+- Handles theme state and persistence
 
 ### ClockCarousel Component
 - Custom Vue carousel implementation
 - Responsive design (1/3/5 items on mobile/tablet/desktop)
 - Navigation buttons and dot indicators
 - Smooth transitions and hover effects
+
+## Theme System
+
+The application features a comprehensive dark/light theme system:
+
+### Theme Toggle
+- **Button Location**: Top-right corner of the clock display
+- **Icons**: 🌙 for light mode, ☀️ for dark mode
+- **Activation**: Click to instantly switch between themes
+
+### Theme Persistence
+- **Storage**: Uses localStorage to remember user preference
+- **Default**: Respects system preference (`prefers-color-scheme`)
+- **Consistency**: Theme applies immediately on page load
+
+### Color Schemes
+
+#### Light Theme
+- Background: Soft blue-gray gradients
+- Cards: Clean white with subtle shadows
+- Text: Deep blue-gray for readability
+- Accents: Vibrant indigo/purple tones
+
+#### Dark Theme
+- Background: Deep purple-to-black gradients
+- Cards: Dark purple with enhanced shadows
+- Text: Light gray for optimal contrast
+- Accents: Bright purple/violet tones
+
+### Implementation Details
+- **CSS Variables**: All colors defined as CSS custom properties
+- **Smooth Transitions**: 0.3s ease transitions for all theme changes
+- **Responsive**: Theme toggle adapts to mobile screen sizes
+- **Accessibility**: High contrast ratios maintained in both themes
 
 ## Clock Collection
 
@@ -61,15 +99,31 @@ images/ - Clock images from around the world
 ## Data Structure
 
 The clock data is now stored in `clocks.json` for better organization and maintainability. Each clock entry contains:
-- `src`: Path to the clock image
+- `time`: 24-hour format time when this clock is displayed (e.g., "13:00")
+- `date`: Installation/creation date in ISO format
+- `src`: Path to the clock image (renamed to time-based format like "1300.jpg")
 - `desc`: Description with location and year
 - `link`: Wikipedia or reference URL
+- `mnemonic`: Short memorable name for the clock
 
-This separation makes it easy to:
+### Image Naming Convention
+All images have been renamed to follow a time-based naming pattern:
+- `0000.jpeg` - Midnight (00:00)
+- `0100.jpg` - 1:00 AM
+- `0200.jpg` - 2:00 AM
+- ...
+- `1200.jpg` - Noon (12:00)
+- `1300.jpg` - 1:00 PM
+- ...
+- `2300.jpg` - 11:00 PM
+
+This makes it easy to:
+- Quickly identify which image corresponds to which hour
 - Update clock data without touching the code
 - Add new clocks by editing the JSON file
 - Maintain data consistency
 - Enable future features like data validation
+- Implement time-based sorting and filtering
 
 ## Migration from Original
 

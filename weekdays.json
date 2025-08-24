@@ -1,0 +1,37 @@
+[
+    {
+        "day": "Sunday",
+        "color": "red",
+        "emoji": "🌞🍅"
+    },
+    {
+        "day": "Monday",
+        "color": "orange",
+        "emoji": "🥕🌙"
+    },
+    {
+        "day": "Tuesday",
+        "color": "yellow",
+        "emoji": "🍑🍋🍑"
+    },
+    {
+        "day": "Wednesday",
+        "color": "green",
+        "emoji": "🤵🏻👰🏻💒👰🏻🤵🏻🍏"
+    },
+    {
+        "day": "Thursday",
+        "color": "blue",
+        "emoji": "🐕🐕💧🐕🐕"
+    },
+    {
+        "day": "Friday",
+        "color": "indigo",
+        "emoji": "🍟🦋"
+    },
+    {
+        "day": "Saturday",
+        "color": "violet",
+        "emoji": "🪐🍆"
+    }
+]

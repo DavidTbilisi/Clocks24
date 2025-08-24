@@ -1,4 +1,4 @@
-const { createApp, ref, onMounted, onUnmounted, computed } = Vue;
+const { createApp, ref, onMounted, onUnmounted, computed, watch } = Vue;
 
 // Clocks data will be loaded from JSON file
 let clocks = [];
@@ -131,7 +131,37 @@ const ClockShowcase = {
     const currentClock = ref({});
     const clocksData = ref([]);
     const isLoading = ref(true);
+    const isDarkTheme = ref(false);
     let interval = null;
+
+    // Theme management functions
+    const loadThemePreference = () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        isDarkTheme.value = savedTheme === 'dark';
+      } else {
+        // Default to system preference
+        isDarkTheme.value = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      applyTheme();
+    };
+
+    const applyTheme = () => {
+      const root = document.documentElement;
+      if (isDarkTheme.value) {
+        root.classList.add('dark-theme');
+        root.classList.remove('light-theme');
+      } else {
+        root.classList.add('light-theme');
+        root.classList.remove('dark-theme');
+      }
+    };
+
+    const toggleTheme = () => {
+      isDarkTheme.value = !isDarkTheme.value;
+      applyTheme();
+      localStorage.setItem('theme', isDarkTheme.value ? 'dark' : 'light');
+    };
 
     const updateClock = () => {
       if (clocksData.value.length === 0) return;
@@ -161,6 +191,7 @@ const ClockShowcase = {
     };
 
     onMounted(() => {
+      loadThemePreference();
       initializeApp();
     });
 
@@ -174,11 +205,17 @@ const ClockShowcase = {
       currentTime,
       currentClock,
       clocksData,
-      isLoading
+      isLoading,
+      isDarkTheme,
+      toggleTheme
     };
   },
   template: `
     <div id="clock-display">
+      <button class="theme-toggle" @click="toggleTheme" :title="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+        <span v-if="isDarkTheme">☀️</span>
+        <span v-else>🌙</span>
+      </button>
       <div v-if="isLoading" class="loading">
         <h1>Loading clocks...</h1>
       </div>

@@ -1,122 +1,194 @@
 [
   {
-    "src": "images/960px-Padova_Piazza_dei_Signori_Torre_dell'Orologio_6.jpg",
-    "desc": "Torre dell'Orologio (Padua, Italy) – installed 1344",
-    "link": "https://en.wikipedia.org/wiki/Torre_dell%27Orologio,_Padua"
-  },
-  {
-    "src": "images/Zytglogge – Bern, Switzerland.jpg",
+    "time": "13:00",
+    "date": "1405-01-01",
+    "src": "images/1300.jpg",
     "desc": "Zytglogge (Bern, Switzerland) – c. 1405",
-    "link": "https://en.wikipedia.org/wiki/Zytglogge"
+    "link": "https://en.wikipedia.org/wiki/Zytglogge",
+    "mnemonic": "Zytglogge" 
   },
   {
-    "src": "images/Prague Astronomical Clock.jpg",
+    "time": "14:00",
+    "date": "1410-01-01",
+    "src": "images/1400.jpg",
     "desc": "Prague Astronomical Clock – 1410",
-    "link": "https://en.wikipedia.org/wiki/Prague_astronomical_clock"
+    "link": "https://en.wikipedia.org/wiki/Prague_astronomical_clock",
+    "mnemonic": "Prague Astronomical Clock"
   },
   {
-    "src": "images/St Mark's Clock, San Marco, Venice.jpg",
+    "time": "15:00",
+    "date": "1499-01-01",
+    "src": "images/1500.jpg",
     "desc": "St Mark's Clock (Venice, Italy) – 1499",
-    "link": "https://en.wikipedia.org/wiki/St_Mark%27s_Clocktower"
+    "link": "https://en.wikipedia.org/wiki/St_Mark%27s_Clocktower",
+    "mnemonic": "St Mark's Clock"
   },
   {
-    "src": "images/Astronomical clock tower , Town Hall of Ulm, Baden-Wurttemberg,.jpg",
+    "time": "16:00",
+    "date": "1520-01-01",
+    "src": "images/1600.jpg",
     "desc": "Ulm Town Hall Astronomical Clock – 1520",
-    "link": "https://en.wikipedia.org/wiki/Ulm_Town_Hall"
+    "link": "https://en.wikipedia.org/wiki/Ulm_Town_Hall",
+    "mnemonic": "Ulm Town Hall Astronomical Clock"
   },
   {
-    "src": "images/Sighișoara Clock Tower – Sighișoara, Romania.jpg",
+    "time": "17:00",
+    "date": "1648-01-01",
+    "src": "images/1700.jpg",
     "desc": "Sighișoara Clock Tower – 1648",
-    "link": "https://en.wikipedia.org/wiki/Sighi%C8%99oara_Clock_Tower"
+    "link": "https://en.wikipedia.org/wiki/Sighi%C8%99oara_Clock_Tower",
+    "mnemonic": "Sighișoara Clock Tower"
   },
   {
-    "src": "images/Astronomical Clock of Lyon.jpg",
+    "time": "18:00",
+    "date": "1661-01-01",
+    "src": "images/1800.jpg",
     "desc": "Astronomical Clock of Lyon – 1661",
-    "link": "https://en.wikipedia.org/wiki/Astronomical_clock_of_Lyon"
+    "link": "https://en.wikipedia.org/wiki/Astronomical_clock_of_Lyon",
+    "mnemonic": "Astronomical Clock of Lyon"
   },
   {
-    "src": "images/Spasskaya (Saviour's) Tower Clock – Moscow, Russia.jpg",
+    "time": "19:00",
+    "date": "1852-01-01",
+    "src": "images/1900.jpg",
     "desc": "Spasskaya Tower Clock – 1852",
-    "link": "https://en.wikipedia.org/wiki/Spasskaya_Tower"
+    "link": "https://en.wikipedia.org/wiki/Spasskaya_Tower",
+    "mnemonic": "Spasskaya Tower Clock"
   },
   {
-    "src": "images/daytonian-in-manhattan_a-tiffany-co-1853-atlas-clock.jpg",
+    "time": "20:00",
+    "date": "1853-01-01",
+    "src": "images/2000.jpg",
     "desc": "Atlas Clock (Tiffany, NYC) – 1853",
-    "link": "https://en.wikipedia.org/wiki/Atlas_Clock"
+    "link": "https://en.wikipedia.org/wiki/Atlas_Clock",
+    "mnemonic": "Atlas Clock"
   },
   {
-    "src": "images/BigBen.jpg",
+    "time": "21:00",
+    "date": "1859-01-01",
+    "src": "images/2100.jpg",
     "desc": "Big Ben (London) – 1859",
-    "link": "https://en.wikipedia.org/wiki/Big_Ben"
+    "link": "https://en.wikipedia.org/wiki/Big_Ben",
+    "mnemonic": "Big Ben"
   },
   {
-    "src": "images/Église_Sainte-Croix_-_Nantes_-_01.jpg",
+    "time": "22:00",
+    "date": "1860-01-01",
+    "src": "images/2200.jpg",
     "desc": "Église Sainte-Croix Clock (Nantes) – 1860",
-    "link": "https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Croix_de_Nantes"
+    "link": "https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Croix_de_Nantes",
+    "mnemonic": "Église Sainte-Croix Clock"
   },
   {
-    "src": "images/Dolmabahçe Clock Tower – Istanbul, Turkey.jpg",
+    "time": "23:00",
+    "date": "1895-01-01",
+    "src": "images/2300.jpg",
     "desc": "Dolmabahçe Clock Tower – 1895",
-    "link": "https://en.wikipedia.org/wiki/Dolmabah%C3%A7e_Clock_Tower"
+    "link": "https://en.wikipedia.org/wiki/Dolmabah%C3%A7e_Clock_Tower",
+    "mnemonic": "Dolmabahçe Clock Tower"
   },
   {
-    "src": "images/Philadelphia City Hall Clock – Philadelphia, USA.jpeg",
+    "time": "00:00",
+    "date": "1898-01-01",
+    "src": "images/0000.jpeg",
     "desc": "Philadelphia City Hall Clock – 1898",
-    "link": "https://en.wikipedia.org/wiki/Philadelphia_City_Hall"
+    "link": "https://en.wikipedia.org/wiki/Philadelphia_City_Hall",
+    "mnemonic": "Philadelphia City Hall Clock"
   },
   {
-    "src": "images/Orsay clock.jpg",
+    "time": "01:00",
+    "date": "1900-01-01",
+    "src": "images/0100.jpg",
     "desc": "Orsay Station Clock (Paris) – 1900",
-    "link": "https://en.wikipedia.org/wiki/Mus%C3%A9e_d%27Orsay"
+    "link": "https://en.wikipedia.org/wiki/Mus%C3%A9e_d%27Orsay",
+    "mnemonic": "Orsay Station Clock"
   },
   {
-    "src": "images/Edwardian clock and tower, Borough.jpg",
+    "time": "02:00",
+    "date": "1905-01-01",
+    "src": "images/0200.jpg",
     "desc": "Edwardian Clock & Tower (Dorchester) – 1905",
-    "link": "https://en.wikipedia.org/wiki/Dorchester,_Dorset"
+    "link": "https://en.wikipedia.org/wiki/Dorchester,_Dorset",
+    "mnemonic": "Edwardian Clock & Tower"
   },
   {
-    "src": "images/Grand Central Terminal Clock – New York City, USA.jpg",
+    "time": "03:00",
+    "date": "1910-01-01",
+    "src": "images/0300.jpg",
     "desc": "Grand Central Terminal Clock – 1913",
-    "link": "https://en.wikipedia.org/wiki/Grand_Central_Terminal"
+    "link": "https://en.wikipedia.org/wiki/Grand_Central_Terminal",
+    "mnemonic": "Grand Central Terminal Clock"
   },
   {
-    "src": "images/Anker Clock Vienna.jpg",
+    "time": "04:00",
+    "date": "1914-01-01",
+    "src": "images/0400.jpg",
     "desc": "Anker Clock (Vienna) – 1914",
-    "link": "https://en.wikipedia.org/wiki/Ankeruhr"
+    "link": "https://en.wikipedia.org/wiki/Ankeruhr",
+    "mnemonic": "Anker Clock"
   },
   {
-    "src": "images/Peace Tower – Ottawa, Canada.webp",
+    "time": "05:00",
+    "date": "1920-01-01",
+    "src": "images/0500.webp",
     "desc": "Peace Tower (Ottawa) – 1920",
-    "link": "https://en.wikipedia.org/wiki/Peace_Tower"
+    "link": "https://en.wikipedia.org/wiki/Peace_Tower",
+    "mnemonic": "Peace Tower"
   },
   {
-    "src": "images/Oxford Street, London, England.jpg",
+    "time": "06:00",
+    "date": "1931-01-01",
+    "src": "images/0600.jpg",
     "desc": "Selfridges Clock, Oxford St – 1931",
-    "link": "https://en.wikipedia.org/wiki/Selfridges,_Oxford_Street"
+    "link": "https://en.wikipedia.org/wiki/Selfridges,_Oxford_Street",
+    "mnemonic": "Selfridges Clock"
   },
   {
-    "src": "images/World Clock (Urania) – Berlin, Germany.jpg",
+    "time": "07:00",
+    "date": "1969-01-01",
+    "src": "images/0700.jpg",
     "desc": "World Clock (Urania, Berlin) – 1969",
-    "link": "https://en.wikipedia.org/wiki/World_clock"
+    "link": "https://en.wikipedia.org/wiki/World_clock",
+    "mnemonic": "World Clock (Urania)"
   },
   {
-    "src": "images/Allen-Bradley Clock Tower – Milwaukee, USA.jpg",
+    "time": "08:00",
+    "date": "1962-01-01",
+    "src": "images/0800.jpg",
     "desc": "Allen-Bradley Clock Tower – 1962",
-    "link": "https://en.wikipedia.org/wiki/Allen-Bradley_Clock_Tower"
+    "link": "https://en.wikipedia.org/wiki/Allen-Bradley_Clock_Tower",
+    "mnemonic": "Allen-Bradley Clock Tower"
   },
   {
-    "src": "images/Leaning Clock Tower of Tbilisi – Tbilisi, Georgia.jpg",
+    "time": "09:00",
+    "date": "1962-01-01",
+    "src": "images/0900.jpg",
+    "desc": "Allen-Bradley Clock Tower – 1962",
+    "link": "https://en.wikipedia.org/wiki/Allen-Bradley_Clock_Tower",
+    "mnemonic": "Allen-Bradley Clock Tower"
+  },
+  {
+    "time": "10:00",
+    "date": "2011-01-01",
+    "src": "images/1000.jpg",
     "desc": "Leaning Clock Tower (Tbilisi) – 2011",
-    "link": "https://en.wikipedia.org/wiki/Leaning_Clock_Tower_(Tbilisi)"
+    "link": "https://en.wikipedia.org/wiki/Leaning_Clock_Tower_(Tbilisi)",
+    "mnemonic": "Leaning Clock Tower (Tbilisi)"
   },
   {
-    "src": "images/Makkah Royal Clock Tower – Mecca, Saudi Arabia.jpg",
+    "time": "11:00",
+    "date": "2011-01-01",
+    "src": "images/1100.jpg",
     "desc": "Makkah Royal Clock Tower – 2011",
-    "link": "https://en.wikipedia.org/wiki/Abraj_Al_Bait"
+    "link": "https://en.wikipedia.org/wiki/Abraj_Al_Bait",
+    "mnemonic": "Makkah Royal Clock Tower"
   },
   {
-    "src": "images/Binns Clock.jpg_large",
-    "desc": "Binns Clock (Edinburgh, Scotland) - 1960s",
-    "link": "https://www.atlasobscura.com/places/binns-clock"
+    "time": "12:00",
+    "date": "1960-01-01",
+    "src": "images/1200.jpg",
+    "desc": "Wells Cathedral clock – 1960",
+    "link": "https://www.atlasobscura.com/places/binns-clock",
+    "mnemonic": "Binns Clock"
   }
 ]
