@@ -18,6 +18,27 @@ body {
   margin-bottom: 2rem;
   position: relative;
 }
+
+.loading, .error {
+  padding: 2rem;
+  color: #3b3b6d;
+}
+
+.loading h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.error h1 {
+  font-size: 2rem;
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.error p {
+  font-size: 1.1rem;
+  color: #64748b;
+}
 #clock-display h1 {
   font-size: 2.5rem;
   font-weight: 700;
@@ -25,7 +46,7 @@ body {
   margin-bottom: 1.2rem;
   letter-spacing: 0.04em;
 }
-#clock-display img {
+#clock-display img, .clock-img {
   max-width: 90%;
   height: 260px;
   object-fit: cover;
@@ -36,24 +57,24 @@ body {
   margin-bottom: 0.7rem;
   transition: transform 0.2s;
 }
-#clock-display img:hover {
+#clock-display img:hover, .clock-img:hover {
   transform: scale(1.025) rotate(-1deg);
   box-shadow: 0 6px 24px rgba(60,60,120,0.18);
 }
-#clock-desc {
+#clock-desc, .clock-desc {
   margin-top: 1rem;
   font-size: 1.25rem;
   color: #3b3b6d;
   font-weight: 500;
   min-height: 2.5em;
 }
-#clock-desc a {
+#clock-desc a, .clock-desc a {
   color: #4f46e5;
   text-decoration: none;
   border-bottom: 1px dashed #a5b4fc;
   transition: color 0.2s, border 0.2s;
 }
-#clock-desc a:hover {
+#clock-desc a:hover, .clock-desc a:hover {
   color: #1e293b;
   border-bottom: 2px solid #6366f1;
 }
@@ -66,21 +87,95 @@ body {
 #carousel-container {
   margin-top: 2.5rem;
 }
-.owl-carousel .carousel-item {
+
+/* Vue Carousel Styles */
+.carousel-container {
+  width: 100%;
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.carousel-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.carousel-nav {
+  background: #6366f1 !important;
+  color: #fff !important;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem !important;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.10);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-nav:hover:not(:disabled) {
+  background: #4338ca !important;
+}
+
+.carousel-nav:disabled {
+  background: #a5b4fc !important;
+  cursor: not-allowed;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.carousel-dot {
+  background: #a5b4fc;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.carousel-dot.active {
+  background: #6366f1;
+}
+
+.carousel-item {
   background: #f8fafc;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(60,60,120,0.07);
   padding: 1rem 0.5rem 0.7rem 0.5rem;
-  margin: 0 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: box-shadow 0.2s, transform 0.2s;
+  min-width: 200px;
+  flex: 1;
 }
-.owl-carousel .carousel-item:hover {
+
+.carousel-item:hover {
   box-shadow: 0 6px 24px rgba(60,60,120,0.13);
   transform: translateY(-4px) scale(1.03);
 }
+
 .carousel-item img {
   width: 100%;
   max-width: 180px;
@@ -91,6 +186,7 @@ body {
   background: #e0e7ff;
   border: 1.5px solid #c7d2fe;
 }
+
 .carousel-desc {
   font-size: 1.05rem;
   color: #334155;
@@ -98,48 +194,38 @@ body {
   margin-top: 0.2rem;
   min-height: 2.5em;
 }
+
 .carousel-desc span {
   display: block;
   color: #64748b;
   font-size: 0.98em;
   margin-top: 0.2em;
 }
-.owl-nav button.owl-prev, .owl-nav button.owl-next {
-  background: #6366f1 !important;
-  color: #fff !important;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1.5rem !important;
-  margin: 0 8px;
-  box-shadow: 0 2px 8px rgba(60,60,120,0.10);
-  border: none;
-  transition: background 0.2s;
-}
-.owl-nav button.owl-prev:hover, .owl-nav button.owl-next:hover {
-  background: #4338ca !important;
-}
-.owl-dots .owl-dot span {
-  background: #a5b4fc !important;
-  width: 12px;
-  height: 12px;
-  margin: 0 4px;
-  border-radius: 50%;
-  transition: background 0.2s;
-}
-.owl-dots .owl-dot.active span {
-  background: #6366f1 !important;
-}
 @media (max-width: 700px) {
   #clock-display {
     padding: 1.2rem 0.5rem 1rem 0.5rem;
     max-width: 99vw;
   }
-  #clock-display img {
+  #clock-display img, .clock-img {
     height: 160px;
   }
   .carousel-item img {
     max-width: 110px;
     max-height: 70px;
+  }
+  .carousel-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem !important;
+  }
+  .carousel-track {
+    justify-content: flex-start;
+  }
+  .carousel-item {
+    min-width: 150px;
   }
 }

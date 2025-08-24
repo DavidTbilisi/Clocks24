@@ -4,20 +4,11 @@
   <meta charset="UTF-8">
   <title>Hourly Clock Showcase</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-  <div id="clock-display">
-    <h1>Time</h1>
-    <img id="clock-img" src="" width="40%" alt="Clock">
-    <p id="clock-desc"></p>
-    <p id="link-to-wiki">Every hour, a different clock from around the world is displayed.</p>
-    <div id="carousel-container">
-      <div id="owl-carousel" class="owl-carousel"></div>
-    </div>
+  <div id="app">
+    <clock-showcase></clock-showcase>
   </div>
   <script src="script.js"></script>
 </body>
