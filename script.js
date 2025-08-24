@@ -132,6 +132,7 @@ const ClockShowcase = {
     const clocksData = ref([]);
     const isLoading = ref(true);
     const isDarkTheme = ref(false);
+    const showCarousel = ref(false);
     let interval = null;
 
     // Theme management functions
@@ -163,6 +164,18 @@ const ClockShowcase = {
       localStorage.setItem('theme', isDarkTheme.value ? 'dark' : 'light');
     };
 
+    const toggleCarousel = () => {
+      showCarousel.value = !showCarousel.value;
+      localStorage.setItem('showCarousel', showCarousel.value.toString());
+    };
+
+    const loadCarouselPreference = () => {
+      const savedPreference = localStorage.getItem('showCarousel');
+      if (savedPreference !== null) {
+        showCarousel.value = savedPreference === 'true';
+      }
+    };
+
     const updateClock = () => {
       if (clocksData.value.length === 0) return;
       
@@ -192,6 +205,7 @@ const ClockShowcase = {
 
     onMounted(() => {
       loadThemePreference();
+      loadCarouselPreference();
       initializeApp();
     });
 
@@ -207,7 +221,9 @@ const ClockShowcase = {
       clocksData,
       isLoading,
       isDarkTheme,
-      toggleTheme
+      showCarousel,
+      toggleTheme,
+      toggleCarousel
     };
   },
   template: `
@@ -243,7 +259,11 @@ const ClockShowcase = {
           <span v-else>{{ currentClock.desc }}</span>
         </p>
         <p id="link-to-wiki">Every hour, a different clock from around the world is displayed.</p>
-        <div id="carousel-container">
+        <button class="carousel-toggle" @click="toggleCarousel" :title="showCarousel ? 'Hide other clocks' : 'Show other clocks'">
+          <span v-if="showCarousel">🔼 Hide Other Clocks</span>
+          <span v-else>🔽 Show Other Clocks</span>
+        </button>
+        <div v-if="showCarousel" id="carousel-container">
           <clock-carousel :clocks="clocksData" />
         </div>
       </div>

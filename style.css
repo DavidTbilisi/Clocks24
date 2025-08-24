@@ -51,12 +51,12 @@ body {
 #clock-display {
   text-align: center;
   background: var(--card-bg);
-  padding: 2.5rem 2rem 2rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
   border-radius: 18px;
   box-shadow: 0 8px 32px var(--shadow-color), 0 1.5px 6px var(--shadow-light);
-  max-width: 700px;
+  /* max-width: 700px; */
   width: 95vw;
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem 0;
   position: relative;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -81,6 +81,26 @@ body {
 .theme-toggle:hover {
   background: var(--carousel-bg);
   transform: scale(1.1);
+}
+
+.carousel-toggle {
+  background: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 1rem 0 1.5rem 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.carousel-toggle:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .loading, .error {
@@ -114,7 +134,7 @@ body {
 }
 #clock-display img, .clock-img {
   max-width: 90%;
-  height: 260px;
+  max-height: 60vh;
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 2px 12px var(--shadow-color);
@@ -160,6 +180,8 @@ body {
 
 #carousel-container {
   margin-top: 2.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform-origin: top;
 }
 
 /* Vue Carousel Styles */
