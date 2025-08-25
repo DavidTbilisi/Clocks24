@@ -1,0 +1,98 @@
+[
+    {
+        "month": 1,
+        "name": "January",
+        "shortName": "Jan",
+        "color": "#4f46e5",
+        "emoji": "❄️🗓️",
+        "image": "images/months/1.jpg"
+    },
+    {
+        "month": 2,
+        "name": "February",
+        "shortName": "Feb",
+        "color": "#dc2626",
+        "emoji": "💖🌹",
+        "image": "images/months/2.jpg"
+    },
+    {
+        "month": 3,
+        "name": "March",
+        "shortName": "Mar",
+        "color": "#059669",
+        "emoji": "🍀🌸",
+        "image": "images/months/3.jpg"
+    },
+    {
+        "month": 4,
+        "name": "April",
+        "shortName": "Apr",
+        "color": "#7c3aed",
+        "emoji": "🌷🌦️",
+        "image": "images/months/4.jpg"
+    },
+    {
+        "month": 5,
+        "name": "May",
+        "shortName": "May",
+        "color": "#65a30d",
+        "emoji": "🌺💐",
+        "image": "images/months/5.jpg"
+    },
+    {
+        "month": 6,
+        "name": "June",
+        "shortName": "Jun",
+        "color": "#ea580c",
+        "emoji": "☀️🏖️",
+        "image": "images/months/6.jpg"
+    },
+    {
+        "month": 7,
+        "name": "July",
+        "shortName": "Jul",
+        "color": "#dc2626",
+        "emoji": "🎆🔥",
+        "image": "images/months/7.jpg"
+    },
+    {
+        "month": 8,
+        "name": "August",
+        "shortName": "Aug",
+        "color": "#d97706",
+        "emoji": "🌻🏄",
+        "image": "images/months/8.jpg"
+    },
+    {
+        "month": 9,
+        "name": "September",
+        "shortName": "Sep",
+        "color": "#b45309",
+        "emoji": "🍂📚",
+        "image": "images/months/9.jpg"
+    },
+    {
+        "month": 10,
+        "name": "October",
+        "shortName": "Oct",
+        "color": "#ea580c",
+        "emoji": "🎃🍁",
+        "image": "images/months/10.jpg"
+    },
+    {
+        "month": 11,
+        "name": "November",
+        "shortName": "Nov",
+        "color": "#92400e",
+        "emoji": "🦃🍽️",
+        "image": "images/months/11.jpg"
+    },
+    {
+        "month": 12,
+        "name": "December",
+        "shortName": "Dec",
+        "color": "#166534",
+        "emoji": "🎄❄️",
+        "image": "images/months/12.jpg"
+    }
+]

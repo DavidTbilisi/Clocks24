@@ -2,6 +2,9 @@ const { createApp, ref, onMounted, onUnmounted, computed, watch } = Vue;
 
 // Clocks data will be loaded from JSON file
 let clocks = [];
+let months = [];
+let weekdays = [];
+let monthDays = [];
 
 // Load clocks data from JSON file
 async function loadClocksData() {
@@ -17,6 +20,54 @@ async function loadClocksData() {
     // Fallback to empty array if loading fails
     clocks = [];
     return clocks;
+  }
+}
+
+// Load months data from JSON file
+async function loadMonthsData() {
+  try {
+    const response = await fetch('months.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    months = await response.json();
+    return months;
+  } catch (error) {
+    console.error('Error loading months data:', error);
+    months = [];
+    return months;
+  }
+}
+
+// Load weekdays data from JSON file
+async function loadWeekdaysData() {
+  try {
+    const response = await fetch('weekdays.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    weekdays = await response.json();
+    return weekdays;
+  } catch (error) {
+    console.error('Error loading weekdays data:', error);
+    weekdays = [];
+    return weekdays;
+  }
+}
+
+// Load month days data from JSON file
+async function loadMonthDaysData() {
+  try {
+    const response = await fetch('monthDays.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    monthDays = await response.json();
+    return monthDays;
+  } catch (error) {
+    console.error('Error loading month days data:', error);
+    monthDays = [];
+    return monthDays;
   }
 }
 
@@ -133,6 +184,13 @@ const ClockShowcase = {
     const isLoading = ref(true);
     const isDarkTheme = ref(false);
     const showCarousel = ref(false);
+    
+    // Sidebar data
+    const monthsData = ref([]);
+    const weekdaysData = ref([]);
+    const monthDaysData = ref([]);
+    const currentDate = ref(new Date());
+    
     let interval = null;
 
     // Theme management functions
@@ -180,6 +238,7 @@ const ClockShowcase = {
       if (clocksData.value.length === 0) return;
       
       const now = new Date();
+      currentDate.value = now;
       const hour = now.getHours();
       // shift so that at 12:00 you see the very first (oldest) clock:
       const index = (hour + 12) % 24;
@@ -190,15 +249,45 @@ const ClockShowcase = {
       currentTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
 
+    // Computed properties for sidebar data
+    const currentMonth = computed(() => {
+      if (monthsData.value.length === 0) return null;
+      const monthIndex = currentDate.value.getMonth();
+      return monthsData.value[monthIndex];
+    });
+
+    const currentWeekday = computed(() => {
+      if (weekdaysData.value.length === 0) return null;
+      const dayIndex = currentDate.value.getDay();
+      return weekdaysData.value[dayIndex];
+    });
+
+    const currentMonthDay = computed(() => {
+      if (monthDaysData.value.length === 0) return null;
+      const dayOfMonth = currentDate.value.getDate();
+      return monthDaysData.value.find(day => day.day === dayOfMonth);
+    });
+
     const initializeApp = async () => {
       isLoading.value = true;
-      await loadClocksData();
+      
+      // Load all data files
+      await Promise.all([
+        loadClocksData(),
+        loadMonthsData(),
+        loadWeekdaysData(),
+        loadMonthDaysData()
+      ]);
+      
       clocksData.value = clocks;
+      monthsData.value = months;
+      weekdaysData.value = weekdays;
+      monthDaysData.value = monthDays;
       
       if (clocksData.value.length > 0) {
         updateClock();
-        // Refresh every 5 minutes to catch the next hour
-        interval = setInterval(updateClock, 5 * 60 * 1000);
+        // Refresh every minute to update time and date
+        interval = setInterval(updateClock, 60 * 1000);
       }
       isLoading.value = false;
     };
@@ -222,49 +311,113 @@ const ClockShowcase = {
       isLoading,
       isDarkTheme,
       showCarousel,
+      currentMonth,
+      currentWeekday,
+      currentMonthDay,
       toggleTheme,
       toggleCarousel
     };
   },
   template: `
-    <div id="clock-display">
-      <button class="theme-toggle" @click="toggleTheme" :title="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
-        <span v-if="isDarkTheme">☀️</span>
-        <span v-else>🌙</span>
-      </button>
-      <div v-if="isLoading" class="loading">
-        <h1>Loading clocks...</h1>
+    <div class="app-container">
+      <!-- Left Sidebar -->
+      <div class="sidebar" v-if="!isLoading && clocksData.length > 0">
+        <!-- Month -->
+        <div class="sidebar-section" v-if="currentMonth">
+          <div class="sidebar-item month-item">
+            <img 
+              v-if="currentMonth.image" 
+              :src="currentMonth.image" 
+              :alt="currentMonth.name"
+              class="sidebar-image"
+              @error="$event.target.style.display='none'"
+            />
+            <div class="sidebar-content">
+              <div class="sidebar-label">Month</div>
+              <div class="sidebar-value" :style="{ color: currentMonth.color }">
+                {{ currentMonth.name }}
+              </div>
+              <div class="sidebar-emoji">{{ currentMonth.emoji }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekday -->
+        <div class="sidebar-section" v-if="currentWeekday">
+          <div class="sidebar-item weekday-item">
+            <div class="sidebar-content">
+              <div class="sidebar-label">Day</div>
+              <div class="sidebar-value weekday-name" :style="{ color: currentWeekday.color }">
+                {{ currentWeekday.day.substring(0, 3) }}
+              </div>
+              <div class="sidebar-emoji">{{ currentWeekday.emoji }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Month Day -->
+        <div class="sidebar-section" v-if="currentMonthDay">
+          <div class="sidebar-item day-item">
+            <img 
+              v-if="currentMonthDay.image" 
+              :src="currentMonthDay.image" 
+              :alt="'Day ' + currentMonthDay.day"
+              class="sidebar-image"
+              @error="$event.target.style.display='none'"
+            />
+            <div class="sidebar-content">
+              <div class="sidebar-label">Date</div>
+              <div class="sidebar-value day-number">
+                {{ currentMonthDay.day }}
+              </div>
+              <div class="sidebar-mnemonic">{{ currentMonthDay.mnemonic }}</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div v-else-if="clocksData.length === 0" class="error">
-        <h1>Error loading clocks data</h1>
-        <p>Please check that clocks.json file is available.</p>
-      </div>
-      <div v-else>
-        <h1>{{ currentTime }}</h1>
-        <img 
-          :src="currentClock.src" 
-          :alt="currentClock.desc" 
-          width="40%" 
-          class="clock-img" 
-        />
-        <p class="clock-desc">
-          <a 
-            v-if="currentClock.link" 
-            :href="currentClock.link" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            {{ currentClock.desc }}
-          </a>
+
+      <!-- Main Content -->
+      <div id="clock-display">
+        <button class="theme-toggle" @click="toggleTheme" :title="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
+          <span v-if="isDarkTheme">☀️</span>
+          <span v-else">🌙</span>
+        </button>
+        <div v-if="isLoading" class="loading">
+          <h1>Loading clocks...</h1>
+        </div>
+        <div v-else-if="clocksData.length === 0" class="error">
+          <h1>Error loading clocks data</h1>
+          <p>Please check that clocks.json file is available.</p>
+        </div>
+        <div v-else>
+          <h1>{{ currentTime }}</h1>
+          <img 
+            :src="currentClock.src" 
+            :alt="currentClock.desc" 
+            width="40%" 
+            class="clock-img" 
+          />
+          <p class="clock-desc">
+            <a 
+              v-if="currentClock.link" 
+              :href="currentClock.link" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              {{ currentClock.desc }}
+            </a>
           <span v-else>{{ currentClock.desc }}</span>
         </p>
-        <p id="link-to-wiki">Every hour, a different clock from around the world is displayed.</p>
-        <button class="carousel-toggle" @click="toggleCarousel" :title="showCarousel ? 'Hide other clocks' : 'Show other clocks'">
-          <span v-if="showCarousel">🔼 Hide Other Clocks</span>
-          <span v-else>🔽 Show Other Clocks</span>
-        </button>
-        <div v-if="showCarousel" id="carousel-container">
-          <clock-carousel :clocks="clocksData" />
+            <span v-else>{{ currentClock.desc }}</span>
+          </p>
+          <p id="link-to-wiki">Every hour, a different clock from around the world is displayed.</p>
+          <button class="carousel-toggle" @click="toggleCarousel" :title="showCarousel ? 'Hide other clocks' : 'Show other clocks'">
+            <span v-if="showCarousel">🔼 Hide Other Clocks</span>
+            <span v-else>🔽 Show Other Clocks</span>
+          </button>
+          <div v-if="showCarousel" id="carousel-container">
+            <clock-carousel :clocks="clocksData" />
+          </div>
         </div>
       </div>
     </div>

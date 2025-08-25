@@ -1,157 +1,157 @@
 [
     {
         "day": 1,
-        "mnemonic": "First day of the month",
+        "mnemonic": "არწივი ანანო ამაღლებულ აივანზე",
         "image": "images/days/1.png"
     },
     {
         "day": 2,
-        "mnemonic": "Second day of the month",
+        "mnemonic": "ბუ ბექა ბებერ ბუდეში",
         "image": "images/days/2.png"
     },
     {
         "day": 3,
-        "mnemonic": "Third day of the month",
+        "mnemonic": "გოჭი გრიგოლი გალუმპული გემზე",
         "image": "images/days/3.png"
     },
     {
         "day": 4,
-        "mnemonic": "Fourth day of the month",
+        "mnemonic": "დინოზავრი დიანა დახრილ დერეფანში",
         "image": "images/days/4.png"
     },
     {
         "day": 5,
-        "mnemonic": "Fifth day of the month",
+        "mnemonic": "ენოტი ელენე ეკოლოგიურ ეზოში",
         "image": "images/days/5.png"
     },
     {
         "day": 6,
-        "mnemonic": "Sixth day of the month",
+        "mnemonic": "ვეფხვი ვიკა ვრცელი ვენტილატორთან",
         "image": "images/days/6.png"
     },
     {
         "day": 7,
-        "mnemonic": "Seventh day of the month",
+        "mnemonic": "ზებრა ზვიადი ზუსტი ზონა (დასასვენებელი)",
         "image": "images/days/7.png"
     },
     {
         "day": 8,
-        "mnemonic": "Eighth day of the month",
+        "mnemonic": "თაგვი თეკლა თბილი თარო",
         "image": "images/days/8.png"
     },
     {
         "day": 9,
-        "mnemonic": "Ninth day of the month",
+        "mnemonic": "ირემი ია იშვიათი იატაკი",
         "image": "images/days/9.png"
     },
     {
         "day": 10,
-        "mnemonic": "Tenth day of the month",
+        "mnemonic": "კურდღელი კატო კეთილი კარადა",
         "image": "images/days/10.png"
     },
     {
         "day": 11,
-        "mnemonic": "Eleventh day of the month",
+        "mnemonic": "ლოკოკინა ლიკა ლამაზი ლოგინი",
         "image": "images/days/11.png"
     },
     {
         "day": 12,
-        "mnemonic": "Twelfth day of the month",
+        "mnemonic": "მგელი მარიამი მგრძნობიარე მინდორი",
         "image": "images/days/12.png"
     },
     {
         "day": 13,
-        "mnemonic": "Thirteenth day of the month",
+        "mnemonic": "ნიანგი ნინი ნაზი ნაძვნარი",
         "image": "images/days/13.png"
     },
     {
         "day": 14,
-        "mnemonic": "Fourteenth day of the month",
+        "mnemonic": "ობობა ოთარი ოსტატური ოთახი",
         "image": "images/days/14.png"
     },
     {
         "day": 15,
-        "mnemonic": "Fifteenth day of the month",
+        "mnemonic": "პეპელა პაპუნა პატიოსანი პურის ქარხანა",
         "image": "images/days/15.png"
     },
     {
         "day": 16,
-        "mnemonic": "Sixteenth day of the month",
+        "mnemonic": "ჟირაფი ჟოზე ჟანგიან ჟალუზებთან",
         "image": "images/days/16.png"
     },
     {
         "day": 17,
-        "mnemonic": "Seventeenth day of the month",
+        "mnemonic": "რჩეული რეზო რბილი რაფა",
         "image": "images/days/17.png"
     },
     {
         "day": 18,
-        "mnemonic": "Eighteenth day of the month",
+        "mnemonic": "სპილო სოფო სასიამოვნო სკამი",
         "image": "images/days/18.png"
     },
     {
         "day": 19,
-        "mnemonic": "Nineteenth day of the month",
+        "mnemonic": "ტურა ტერენტი ტკბილი ტულეტი",
         "image": "images/days/19.png"
     },
     {
         "day": 20,
-        "mnemonic": "Twentieth day of the month",
+        "mnemonic": "ულაყი ულისე უდარდელი უჯრაში",
         "image": "images/days/20.png"
     },
     {
         "day": 21,
-        "mnemonic": "Twenty-first day of the month",
+        "mnemonic": "ფარშევანგი ფატი ფრთხილი ფანჯარასთან",
         "image": "images/days/21.png"
     },
     {
         "day": 22,
-        "mnemonic": "Twenty-second day of the month",
+        "mnemonic": "ქამელეონი ქეთი ქარიანი ქოლგის ქვეშ",
         "image": "images/days/22.png"
     },
     {
         "day": 23,
-        "mnemonic": "Twenty-third day of the month",
+        "mnemonic": "ღამურა ღვთისო ღრმა ღობე",
         "image": "images/days/23.png"
     },
     {
         "day": 24,
-        "mnemonic": "Twenty-fourth day of the month",
+        "mnemonic": "ყვავი ყარამან ყვავილოვანი ყუთი",
         "image": "images/days/24.png"
     },
     {
         "day": 25,
-        "mnemonic": "Twenty-fifth day of the month",
+        "mnemonic": "შველი შორენა შუშხუნა შუქნიშანთან",
         "image": "images/days/25.png"
     },
     {
         "day": 26,
-        "mnemonic": "Twenty-sixth day of the month",
+        "mnemonic": "ჩიტი ჩიორა ჩუმი ჩანთაში",
         "image": "images/days/26.png"
     },
     {
         "day": 27,
-        "mnemonic": "Twenty-seventh day of the month",
+        "mnemonic": "ცხვარი ციცინო ცნობისმოყვარე ცარიელ კუთხეში",
         "image": "images/days/27.png"
     },
     {
         "day": 28,
-        "mnemonic": "Twenty-eighth day of the month",
+        "mnemonic": "ძროხა ძიძია ძველი ძეგლთან",
         "image": "images/days/28.png"
     },
     {
         "day": 29,
-        "mnemonic": "Twenty-ninth day of the month",
+        "mnemonic": "წიწილა წიკო წითელი წინა ოთახში",
         "image": "images/days/29.png"
     },
     {
         "day": 30,
-        "mnemonic": "Thirtieth day of the month",
+        "mnemonic": "ჭიამაია ჭრელა ჭრელ ჭიშკართან",
         "image": "images/days/30.png"
     },
     {
         "day": 31,
-        "mnemonic": "Thirty-first day of the month",
+        "mnemonic": "ხარი ხათუნა ხუთვარსკვლავიან ხეზე",
         "image": "images/days/31.png"
     }
 ]

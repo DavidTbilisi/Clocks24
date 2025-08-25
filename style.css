@@ -39,13 +39,116 @@
 
 body {
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
   transition: background 0.3s ease;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.sidebar-section {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 16px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.sidebar-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sidebar-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+}
+
+.sidebar-content {
+  flex: 1;
+}
+
+.sidebar-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.sidebar-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.weekday-name {
+  color: var(--text-link);
+}
+
+.day-number {
+  color: var(--button-bg);
+  font-size: 1.8rem;
+}
+
+.sidebar-emoji {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.sidebar-mnemonic {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 0.2rem;
+  text-align: center;
+}
+
+.month-item .sidebar-value {
+  font-size: 1.2rem;
+}
+
+.weekday-item {
+  justify-content: center;
+  text-align: center;
+}
+
+.weekday-item .sidebar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.day-item .sidebar-value {
+  text-align: center;
 }
 
 #clock-display {
@@ -301,9 +404,47 @@ body {
   transition: color 0.3s ease;
 }
 @media (max-width: 700px) {
+  .app-container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .sidebar {
+    width: 100%;
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 1rem;
+  }
+  
+  .sidebar-section {
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  
+  .sidebar-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .sidebar-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .sidebar-value {
+    font-size: 1.1rem;
+  }
+  
+  .day-number {
+    font-size: 1.4rem;
+  }
+  
   #clock-display {
     padding: 1.2rem 0.5rem 1rem 0.5rem;
-    max-width: 99vw;
+    max-width: none;
   }
   #clock-display img, .clock-img {
     height: 160px;
