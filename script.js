@@ -396,7 +396,6 @@ const ClockShowcase = {
           <img 
             :src="currentClock.src" 
             :alt="currentClock.desc" 
-            width="40%" 
             class="clock-img" 
           />
           <p class="clock-desc">
