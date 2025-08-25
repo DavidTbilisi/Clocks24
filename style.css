@@ -281,6 +281,15 @@ body {
   transition: color 0.3s ease;
 }
 
+.clock-mnemonic {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
 #carousel-container {
   margin-top: 2.5rem;
   transition: opacity 0.3s ease, transform 0.3s ease;

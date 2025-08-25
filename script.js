@@ -240,13 +240,15 @@ const ClockShowcase = {
       const now = new Date();
       currentDate.value = now;
       const hour = now.getHours();
-      // shift so that at 12:00 you see the very first (oldest) clock:
-      const index = (hour + 12) % 24;
+      const currentTimeString = hour.toString().padStart(2, '0') + ':00';
       
-      if (clocksData.value[index]) {
-        currentClock.value = clocksData.value[index];
+      // Find the clock that matches the current hour
+      const clock = clocksData.value.find(clock => clock.time === currentTimeString);
+      
+      if (clock) {
+        currentClock.value = clock;
       }
-      currentTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      currentTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     };
 
     // Computed properties for sidebar data
@@ -406,10 +408,9 @@ const ClockShowcase = {
             >
               {{ currentClock.desc }}
             </a>
-          <span v-else>{{ currentClock.desc }}</span>
-        </p>
             <span v-else>{{ currentClock.desc }}</span>
           </p>
+          <p v-if="currentClock.mnemonic" class="clock-mnemonic">{{ currentClock.mnemonic }}</p>
           <p id="link-to-wiki">Every hour, a different clock from around the world is displayed.</p>
           <button class="carousel-toggle" @click="toggleCarousel" :title="showCarousel ? 'Hide other clocks' : 'Show other clocks'">
             <span v-if="showCarousel">🔼 Hide Other Clocks</span>
