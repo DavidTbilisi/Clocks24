@@ -114,9 +114,8 @@ const ClockCarousel = {
       currentIndex.value = index;
     };
 
-    const getHourLabel = (clockIndex) => {
-      const hour = (clockIndex + 12) % 24;
-      return hour.toString().padStart(2, '0') + ':00';
+    const getHourLabel = (clock) => {
+      return clock.time; // Use the time directly from the clock data
     };
 
     onMounted(() => {
@@ -152,7 +151,7 @@ const ClockCarousel = {
               <div class="carousel-desc">
                 {{ clock.desc }}
                 <br>
-                <span>(Shown at {{ getHourLabel(clocks.indexOf(clock)) }})</span>
+                <span>(Shown at {{ getHourLabel(clock) }})</span>
               </div>
             </div>
           </div>
