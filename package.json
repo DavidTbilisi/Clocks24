@@ -1,0 +1,27 @@
+{
+  "name": "clocks24",
+  "version": "1.0.0",
+  "description": "A beautiful web application that displays 24 historic clocks from around the world, showing a different clock each hour. Now built with Vue.js 3!",
+  "main": "rename-images.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css:watch": "npx @tailwindcss/cli -i ./src.css -o style.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidTbilisi/Clocks24.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DavidTbilisi/Clocks24/issues"
+  },
+  "homepage": "https://github.com/DavidTbilisi/Clocks24#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "daisyui": "^5.5.14",
+    "tailwindcss": "^4.1.18"
+  }
+}

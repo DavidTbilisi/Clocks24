@@ -1,0 +1,666 @@
+:root {
+    --bg-top: #08111b;
+    --bg-bottom: #1b0d07;
+    --panel: rgba(7, 16, 26, 0.82);
+    --panel-strong: rgba(10, 18, 29, 0.94);
+    --line: rgba(236, 197, 116, 0.24);
+    --line-strong: rgba(236, 197, 116, 0.52);
+    --text: #f5ead1;
+    --muted: #c9b588;
+    --accent: #d4a145;
+    --accent-strong: #ffd16d;
+    --accent-soft: rgba(212, 161, 69, 0.18);
+    --weekday-accent: #95b8ff;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: "Manrope", sans-serif;
+    background:
+        radial-gradient(circle at top, rgba(76, 118, 170, 0.18), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(182, 89, 41, 0.16), transparent 24%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.page-shell {
+    width: min(1280px, calc(100vw - 32px));
+    margin: 0 auto;
+    padding: 32px 0 56px;
+}
+
+.hero-panel,
+.simulation-card,
+.control-panel {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(12, 22, 35, 0.92), rgba(8, 14, 23, 0.9));
+    box-shadow: var(--shadow);
+}
+
+.hero-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.9fr);
+    gap: 28px;
+    border-radius: 28px;
+    padding: 32px;
+    margin-bottom: 28px;
+}
+
+.hero-copy h1,
+.section-heading h2 {
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.hero-copy h1 {
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    line-height: 0.95;
+    max-width: 11ch;
+}
+
+.eyebrow {
+    margin: 0 0 14px;
+    color: var(--accent-strong);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.26em;
+}
+
+.lede,
+.reference-text,
+.dial-caption p,
+#dayMnemonic {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.lede {
+    max-width: 64ch;
+    margin: 18px 0 0;
+}
+
+.status-grid,
+.calendar-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.status-grid {
+    margin-top: 28px;
+}
+
+.status-card,
+.detail-card,
+.mnemonic-card {
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.status-card {
+    padding: 18px;
+}
+
+.status-card strong,
+.calendar-day-number,
+.center-time {
+    display: block;
+    margin-top: 8px;
+    color: var(--accent-strong);
+    font-size: 1.28rem;
+    font-weight: 700;
+}
+
+.status-label,
+.detail-label,
+.reference-title,
+.center-small {
+    color: var(--muted);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.reference-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    background: var(--panel-strong);
+}
+
+.reference-card img,
+.detail-image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.reference-card img {
+    aspect-ratio: 1.1;
+}
+
+.reference-copy {
+    padding: 18px;
+}
+
+.reference-title {
+    margin: 0;
+}
+
+.reference-text {
+    margin: 10px 0 0;
+}
+
+.simulation-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 28px;
+}
+
+.control-panel {
+    border-radius: 28px;
+    padding: 28px;
+    margin-bottom: 28px;
+}
+
+.compact-heading {
+    margin-bottom: 18px;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.control-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-field select,
+.control-field input,
+.button-row button {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid var(--line-strong);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    padding: 0 14px;
+    font: inherit;
+}
+
+.mode-field {
+    grid-column: span 1;
+}
+
+.button-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.button-row button {
+    cursor: pointer;
+    background: linear-gradient(180deg, rgba(255, 209, 109, 0.18), rgba(163, 111, 35, 0.16));
+    transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.button-row button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 209, 109, 0.8);
+}
+
+.button-row button.is-running {
+    background: linear-gradient(180deg, rgba(149, 184, 255, 0.22), rgba(59, 96, 162, 0.18));
+}
+
+.readout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.readout-card {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.readout-card strong {
+    display: block;
+    margin-top: 10px;
+    color: var(--accent-strong);
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+.simulation-card {
+    border-radius: 28px;
+    padding: 28px;
+}
+
+.dial-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-heading {
+    margin-bottom: 22px;
+}
+
+.section-heading h2 {
+    font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.dial-frame {
+    position: relative;
+    width: min(100%, 640px);
+    margin: 0 auto;
+}
+
+#astronomicalDial {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.35));
+}
+
+.frame-outer {
+    fill: url(#frameMetal);
+}
+
+.frame-inner,
+.dial-ring,
+.zodiac-track,
+.center-disc {
+    fill: none;
+    stroke: url(#innerMetal);
+}
+
+.frame-inner {
+    stroke-width: 16;
+}
+
+/* (8) Old Czech / Schwabacher ring background */
+.czech-ring-bg {
+    fill: #0f1e38;
+    stroke: url(#innerMetal);
+    stroke-width: 3;
+}
+
+/* (1) Roman numeral ring background */
+.roman-ring-bg {
+    fill: #152540;
+    stroke: url(#innerMetal);
+    stroke-width: 2;
+}
+
+/* Fixed daylight background zones */
+.zone-night {
+    fill: #080e18;
+}
+
+.zone-dawn {
+    fill: #8b5e28;
+    opacity: 0.85;
+}
+
+.zone-sunrise {
+    fill: #6b7a85;
+    opacity: 0.7;
+}
+
+.zone-day {
+    fill: url(#skyGlow);
+}
+
+/* Horizon labels */
+.horizon-label {
+    fill: #d4a145;
+    font-family: "Manrope", sans-serif;
+    font-size: 7px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.horizon-sub {
+    fill: #b5863a;
+    font-size: 6px;
+}
+
+.dial-ring {
+    stroke-width: 4;
+}
+
+.zodiac-track {
+    stroke-width: 18;
+    opacity: 0.92;
+}
+
+/* Unequal / Planetary hour lines */
+.unequal-hour-line {
+    stroke: rgba(212, 161, 69, 0.55);
+    stroke-width: 1.2;
+}
+
+.unequal-hour-label {
+    fill: rgba(212, 161, 69, 0.8);
+    font-family: "Manrope", sans-serif;
+    font-size: 7px;
+    text-anchor: middle;
+}
+
+/* Earth grid */
+.earth-core {
+    fill: url(#skyGlow);
+}
+
+.earth-grid-line {
+    fill: none;
+    stroke: rgba(240, 226, 180, 0.45);
+    stroke-width: 1.2;
+}
+
+.earth-grid-radial {
+    stroke: rgba(240, 226, 180, 0.4);
+    stroke-width: 1;
+}
+
+/* (6) Sidereal star */
+.sidereal-arm {
+    stroke: rgba(255, 212, 99, 0.35);
+    stroke-width: 1;
+}
+
+.sidereal-star-shape {
+    fill: #ffd463;
+    opacity: 0.9;
+}
+
+/* (9) Golden hand */
+.golden-hand-line {
+    stroke: #1a1a1a;
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+/* (10) Sun */
+.sun-core {
+    fill: #ffd463;
+}
+
+.sun-halo {
+    fill: rgba(255, 212, 99, 0.18);
+}
+
+/* (11) Moon */
+.moon-core {
+    fill: #d7def0;
+}
+
+.moon-shadow {
+    fill: rgba(8, 19, 31, 0.8);
+}
+
+.center-disc {
+    fill: rgba(9, 20, 34, 0.88);
+    stroke-width: 3;
+}
+
+.center-small {
+    font-family: "Manrope", sans-serif;
+    fill: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.center-time {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    fill: #ffd16d;
+}
+
+/* (1) Roman numeral labels */
+.roman-label {
+    fill: #f0deb1;
+    text-anchor: middle;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+/* (13) Zodiac labels */
+.zodiac-label {
+    fill: #f0deb1;
+    text-anchor: middle;
+    font-family: "Manrope", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* (8) Czech hour labels */
+.czech-hour-label {
+    fill: rgba(248, 227, 171, 0.85);
+    text-anchor: middle;
+    font-family: "Manrope", sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.dial-caption {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.dial-caption p {
+    margin: 0;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.calendar-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-disc {
+    position: relative;
+    width: min(100%, 520px);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(12, 30, 43, 0.92) 0 31%, rgba(11, 19, 28, 0.96) 31% 54%, rgba(154, 108, 35, 0.88) 54% 56%, rgba(55, 27, 9, 0.95) 56% 100%);
+    border: 1px solid rgba(255, 214, 132, 0.32);
+    box-shadow: inset 0 0 0 10px rgba(255, 214, 132, 0.08), inset 0 0 80px rgba(0, 0, 0, 0.36);
+}
+
+.calendar-ring {
+    position: absolute;
+    inset: 0;
+}
+
+.calendar-marker {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 46px;
+    height: 46px;
+    margin: -23px 0 0 -23px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(245, 234, 209, 0.1);
+    color: #f0e0b8;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: transform 240ms ease, background-color 240ms ease, border-color 240ms ease, color 240ms ease;
+}
+
+.calendar-marker.is-active {
+    color: #07121d;
+    background: var(--accent-strong);
+    border-color: rgba(255, 209, 109, 0.9);
+    box-shadow: 0 0 0 8px rgba(255, 209, 109, 0.16);
+}
+
+.calendar-marker.is-today-weekday {
+    border-color: var(--weekday-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--weekday-accent) 25%, transparent);
+}
+
+.calendar-center-card {
+    position: absolute;
+    inset: 50%;
+    width: 42%;
+    height: 42%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background:
+        radial-gradient(circle at top, rgba(36, 69, 100, 0.35), rgba(7, 17, 28, 0.92));
+    box-shadow: inset 0 0 26px rgba(255, 255, 255, 0.03);
+}
+
+.calendar-month,
+.calendar-weekday {
+    margin: 0;
+    color: var(--muted);
+}
+
+.calendar-day-number {
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(3.4rem, 7vw, 5rem);
+    line-height: 0.9;
+}
+
+.calendar-detail-grid {
+    margin-top: 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-card,
+.mnemonic-card {
+    padding: 16px;
+}
+
+.detail-image {
+    margin-top: 14px;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+}
+
+.detail-image.is-empty {
+    display: none;
+}
+
+.mnemonic-card {
+    margin-top: 18px;
+}
+
+.mnemonic-card p {
+    margin: 0;
+}
+
+#dayMnemonic {
+    margin-top: 12px;
+}
+
+@media (max-width: 1024px) {
+
+    .hero-panel,
+    .simulation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .control-grid,
+    .readout-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .button-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .reference-card {
+        max-width: 420px;
+    }
+}
+
+@media (max-width: 720px) {
+    .page-shell {
+        width: min(100vw - 20px, 100%);
+        padding-top: 20px;
+    }
+
+    .hero-panel,
+    .simulation-card {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .status-grid,
+    .dial-caption,
+    .calendar-detail-grid,
+    .control-grid,
+    .readout-grid,
+    .button-row {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-marker {
+        width: 40px;
+        height: 40px;
+        margin: -20px 0 0 -20px;
+        font-size: 0.82rem;
+    }
+}

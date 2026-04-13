@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prague Astronomical Clock Simulation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="prague-clock.css">
+</head>
+
+<body>
+    <main class="page-shell">
+        <section class="hero-panel">
+            <div class="hero-copy">
+                <p class="eyebrow">Standalone study</p>
+                <h1>Prague astronomical clock simulation</h1>
+                <p class="lede">
+                    A focused Orloj simulator with live Prague time, a controllable astronomical dial, and an English
+                    calendar disc
+                    built on top of the existing month and day assets in this workspace.
+                </p>
+                <div class="status-grid">
+                    <article class="status-card">
+                        <span class="status-label">Simulation time</span>
+                        <strong id="currentTime">--:--:--</strong>
+                    </article>
+                    <article class="status-card">
+                        <span class="status-label">Simulation date</span>
+                        <strong id="currentDateLabel">Loading...</strong>
+                    </article>
+                    <article class="status-card">
+                        <span class="status-label">Simulation mode</span>
+                        <strong id="currentCalendarFocus">Loading...</strong>
+                    </article>
+                </div>
+            </div>
+            <aside class="reference-card">
+                <img src="images/1400.jpg" alt="Reference image of the Prague Astronomical Clock">
+                <div class="reference-copy">
+                    <p class="reference-title">Reference clock</p>
+                    <p class="reference-text">This version goes beyond a static visual: live and manual time modes,
+                        playback controls, solar and lunar positions, zodiac rotation, and the calendar day disc all
+                        react together.</p>
+                </div>
+            </aside>
+        </section>
+
+        <section class="control-panel simulation-card">
+            <div class="section-heading compact-heading">
+                <p class="eyebrow">Controllers</p>
+                <h2>Simulation controls</h2>
+            </div>
+            <div class="control-grid">
+                <label class="control-field mode-field">
+                    <span class="detail-label">Mode</span>
+                    <select id="modeSelect">
+                        <option value="live">Live Prague clock</option>
+                        <option value="manual">Manual simulation</option>
+                    </select>
+                </label>
+                <label class="control-field">
+                    <span class="detail-label">Date</span>
+                    <input id="dateInput" type="date">
+                </label>
+                <label class="control-field">
+                    <span class="detail-label">Time</span>
+                    <input id="timeInput" type="time" step="60">
+                </label>
+                <label class="control-field">
+                    <span class="detail-label">Playback rate</span>
+                    <select id="speedSelect">
+                        <option value="1">Real time</option>
+                        <option value="60">1 minute / second</option>
+                        <option value="3600" selected>1 hour / second</option>
+                        <option value="21600">6 hours / second</option>
+                        <option value="86400">1 day / second</option>
+                    </select>
+                </label>
+                <div class="button-row">
+                    <button id="playPauseButton" type="button">Start playback</button>
+                    <button id="stepHourButton" type="button">+1 hour</button>
+                    <button id="stepDayButton" type="button">+1 day</button>
+                    <button id="resetButton" type="button">Reset to Prague now</button>
+                </div>
+            </div>
+            <div class="readout-grid">
+                <article class="readout-card">
+                    <span class="detail-label">Golden Sun (10)</span>
+                    <strong id="sunReadout">--</strong>
+                </article>
+                <article class="readout-card">
+                    <span class="detail-label">Moon (11)</span>
+                    <strong id="moonReadout">--</strong>
+                </article>
+                <article class="readout-card">
+                    <span class="detail-label">Zodiac ring (13)</span>
+                    <strong id="zodiacReadout">--</strong>
+                </article>
+                <article class="readout-card">
+                    <span class="detail-label">Old Czech hour (8)</span>
+                    <strong id="czechHourReadout">--</strong>
+                </article>
+                <article class="readout-card">
+                    <span class="detail-label">Unequal hour</span>
+                    <strong id="unequalReadout">--</strong>
+                </article>
+                <article class="readout-card">
+                    <span class="detail-label">Sidereal star (6)</span>
+                    <strong id="siderealReadout">--</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="simulation-grid">
+            <article class="simulation-card dial-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Upper dial</p>
+                    <h2>Astronomical face</h2>
+                </div>
+                <div class="dial-frame">
+                    <svg id="astronomicalDial" viewBox="0 0 520 520" role="img" aria-labelledby="dialTitle dialDesc">
+                        <title id="dialTitle">Prague astronomical clock simulation</title>
+                        <desc id="dialDesc">Astronomical dial with Roman numeral 24-hour ring (noon at top), rotating
+                            Old Czech ring, daylight zones, unequal hour lines, zodiac ring, golden hand with sun, moon,
+                            and sidereal star.</desc>
+                        <defs>
+                            <radialGradient id="skyGlow" cx="50%" cy="40%" r="55%">
+                                <stop offset="0%" stop-color="#5ba0d6" />
+                                <stop offset="60%" stop-color="#3a7bb5" />
+                                <stop offset="100%" stop-color="#1e527a" />
+                            </radialGradient>
+                            <linearGradient id="frameMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#d8bc72" />
+                                <stop offset="35%" stop-color="#9b6f26" />
+                                <stop offset="100%" stop-color="#f4dd98" />
+                            </linearGradient>
+                            <linearGradient id="innerMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f3c56e" />
+                                <stop offset="55%" stop-color="#a36f23" />
+                                <stop offset="100%" stop-color="#f8e3ab" />
+                            </linearGradient>
+                            <clipPath id="dialClip">
+                                <circle cx="260" cy="260" r="168" />
+                            </clipPath>
+                        </defs>
+
+                        <!-- Outer decorative frame -->
+                        <circle cx="260" cy="260" r="252" class="frame-outer" />
+                        <circle cx="260" cy="260" r="236" class="frame-inner" />
+
+                        <!-- (8) Old Czech / Schwabacher ring — outermost numbered ring, ROTATES with sunset -->
+                        <circle cx="260" cy="260" r="222" class="czech-ring-bg" />
+                        <g id="czechRing" transform="rotate(0 260 260)">
+                            <g id="oldCzechHourMarkers"></g>
+                        </g>
+
+                        <!-- (1) Roman numeral ring — 24-hour, STATIC, noon (XII) at top -->
+                        <circle cx="260" cy="260" r="196" class="roman-ring-bg" />
+                        <g id="romanHourMarkers"></g>
+
+                        <!-- Fixed daylight background zones (stationary, you the observer in Prague) -->
+                        <g clip-path="url(#dialClip)">
+                            <!-- (7) Night — darkest, full background -->
+                            <circle cx="260" cy="260" r="168" class="zone-night" />
+                            <!-- (5) Dawn / Dusk — orange-brown strip -->
+                            <rect x="60" y="233" width="400" height="54" class="zone-dawn" />
+                            <!-- (4) Sunrise / Sunset — grey-blue strip -->
+                            <rect x="60" y="245" width="400" height="30" class="zone-sunrise" />
+                            <!-- (2) Daytime — blue sky, upper portion -->
+                            <rect x="60" y="60" width="400" height="200" class="zone-day" />
+                        </g>
+
+                        <!-- (3/4) Horizon labels — English for ORTUS / OCCASUS / AURORA / CREPUSCULUM -->
+                        <text x="104" y="257" class="horizon-label">SUNRISE</text>
+                        <text x="416" y="257" class="horizon-label" text-anchor="end">SUNSET</text>
+                        <text x="104" y="274" class="horizon-label horizon-sub">DAWN</text>
+                        <text x="416" y="274" class="horizon-label horizon-sub" text-anchor="end">DUSK</text>
+
+                        <!-- Dial border ring -->
+                        <circle cx="260" cy="260" r="168" class="dial-ring" />
+
+                        <!-- Unequal / Planetary hour lines (golden arches 1-12, sunrise to sunset) -->
+                        <g id="unequalHourLines"></g>
+
+                        <!-- (13) Zodiac ring — ROTATES, sun crosses it counterclockwise -->
+                        <g id="zodiacRing" transform="rotate(0 260 260)">
+                            <circle cx="260" cy="260" r="130" class="zodiac-track" />
+                            <g id="zodiacLabels"></g>
+                        </g>
+
+                        <!-- Earth grid — center map, you the observer standing in Prague -->
+                        <g id="earthGrid">
+                            <circle cx="260" cy="260" r="58" class="earth-core" />
+                            <circle cx="260" cy="260" r="50" class="earth-grid-line" />
+                            <circle cx="260" cy="260" r="40" class="earth-grid-line" />
+                            <circle cx="260" cy="260" r="28" class="earth-grid-line" />
+                            <circle cx="260" cy="260" r="16" class="earth-grid-line" />
+                            <g id="earthGridRadials"></g>
+                        </g>
+
+                        <!-- (6) Sidereal star — vernal equinox marker, rotates ~4 min faster per day -->
+                        <g id="siderealStar" transform="rotate(0 260 260)">
+                            <line x1="260" y1="260" x2="260" y2="176" class="sidereal-arm" />
+                            <polygon
+                                points="260,168 263,175 269,175 264,179 266,186 260,182 254,186 256,179 251,175 257,175"
+                                class="sidereal-star-shape" />
+                        </g>
+
+                        <!-- (9) Golden hand — 24-hour rotation, with (10) golden sun riding on it -->
+                        <g id="goldenHand" transform="rotate(0 260 260)">
+                            <line x1="260" y1="58" x2="260" y2="380" class="golden-hand-line" />
+                            <circle id="sunDisc" cx="260" cy="130" r="14" class="sun-core" />
+                            <circle id="sunHalo" cx="260" cy="130" r="22" class="sun-halo" />
+                        </g>
+
+                        <!-- (11) Moon — orbits along zodiac ring, half-black half-white shows phase -->
+                        <g id="moonMarker" transform="rotate(0 260 260)">
+                            <circle cx="260" cy="132" r="10" class="moon-core" />
+                            <circle id="moonShadow" cx="264" cy="129" r="8" class="moon-shadow" />
+                        </g>
+
+                        <!-- Center disc with digital time readout -->
+                        <circle cx="260" cy="260" r="44" class="center-disc" />
+                        <text x="260" y="248" text-anchor="middle" class="center-small">Prague</text>
+                        <text x="260" y="276" text-anchor="middle" id="dialCenterTime" class="center-time">--:--</text>
+                    </svg>
+                </div>
+                <div class="dial-caption">
+                    <p id="monthSummary">Month loading...</p>
+                    <p id="weekdaySummary">Weekday loading...</p>
+                    <p id="astronomySummary">Astronomy loading...</p>
+                    <p id="dialLayerSummary">Dial layers loading...</p>
+                </div>
+            </article>
+
+            <article class="simulation-card calendar-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Lower disc</p>
+                    <h2>Calendar days</h2>
+                </div>
+                <div class="calendar-disc" id="calendarDisc">
+                    <div class="calendar-ring" id="calendarRing"></div>
+                    <div class="calendar-center-card">
+                        <p class="calendar-month" id="calendarMonthName">Month</p>
+                        <p class="calendar-day-number" id="calendarDayNumber">--</p>
+                        <p class="calendar-weekday" id="calendarWeekday">Weekday</p>
+                    </div>
+                </div>
+                <div class="calendar-detail-grid">
+                    <article class="detail-card">
+                        <span class="detail-label">Month image</span>
+                        <img id="monthImage" class="detail-image" alt="Current month illustration">
+                    </article>
+                    <article class="detail-card">
+                        <span class="detail-label">Day image</span>
+                        <img id="dayImage" class="detail-image" alt="Current calendar day illustration">
+                    </article>
+                </div>
+                <article class="mnemonic-card">
+                    <p class="detail-label">Day mnemonic</p>
+                    <p id="dayMnemonic">Loading calendar mnemonic...</p>
+                </article>
+                <article class="mnemonic-card">
+                    <p class="detail-label">Simulation notes</p>
+                    <p id="simulationNotes">Loading simulation notes...</p>
+                </article>
+            </article>
+        </section>
+    </main>
+
+    <script src="prague-clock.js"></script>
+</body>
+
+</html>

@@ -82,7 +82,7 @@ const ClockCarousel = {
   setup(props) {
     const currentIndex = ref(0);
     const itemsPerPage = ref(5);
-    
+
     const updateItemsPerPage = () => {
       if (window.innerWidth < 600) {
         itemsPerPage.value = 1;
@@ -159,8 +159,8 @@ const ClockCarousel = {
         <button class="carousel-nav carousel-next" @click="nextSlide" :disabled="totalPages <= 1">›</button>
       </div>
       <div v-if="totalPages > 1" class="carousel-dots">
-        <button 
-          v-for="page in totalPages" 
+        <button
+          v-for="page in totalPages"
           :key="page"
           class="carousel-dot"
           :class="{ active: currentIndex === page - 1 }"
@@ -183,13 +183,13 @@ const ClockShowcase = {
     const isLoading = ref(true);
     const isDarkTheme = ref(false);
     const showCarousel = ref(false);
-    
+
     // Sidebar data
     const monthsData = ref([]);
     const weekdaysData = ref([]);
     const monthDaysData = ref([]);
     const currentDate = ref(new Date());
-    
+
     let interval = null;
 
     // Theme management functions
@@ -235,15 +235,15 @@ const ClockShowcase = {
 
     const updateClock = () => {
       if (clocksData.value.length === 0) return;
-      
+
       const now = new Date();
       currentDate.value = now;
       const hour = now.getHours();
       const currentTimeString = hour.toString().padStart(2, '0') + ':00';
-      
+
       // Find the clock that matches the current hour
       const clock = clocksData.value.find(clock => clock.time === currentTimeString);
-      
+
       if (clock) {
         currentClock.value = clock;
       }
@@ -271,7 +271,7 @@ const ClockShowcase = {
 
     const initializeApp = async () => {
       isLoading.value = true;
-      
+
       // Load all data files
       await Promise.all([
         loadClocksData(),
@@ -279,12 +279,12 @@ const ClockShowcase = {
         loadWeekdaysData(),
         loadMonthDaysData()
       ]);
-      
+
       clocksData.value = clocks;
       monthsData.value = months;
       weekdaysData.value = weekdays;
       monthDaysData.value = monthDays;
-      
+
       if (clocksData.value.length > 0) {
         updateClock();
         // Refresh every minute to update time and date
@@ -326,9 +326,9 @@ const ClockShowcase = {
         <!-- Month -->
         <div class="sidebar-section" v-if="currentMonth">
           <div class="sidebar-item month-item">
-            <img 
-              v-if="currentMonth.image" 
-              :src="currentMonth.image" 
+            <img
+              v-if="currentMonth.image"
+              :src="currentMonth.image"
               :alt="currentMonth.name"
               class="sidebar-image"
               @error="$event.target.style.display='none'"
@@ -359,9 +359,9 @@ const ClockShowcase = {
         <!-- Month Day -->
         <div class="sidebar-section" v-if="currentMonthDay">
           <div class="sidebar-item day-item">
-            <img 
-              v-if="currentMonthDay.image" 
-              :src="currentMonthDay.image" 
+            <img
+              v-if="currentMonthDay.image"
+              :src="currentMonthDay.image"
               :alt="'Day ' + currentMonthDay.day"
               class="sidebar-image"
               @error="$event.target.style.display='none'"
@@ -379,10 +379,6 @@ const ClockShowcase = {
 
       <!-- Main Content -->
       <div id="clock-display">
-        <button class="theme-toggle" @click="toggleTheme" :title="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'">
-          <span v-if="isDarkTheme">☀️</span>
-          <span v-else">🌙</span>
-        </button>
         <div v-if="isLoading" class="loading">
           <h1>Loading clocks...</h1>
         </div>
@@ -392,16 +388,16 @@ const ClockShowcase = {
         </div>
         <div v-else>
           <h1>{{ currentTime }}</h1>
-          <img 
-            :src="currentClock.src" 
-            :alt="currentClock.desc" 
-            class="clock-img" 
+          <img
+            :src="currentClock.src"
+            :alt="currentClock.desc"
+            class="clock-img"
           />
           <p class="clock-desc">
-            <a 
-              v-if="currentClock.link" 
-              :href="currentClock.link" 
-              target="_blank" 
+            <a
+              v-if="currentClock.link"
+              :href="currentClock.link"
+              target="_blank"
               rel="noopener noreferrer"
             >
               {{ currentClock.desc }}
