@@ -4,7 +4,9 @@
   "description": "A beautiful web application that displays 24 historic clocks from around the world, showing a different clock each hour. Now built with Vue.js 3!",
   "main": "rename-images.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
     "css:watch": "npx @tailwindcss/cli -i ./src.css -o style.css --watch"
   },
   "repository": {
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/DavidTbilisi/Clocks24#readme",
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/cli": "^4.1.18",
     "daisyui": "^5.5.14",
     "tailwindcss": "^4.1.18"
