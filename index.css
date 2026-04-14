@@ -9,14 +9,14 @@
 body {
     background: linear-gradient(135deg, #0f172a, #1e293b);
     color: #e2e8f0;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* ===== LAYOUT ===== */
 .app-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* ===== SIDEBAR ===== */
@@ -115,9 +115,9 @@ body {
 /* CLOCK CARD */
 #clock-display>div {
     width: 100%;
-    max-width: 600px;
+    max-width: 760px;
     text-align: center;
-    padding: 40px;
+    padding: clamp(1rem, 4vw, 2.5rem);
     border-radius: 24px;
 
     background: rgba(30, 41, 59, 0.6);
@@ -126,37 +126,365 @@ body {
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.6),
         inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+    /* layout as grid so meta can sit top/left/right of the image */
+    display: grid;
+    grid-template-columns: minmax(80px, 160px) 1fr minmax(80px, 160px);
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+        "meta-top meta-top meta-top"
+        "time time time"
+        "meta-left image meta-right"
+        ". desc .";
+    gap: 14px;
+    align-items: start;
 }
 
 /* TIME */
 h1 {
-    font-size: 80px;
+    font-size: clamp(2.25rem, 6.5vw, 4.25rem);
     font-weight: 800;
-    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    background: linear-gradient(90deg, #f472b6, #60a5fa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
+    margin: 0;
+    grid-area: time;
+    justify-self: center;
 }
 
 /* IMAGE */
 .clock-img {
     display: block;
     width: 100%;
-    max-width: 90vw;
-    /* never exceed viewport width */
+    max-width: min(520px, 90vw);
+    /* never exceed viewport width (smaller cap) */
     height: auto;
-    max-height: 80vh;
-    /* never exceed viewport height */
+    max-height: 55vh;
+    /* never exceed viewport height (reduced) */
     object-fit: contain;
     /* preserve aspect ratio while fitting */
     border-radius: 16px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     transition: 0.3s ease;
 }
 
 .clock-img:hover {
     transform: scale(1.03);
 }
+
+/* Image wrapper and overlay meta styles */
+.image-wrap {
+    position: relative;
+    width: 100%;
+    max-width: min(520px, 90vw);
+    margin: 0 auto;
+    display: block;
+}
+
+.image-wrap .clock-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 55vh;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.image-wrap .meta-item.overlay {
+    position: absolute;
+    pointer-events: auto;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border-radius: 12px;
+    padding: 8px 10px;
+    box-shadow: 0 10px 28px rgba(2, 6, 23, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(8px);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-width: 0;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.image-wrap .meta-top.overlay {
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.image-wrap .meta-left.overlay {
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-wrap .meta-right.overlay {
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-wrap .meta-left .meta-image,
+.image-wrap .meta-right .meta-image {
+    width: 40px;
+    height: 40px;
+}
+
+.image-wrap .meta-top .meta-image {
+    width: 36px;
+    height: 36px;
+}
+
+.image-wrap .meta-top:hover,
+.image-wrap .meta-left:hover,
+.image-wrap .meta-right:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.6);
+}
+
+/* Hide side overlays on small screens to reduce clutter, keep top pill */
+@media (max-width: 700px) {
+
+    .image-wrap .meta-left.overlay,
+    .image-wrap .meta-right.overlay {
+        display: none;
+    }
+
+    .image-wrap .meta-top.overlay {
+        padding: 8px 12px;
+        top: 10px;
+    }
+}
+
+/* On very wide screens make overlays slightly larger and more separated */
+@media (min-width: 1200px) {
+    .image-wrap .meta-item.overlay {
+        padding: 10px 14px;
+    }
+
+    .image-wrap .meta-left.overlay,
+    .image-wrap .meta-right.overlay {
+        left: 18px;
+        right: 18px;
+    }
+}
+
+/* Centered clock overlay on image and bottom glassy meta bar */
+.image-wrap .clock-overlay-time {
+    position: absolute;
+    z-index: 30;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(2rem, 6.5vw, 3.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    padding: 8px 14px;
+    border-radius: 12px;
+    text-align: center;
+    text-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.28));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+}
+
+.image-wrap .meta-bottom {
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 28;
+    padding: 8px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 12px 32px rgba(2, 6, 23, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+.meta-bottom-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.meta-bottom-item .meta-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meta-bottom-item .meta-label {
+    font-size: 10px;
+    color: #cbd5f5;
+}
+
+.meta-bottom-item .meta-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+@media (max-width: 480px) {
+    .image-wrap .clock-overlay-time {
+        font-size: 2rem;
+        padding: 6px 10px;
+    }
+
+    .image-wrap .meta-bottom {
+        gap: 8px;
+        padding: 6px;
+        bottom: 10px;
+    }
+
+    .meta-bottom-item {
+        padding: 5px 8px;
+    }
+}
+
+.meta-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(2, 6, 23, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.meta-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.55);
+}
+
+.meta-image {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+}
+
+.meta-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.meta-label {
+    font-size: 11px;
+    color: #94a3b8;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.meta-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.meta-emoji {
+    font-size: 18px;
+}
+
+.meta-mnemonic {
+    font-size: 12px;
+    color: #cbd5f5;
+    opacity: 0.9;
+}
+
+.day-number {
+    font-size: 18px;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+/* On wider screens show meta items in a row */
+@media (min-width: 700px) {
+
+    /* switch to grid placement on wide screens */
+    .meta-top {
+        grid-area: meta-top;
+        justify-self: center;
+    }
+
+    .meta-left {
+        grid-area: meta-left;
+        justify-self: end;
+    }
+
+    .meta-right {
+        grid-area: meta-right;
+        justify-self: start;
+    }
+
+    .clock-img {
+        grid-area: image;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .clock-card .clock-desc,
+    .clock-card .clock-mnemonic,
+    .clock-card #link-to-wiki {
+        grid-column: 1 / -1;
+        grid-row: 4;
+    }
+
+    .meta-item {
+        width: auto;
+    }
+
+    .meta-top {
+        width: 100%;
+    }
+
+    .meta-left,
+    .meta-right {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 8px 10px;
+        min-width: 100px;
+    }
+}
+
+/* For medium and small screens we'll keep stacked layout using the mobile media query below */
 
 /* TEXT */
 .clock-desc a {
@@ -250,7 +578,7 @@ h1 {
 
     #clock-display>div {
         width: 100%;
-        height: calc(100vh - 120px);
+        height: auto;
 
         border-radius: 0;
         padding: 20px;
@@ -268,7 +596,7 @@ h1 {
     }
 
     .clock-img {
-        max-height: 60vh;
+        max-height: 45vh;
         max-width: 100%;
         object-fit: contain;
     }
@@ -279,4 +607,130 @@ h1 {
         padding: 14px;
         font-size: 16px;
     }
+}
+
+/* Compact side columns override for cleaner, narrow vertical stacks */
+@media (min-width: 700px) {
+    .clock-card .meta-top {
+        grid-area: meta-top;
+        justify-self: center;
+        align-self: start;
+        width: auto;
+        padding: 6px 12px;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, rgba(167, 139, 250, 0.10), rgba(56, 189, 248, 0.05));
+        border: 1px solid rgba(167, 139, 250, 0.06);
+        box-shadow: 0 8px 18px rgba(2, 6, 23, 0.35);
+        font-size: 13px;
+        font-weight: 700;
+        display: inline-flex;
+        gap: 8px;
+    }
+
+    .clock-card .meta-left,
+    .clock-card .meta-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 6px;
+        min-width: 56px;
+        max-width: 110px;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(2, 6, 23, 0.12);
+    }
+
+    .clock-card .meta-left {
+        grid-area: meta-left;
+        justify-self: end;
+        align-self: center;
+    }
+
+    .clock-card .meta-right {
+        grid-area: meta-right;
+        justify-self: start;
+        align-self: center;
+    }
+
+    .clock-card .meta-left .meta-image,
+    .clock-card .meta-right .meta-image {
+        width: 34px;
+        height: 34px;
+    }
+
+    .clock-card .meta-left .meta-label,
+    .clock-card .meta-right .meta-label {
+        font-size: 10px;
+        color: #94a3b8;
+    }
+
+    .clock-card .meta-left .meta-value,
+    .clock-card .meta-right .meta-value {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .clock-card .meta-left .day-number,
+    .clock-card .meta-right .day-number {
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+
+    .clock-card .meta-item {
+        padding: 6px 8px;
+    }
+}
+
+/* Absolute-position side columns on very wide screens for compact vertical stacks */
+@media (min-width: 900px) {
+    .clock-card {
+        position: relative;
+    }
+
+    .clock-card .meta-left {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: auto;
+        padding: 6px 6px;
+    }
+
+    .clock-card .meta-right {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: auto;
+        padding: 6px 6px;
+    }
+
+    .clock-card .meta-left .meta-item,
+    .clock-card .meta-right .meta-item {
+        margin: 6px 0;
+    }
+}
+
+/* Post-image container centered horizontally */
+.post-image {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 760px;
+    margin: 12px auto 0 auto;
+    padding: 0 12px;
+}
+
+.post-image .clock-desc {
+    margin: 0;
+}
+
+.post-image .clock-mnemonic {
+    margin: 0;
 }
