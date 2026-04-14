@@ -1,0 +1,282 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #e2e8f0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ===== LAYOUT ===== */
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 280px;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* SECTION */
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+}
+
+/* CARD */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.6));
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    transition: 0.3s ease;
+}
+
+.sidebar-item:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* IMAGE */
+.sidebar-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* TEXT */
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sidebar-label {
+    font-size: 12px;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.sidebar-value {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.weekday-name {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.day-number {
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.sidebar-mnemonic {
+    font-size: 13px;
+    color: #cbd5f5;
+    opacity: 0.8;
+}
+
+.sidebar-emoji {
+    font-size: 20px;
+    margin-top: 4px;
+}
+
+/* ===== MAIN CONTENT ===== */
+#clock-display {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+/* CLOCK CARD */
+#clock-display>div {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    padding: 40px;
+    border-radius: 24px;
+
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(30px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* TIME */
+h1 {
+    font-size: 80px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+/* IMAGE */
+.clock-img {
+    display: block;
+    width: 100%;
+    max-width: 90vw;
+    /* never exceed viewport width */
+    height: auto;
+    max-height: 80vh;
+    /* never exceed viewport height */
+    object-fit: contain;
+    /* preserve aspect ratio while fitting */
+    border-radius: 16px;
+    margin-bottom: 15px;
+    transition: 0.3s ease;
+}
+
+.clock-img:hover {
+    transform: scale(1.03);
+}
+
+/* TEXT */
+.clock-desc a {
+    color: #93c5fd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.clock-desc a:hover {
+    text-decoration: underline;
+}
+
+.clock-mnemonic {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #cbd5f5;
+}
+
+/* BUTTON */
+.carousel-toggle {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+
+    background: linear-gradient(135deg, #7c3aed, #0ea5e9);
+    color: white;
+    font-weight: 600;
+
+    transition: 0.3s ease;
+}
+
+.carousel-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
+}
+
+/* ===== SMALL DETAILS ===== */
+#link-to-wiki {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+
+/* ===== MOBILE FIRST ===== */
+@media (max-width: 768px) {
+
+    body {
+        overflow: auto;
+    }
+
+    .app-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* ===== TOP SLIDES (sidebar becomes horizontal scroll) ===== */
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 12px;
+        padding: 12px;
+
+        scroll-snap-type: x mandatory;
+    }
+
+    .sidebar-section {
+        min-width: 80%;
+        scroll-snap-align: center;
+    }
+
+    .sidebar-item {
+        min-width: 100%;
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .sidebar-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* ===== MAIN SLIDE ===== */
+    #clock-display {
+        width: 100%;
+        padding: 0;
+    }
+
+    #clock-display>div {
+        width: 100%;
+        height: calc(100vh - 120px);
+
+        border-radius: 0;
+        padding: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        scroll-snap-align: center;
+    }
+
+    /* ===== TIME BIGGER FOR MOBILE ===== */
+    h1 {
+        font-size: 64px;
+    }
+
+    .clock-img {
+        max-height: 60vh;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    /* ===== BUTTON FULL WIDTH ===== */
+    .carousel-toggle {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+    }
+}

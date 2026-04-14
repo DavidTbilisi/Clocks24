@@ -69,6 +69,111 @@ const romanHours24 = [
 ];
 const zodiacLabels = ["AR", "TA", "GE", "CA", "LE", "VI", "LI", "SC", "SG", "CP", "AQ", "PI"];
 
+// Calendar disc constants
+const monthDayStarts = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+const monthDayLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const calMonthAbbr = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const calZodiacGlyphs = ["♑","♒","♓","♈","♉","♊","♋","♌","♍","♎","♏","♐"];
+const calMonthColors = [
+    "#1e4fa0","#0e6090","#0e7858","#1a8c4a","#3a9020","#789020",
+    "#b08c1a","#cc5c14","#b03818","#8c2e18","#4c2030","#22185e"
+];
+
+// 365 saint / feast-day names (Jan 1 → Dec 31)
+const saintsCalendar = [
+    // January
+    "Mary, Mother of God","Basil & Gregory","Genoveva","Elizabeth Ann Seton","John Neumann",
+    "Epiphany","Raymond of Penyafort","Apollinaris","Adrian of Canterbury","William of Bourges",
+    "Hyginus","Benedict Biscop","Hilary of Poitiers","Felix of Nola","Paul the Hermit",
+    "Marcellus I","Anthony of Egypt","Prisca","Wulfstan","Fabian & Sebastian",
+    "Agnes","Vincent of Saragossa","Marianne Cope","Francis de Sales","Paul the Apostle",
+    "Timothy & Titus","Angela Merici","Thomas Aquinas","Gildas","Mutius of Rome",
+    "John Bosco",
+    // February
+    "Brigid of Ireland","Presentation of Jesus","Blaise & Ansgar","Isidore of Pelusium","Agatha",
+    "Paul Miki & Companions","Colette","Jerome Emiliani","Miguel Febres Cordero","Scholastica",
+    "Our Lady of Lourdes","Meletius of Antioch","Ermengild","Cyril & Methodius","Claude de la Colombière",
+    "Pamphilus","Seven Servite Founders","Flavian of Constantinople","Conrad of Piacenza","Jacinta & Francisco",
+    "Peter Damian","Chair of Peter","Polycarp","Praetextatus","Walburga",
+    "Porphyrius","Gregory of Narek","Romanus of Condat",
+    // March
+    "David of Wales","Chad of Mercia","Katharine Drexel","Casimir of Poland","Ciaran of Saighir",
+    "Chrodegang","Perpetua & Felicity","John of God","Frances of Rome","John Ogilvie",
+    "Eulogius of Córdoba","Gregory the Great","Ansovinus","Leobinus","Clement Mary Hofbauer",
+    "Herbert of Cologne","Patrick of Ireland","Cyril of Jerusalem","Joseph","Cuthbert",
+    "Nicholas von Flüe","Nicholas Owen","Toribio of Lima","Óscar Romero","Annunciation",
+    "Ludger","Rupert of Salzburg","Gontran","Jonas & Barachisius","John Climacus",
+    "Benjamin",
+    // April
+    "Hugh of Grenoble","Francis of Paola","Richard of Chichester","Isidore of Seville","Vincent Ferrer",
+    "Celestine I","John Baptist de la Salle","Agabus","Mary of Egypt","Fulbert of Chartres",
+    "Stanislaus of Kraków","Julius I","Martin I","Tiburtius & Valerian","Paternus of Wales",
+    "Bernadette Soubirous","Stephen Harding","Galdinus","Alphege of Canterbury","Agnes of Montepulciano",
+    "Anselm of Canterbury","Theodore of Sykeon","George","Fidelis of Sigmaringen","Mark the Evangelist",
+    "Our Lady of Good Counsel","Zita","Peter Chanel","Catherine of Siena","Pius V",
+    // May
+    "Joseph the Worker","Athanasius","Philip & James","Florian of Austria","Hilary of Arles",
+    "Marian & James","Domitian","Peter of Tarentaise","Pachomius","Antoninus of Florence",
+    "Ignatius of Laconi","Nereus & Achilleus","Our Lady of Fatima","Matthias","Isidore the Farmer",
+    "Andrew Bobola","Paschal Baylón","John I","Dunstan","Bernardino of Siena",
+    "Christopher Magallanes","Rita of Cascia","John Baptist Rossi","Mary Magdalene de Pazzi","Bede & Gregory VII",
+    "Philip Neri","Augustine of Canterbury","Germanus of Paris","Paul VI","Joan of Arc",
+    "Visitation of Mary",
+    // June
+    "Justin Martyr","Marcellinus & Peter","Charles Lwanga","Francis Caracciolo","Boniface",
+    "Norbert","Robert of Newminster","William of York","Ephrem of Syria","Landericus",
+    "Barnabas","Leo III","Anthony of Padua","Elisha","Vitus",
+    "John Francis Regis","Alban","Ephraem of Edessa","Romuald","Silverius",
+    "Aloysius Gonzaga","Paulinus of Nola","Etheldreda","John the Baptist","William of Vercelli",
+    "Josemaría Escrivá","Cyril of Alexandria","Irenaeus of Lyon","Peter & Paul","First Martyrs of Rome",
+    // July
+    "Junípero Serra","Bernardino Realino","Thomas the Apostle","Elizabeth of Portugal","Anthony Zaccaria",
+    "Maria Goretti","Palladius","Kilian of Würzburg","Augustine Zhao Rong","Rufina of Seville",
+    "Benedict of Nursia","Gualbert","Henry II","Camillus de Lellis","Bonaventure",
+    "Our Lady of Carmel","Clement of Okhrida","Pambo","Macrina the Elder","Apollinaris of Ravenna",
+    "Lawrence of Brindisi","Mary Magdalene","Bridget of Sweden","Sharbel Makhluf","James the Apostle",
+    "Joachim & Anne","Aurelius of Carthage","Samson of Dol","Martha Mary & Lazarus","Peter Chrysologus",
+    "Ignatius of Loyola",
+    // August
+    "Alphonsus Liguori","Eusebius of Vercelli","Lydia of Thyatira","John Mary Vianney","Our Lady Major",
+    "Transfiguration","Sixtus II","Dominic de Guzmán","Teresa Benedicta of the Cross","Lawrence of Rome",
+    "Clare of Assisi","Jane Frances de Chantal","Pontian & Hippolytus","Maximilian Kolbe","Assumption of Mary",
+    "Stephen of Hungary","Hyacinth of Poland","Helena","John Eudes","Bernard of Clairvaux",
+    "Pius X","Queenship of Mary","Rose of Lima","Bartholomew the Apostle","Louis IX of France",
+    "Dom Augustin Bartholomew","Monica","Augustine of Hippo","Beheading of John the Baptist","Fantinus",
+    "Raymond Nonnatus",
+    // September
+    "Giles","Stephen of Zante","Gregory the Great","Rosalia","Teresa of Calcutta",
+    "Bega","Cloud","Nativity of Mary","Peter Claver","Nicholas of Tolentino",
+    "Paphnutius","Holy Name of Mary","John Chrysostom","Exaltation of the Holy Cross","Our Lady of Sorrows",
+    "Cornelius & Cyprian","Robert Bellarmine","Joseph of Cupertino","Januarius","Andrew Kim Tae-gon",
+    "Matthew the Apostle","Maurice","Padre Pio","Our Lady of Ransom","Finbar",
+    "Cosmas & Damian","Vincent de Paul","Wenceslaus of Bohemia","Michael Gabriel Raphael","Jerome",
+    // October
+    "Thérèse of Lisieux","Guardian Angels","Thomas of Hereford","Francis of Assisi","Faustina Kowalska",
+    "Bruno of Cologne","Our Lady of the Rosary","Pelagia","Denis & Companions","Francis Borgia",
+    "John XXIII","Seraphin of Montegranaro","Edward the Confessor","Callixtus I","Teresa of Ávila",
+    "Hedwig & Margaret Mary","Ignatius of Antioch","Luke the Evangelist","Paul of the Cross","Cornelius",
+    "Hilarion","John Paul II","John of Capistrano","Anthony Mary Claret","Crispin & Crispinian",
+    "Evaristus","Frumentius","Simon & Jude","Ermelinda","Alphonsus Rodriguez",
+    "Wolfgang of Regensburg",
+    // November
+    "All Saints","All Souls","Martin de Porres","Charles Borromeo","Elizabeth & Zechariah",
+    "Leonard of Noblac","Willibrord","Elizabeth of the Trinity","Dedication of Lateran","Leo the Great",
+    "Martin of Tours","Josaphat","Frances Xavier Cabrini","Lawrence O'Toole","Albert the Great",
+    "Margaret of Scotland & Gertrude","Elizabeth of Hungary","Dedication of Peter & Paul","Mechtilde","Edmund the Martyr",
+    "Presentation of Mary","Cecilia","Clement I","Andrew Dung-Lac","Catherine of Alexandria",
+    "Leonard of Port Maurice","Virgil of Salzburg","Catherine Labouré","Saturninus","Andrew the Apostle",
+    // December
+    "Eligius","Bibiana","Francis Xavier","John Damascene","Sabas",
+    "Nicholas","Ambrose","Immaculate Conception","Peter Fourier","Our Lady of Loreto",
+    "Damasus I","Our Lady of Guadalupe","Lucy","John of the Cross","Valerian",
+    "Adelheid","Lazarus & Olympias","Gatianus","Anastasius I","Dominic of Silos",
+    "Peter Canisius","Chaeremon","John of Kanty","Sharbel Makhluf","Christmas Eve",
+    "Nativity of Christ","Stephen the First Martyr","John the Evangelist","Holy Innocents","Sabinus",
+    "Sylvester I"
+];
+
 const state = {
     months: fallbackMonths,
     weekdays: fallbackWeekdays,
@@ -78,6 +183,7 @@ const state = {
     isPlaying: false,
     speed: 3600,
     manualDate: null,
+    selectedDayIndex: null,
     lastTick: performance.now()
 };
 
@@ -97,7 +203,8 @@ const dom = {
     moonMarker: document.getElementById("moonMarker"),
     siderealStar: document.getElementById("siderealStar"),
     czechRing: document.getElementById("czechRing"),
-    calendarRing: document.getElementById("calendarRing"),
+    calDiscGroup: document.getElementById("calDiscGroup"),
+    calSaintToday: document.getElementById("calSaintToday"),
     calendarMonthName: document.getElementById("calendarMonthName"),
     calendarDayNumber: document.getElementById("calendarDayNumber"),
     calendarWeekday: document.getElementById("calendarWeekday"),
@@ -313,21 +420,228 @@ function buildDialLabels() {
     }
 }
 
-function buildCalendarRing() {
-    dom.calendarRing.innerHTML = "";
-    state.markers = state.monthDays.map((entry, index) => {
-        const marker = document.createElement("div");
-        const angle = (index / state.monthDays.length) * 360;
-        const radius = 188;
-        marker.className = "calendar-marker";
-        marker.textContent = entry.day;
-        marker.style.transform = `rotate(${angle}deg) translateY(-${radius}px) rotate(${-angle}deg)`;
-        marker.title = entry.title || `Calendar day ${entry.day}`;
-        dom.calendarRing.appendChild(marker);
-        return marker;
-    });
+function svgEl(tag) {
+    return document.createElementNS("http://www.w3.org/2000/svg", tag);
 }
 
+function sectorPath(cx, cy, innerR, outerR, startAngle, endAngle) {
+    const s1 = polarToCartesian(cx, cy, outerR, startAngle);
+    const e1 = polarToCartesian(cx, cy, outerR, endAngle);
+    const s2 = polarToCartesian(cx, cy, innerR, endAngle);
+    const e2 = polarToCartesian(cx, cy, innerR, startAngle);
+    const lf = (endAngle - startAngle) > 180 ? 1 : 0;
+    return [
+        `M ${s1.x.toFixed(1)} ${s1.y.toFixed(1)}`,
+        `A ${outerR} ${outerR} 0 ${lf} 1 ${e1.x.toFixed(1)} ${e1.y.toFixed(1)}`,
+        `L ${s2.x.toFixed(1)} ${s2.y.toFixed(1)}`,
+        `A ${innerR} ${innerR} 0 ${lf} 0 ${e2.x.toFixed(1)} ${e2.y.toFixed(1)}`,
+        "Z"
+    ].join(" ");
+}
+
+function buildCalendarDial() {
+    // Canvas-based 365-segment calendar disc for reliable rendering.
+    const canvas = document.getElementById('calendarCanvas');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+    // logical drawing size
+    const size = 600;
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    // set internal pixel buffer for crisp rendering on HiDPI
+    canvas.width = Math.round(size * dpr);
+    canvas.height = Math.round(size * dpr);
+    canvas.style.width = '100%';
+    canvas.style.height = 'auto';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cx = size / 2, cy = size / 2;
+    const outerR = 289, innerR = 116;
+
+    // Clear (logical coords)
+    ctx.clearRect(0, 0, size, size);
+
+    // Draw month sectors
+    monthDayStarts.forEach((start, mi) => {
+        const a1 = (start / 365) * Math.PI * 2 - Math.PI/2;
+        const a2 = ((start + monthDayLengths[mi]) / 365) * Math.PI * 2 - Math.PI/2;
+        ctx.beginPath();
+        ctx.moveTo(cx + innerR*Math.cos(a1), cy + innerR*Math.sin(a1));
+        ctx.arc(cx, cy, innerR, a1, a2, false);
+        ctx.lineTo(cx + outerR*Math.cos(a2), cy + outerR*Math.sin(a2));
+        ctx.arc(cx, cy, outerR, a2, a1, true);
+        ctx.closePath();
+        ctx.fillStyle = calMonthColors[mi];
+        ctx.globalAlpha = 0.98;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = 'rgba(212,168,60,0.7)';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+    });
+
+    // Draw day ticks
+    for (let i = 0; i < 365; i++) {
+        const angle = (i/365)*Math.PI*2 - Math.PI/2;
+        const isMonthBound = monthDayStarts.includes(i);
+        const r1 = isMonthBound ? 229 : 237;
+        const r2 = 265;
+        ctx.beginPath();
+        ctx.moveTo(cx + r1*Math.cos(angle), cy + r1*Math.sin(angle));
+        ctx.lineTo(cx + r2*Math.cos(angle), cy + r2*Math.sin(angle));
+        ctx.strokeStyle = isMonthBound ? 'rgba(255,209,109,0.95)' : 'rgba(212,161,69,0.85)';
+        ctx.lineWidth = isMonthBound ? 2.0 : 1.0;
+        ctx.stroke();
+    }
+
+    // Draw thin decorative rings
+    ctx.beginPath(); ctx.arc(cx,cy,outerR,0,Math.PI*2); ctx.strokeStyle='rgba(200,170,80,0.45)'; ctx.lineWidth=3; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,265,0,Math.PI*2); ctx.strokeStyle='rgba(120,90,40,0.25)'; ctx.lineWidth=1.2; ctx.stroke();
+
+    // Draw small month medallions and labels on overlay SVG via DOM for crisp text
+    const overlay = document.getElementById('calendarOverlay');
+    // remove previous month labels
+    const old = overlay.querySelectorAll('.cal-month-label, .cal-month-medal, .cal-zodiac-glyph');
+    old.forEach(n=>n.remove());
+    monthDayStarts.forEach((start, mi) => {
+        const mid = (start + monthDayLengths[mi]/2) / 365 * Math.PI*2 - Math.PI/2;
+        const rx = cx + 172*Math.cos(mid);
+        const ry = cy + 172*Math.sin(mid);
+        const medal = svgEl('circle');
+        medal.setAttribute('cx', rx.toFixed(1)); medal.setAttribute('cy', ry.toFixed(1)); medal.setAttribute('r', '17'); medal.setAttribute('class','cal-month-medal');
+        overlay.appendChild(medal);
+        const glyph = svgEl('text'); glyph.setAttribute('x', rx.toFixed(1)); glyph.setAttribute('y', (ry+6).toFixed(1)); glyph.setAttribute('class','cal-zodiac-glyph'); glyph.textContent = calZodiacGlyphs[mi]; overlay.appendChild(glyph);
+        const lab = svgEl('text'); lab.setAttribute('x', (cx + 205*Math.cos(mid)).toFixed(1)); lab.setAttribute('y', (cy + 205*Math.sin(mid)+4).toFixed(1)); lab.setAttribute('class','cal-month-label'); lab.textContent = calMonthAbbr[mi]; overlay.appendChild(lab);
+    });
+
+    // Build a single circular textPath containing all 365 names (dense ring)
+    // Ensure defs has a path for the names
+    const rNames = 275;
+    const pathD = `M ${cx} ${cy - rNames} A ${rNames} ${rNames} 0 1 1 ${cx - 0.001} ${cy - rNames}`;
+    let defsNode = overlay.querySelector('defs');
+    if (!defsNode) {
+        defsNode = svgEl('defs');
+        overlay.insertBefore(defsNode, overlay.firstChild);
+    }
+    let namesPath = defsNode.querySelector('#calNamesPath');
+    if (!namesPath) {
+        namesPath = svgEl('path');
+        namesPath.setAttribute('id', 'calNamesPath');
+        namesPath.setAttribute('d', pathD);
+        namesPath.setAttribute('fill', 'none');
+        defsNode.appendChild(namesPath);
+    } else {
+        namesPath.setAttribute('d', pathD);
+    }
+
+    // Group that will be rotated to scroll the ring
+    let namesRot = overlay.querySelector('#calNamesRot');
+    if (!namesRot) {
+        namesRot = svgEl('g');
+        namesRot.setAttribute('id', 'calNamesRot');
+        namesRot.setAttribute('transform', 'rotate(0 300 300)');
+        overlay.appendChild(namesRot);
+    }
+
+    // Single text element with textPath
+    let namesText = overlay.querySelector('#calNamesText');
+    const separator = ' · ';
+    const allNames = saintsCalendar.join(separator);
+    if (!namesText) {
+        namesText = svgEl('text');
+        namesText.setAttribute('id', 'calNamesText');
+        namesText.setAttribute('class', 'cal-names-text');
+        const tp = svgEl('textPath');
+        // support both older xlink:href and modern href
+        tp.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#calNamesPath');
+        tp.setAttribute('href', '#calNamesPath');
+        tp.setAttribute('startOffset', '0%');
+        tp.textContent = allNames;
+        namesText.appendChild(tp);
+        namesRot.appendChild(namesText);
+    } else {
+        const tp = namesText.querySelector('textPath');
+        if (tp) tp.textContent = allNames;
+    }
+
+    // ensure pointer group exists but hidden initially
+    const overlayEl = document.getElementById('calendarOverlay');
+    if (overlayEl) {
+        let pg = overlayEl.querySelector('#calSelectionPointer');
+        if (!pg) {
+            pg = svgEl('g'); pg.setAttribute('id','calSelectionPointer'); pg.setAttribute('class','cal-selection-pointer'); pg.setAttribute('style','display:none;');
+            const line = svgEl('line'); line.setAttribute('id','calSelectionLine'); line.setAttribute('x1','300'); line.setAttribute('y1','300');
+            const tip = svgEl('circle'); tip.setAttribute('id','calSelectionTip'); tip.setAttribute('r','7');
+            pg.appendChild(line); pg.appendChild(tip);
+            overlayEl.appendChild(pg);
+        }
+    }
+}
+
+function buildSaintsList() {
+    const container = document.getElementById('saintsList');
+    if (!container) return;
+    container.innerHTML = '';
+    for (let mi = 0; mi < 12; mi++) {
+        const monthEl = document.createElement('div');
+        monthEl.className = 'saints-month';
+        const heading = document.createElement('h3');
+        heading.textContent = (state.months && state.months[mi] && state.months[mi].name) || calMonthAbbr[mi];
+        monthEl.appendChild(heading);
+        const list = document.createElement('div');
+        list.className = 'saint-list-month';
+        const start = monthDayStarts[mi];
+        const len = monthDayLengths[mi];
+        for (let d = 0; d < len; d++) {
+            const idx = start + d;
+            const item = document.createElement('div');
+            item.className = 'saint-item';
+            item.dataset.index = String(idx);
+            const daySpan = document.createElement('span'); daySpan.className = 'day-num'; daySpan.textContent = String(d + 1).padStart(2, '0');
+            const nameSpan = document.createElement('span'); nameSpan.className = 'saint-name'; nameSpan.textContent = saintsCalendar[idx] || `Day ${idx + 1}`;
+            item.appendChild(daySpan); item.appendChild(nameSpan);
+            item.addEventListener('click', () => selectDay(idx));
+            list.appendChild(item);
+        }
+        monthEl.appendChild(list);
+        container.appendChild(monthEl);
+    }
+}
+
+function selectDay(index) {
+    state.selectedDayIndex = index;
+    // highlight list
+    const container = document.getElementById('saintsList');
+    if (container) {
+        const prev = container.querySelector('.saint-item.selected');
+        if (prev) prev.classList.remove('selected');
+        const el = container.querySelector(`.saint-item[data-index="${index}"]`);
+        if (el) { el.classList.add('selected'); el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }); }
+    }
+    // update pointer and set manual date
+    updateSelectionPointer(index);
+    const now = getPragueNow();
+    const year = now.getFullYear();
+    const dayOfYear = mapIndexToDayOfYear(index, year);
+    state.mode = 'manual';
+    state.isPlaying = false;
+    state.manualDate = dateFromDayOfYear(year, dayOfYear);
+    updateModeUi();
+    updateSimulation();
+}
+
+function updateSelectionPointer(index) {
+    const overlay = document.getElementById('calendarOverlay');
+    if (!overlay) return;
+    const pg = overlay.querySelector('#calSelectionPointer');
+    if (!pg) return;
+    if (index == null) { pg.style.display = 'none'; return; }
+    const angleDeg = (index % 365) * (360 / 365);
+    const pt = polarToCartesian(300, 300, 275, angleDeg);
+    const line = overlay.querySelector('#calSelectionLine');
+    const tip = overlay.querySelector('#calSelectionTip');
+    if (line) { line.setAttribute('x2', pt.x.toFixed(1)); line.setAttribute('y2', pt.y.toFixed(1)); }
+    if (tip) { tip.setAttribute('cx', pt.x.toFixed(1)); tip.setAttribute('cy', pt.y.toFixed(1)); }
+    pg.style.display = 'inline';
+}
 function describeZodiac(dayOfYear) {
     const adjusted = ((dayOfYear - 80) + 365) % 365;
     const index = Math.floor((adjusted / 365.25) * 12) % 12;
@@ -355,6 +669,144 @@ function getMoonPhase(dayOfYear, hourFraction) {
 function getDaylightHours(dayOfYear) {
     // Prague (~50°N): daylight varies from ~8h in winter to ~16h in summer
     return 12 + 4 * Math.sin(((dayOfYear - 80) / 365.25) * 2 * Math.PI);
+}
+
+function isLeapYear(year) {
+    return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+}
+
+// Map a calendar day-of-year (1..365 or 366) to a 0-based index into the 365-entry saintsCalendar.
+// On leap years the 29 Feb day is folded into Feb 28 so the disc remains 365 entries.
+function mapDayOfYearTo365Index(dayOfYear, year) {
+    if (isLeapYear(year) && dayOfYear > 59) {
+        // compress by removing the leap-day slot
+        return Math.max(0, Math.min(364, dayOfYear - 2));
+    }
+    return Math.max(0, Math.min(364, dayOfYear - 1));
+}
+
+function mapIndexToDayOfYear(index, year) {
+    // inverse of mapDayOfYearTo365Index
+    index = Math.max(0, Math.min(364, index));
+    if (isLeapYear(year)) {
+        // indices 0..58 map to days 1..59 (Jan 1..Feb 28)
+        if (index <= 58) return index + 1;
+        // indices 59..364 map to days 61..366 (skip Feb 29)
+        return index + 2;
+    }
+    return index + 1;
+}
+
+function dateFromDayOfYear(year, dayOfYear) {
+    // return a Date object at noon UTC for the given day-of-year
+    return new Date(Date.UTC(year, 0, dayOfYear - 1, 12, 0, 0));
+}
+
+function debounce(fn, wait = 120) {
+    let t;
+    return function(...args) {
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(this, args), wait);
+    };
+}
+
+function attachCalendarInteractions() {
+    if (attachCalendarInteractions._attached) return;
+    attachCalendarInteractions._attached = true;
+
+    const canvas = document.getElementById('calendarCanvas');
+    if (!canvas) return;
+
+    // create small tooltip element
+    let tooltip = document.getElementById('calendarTooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'calendarTooltip';
+        tooltip.style.display = 'none';
+        document.body.appendChild(tooltip);
+    }
+
+    const logicalSize = 600;
+    const innerR = 116;
+    const outerR = 289;
+    let namesRotation = 0;
+
+    function hideTooltip() {
+        tooltip.style.display = 'none';
+    }
+
+    function showTooltip(text, clientX, clientY) {
+        tooltip.textContent = text;
+        tooltip.style.left = clientX + 'px';
+        tooltip.style.top = (clientY - 12) + 'px';
+        tooltip.style.display = 'block';
+    }
+
+    function getDayIndexFromEvent(ev) {
+        const rect = canvas.getBoundingClientRect();
+        const px = (ev.clientX - rect.left) / rect.width * logicalSize;
+        const py = (ev.clientY - rect.top) / rect.height * logicalSize;
+        const dx = px - logicalSize / 2;
+        const dy = py - logicalSize / 2;
+        const r = Math.sqrt(dx * dx + dy * dy);
+        if (r < innerR - 6 || r > outerR + 6) return null;
+        let angle = Math.atan2(dy, dx); // -PI..PI, 0 is +X
+        let angleDeg = angle * 180 / Math.PI + 90; // convert so 0 is top
+        if (angleDeg < 0) angleDeg += 360;
+        const dayIndex = Math.floor(angleDeg / (360 / 365)) % 365;
+        return dayIndex;
+    }
+
+    function onPointerMove(ev) {
+        const di = getDayIndexFromEvent(ev);
+        if (di == null) return hideTooltip();
+        const name = saintsCalendar[di] || `Day ${di + 1}`;
+        showTooltip(name, ev.clientX, ev.clientY);
+    }
+
+    function onPointerLeave() { hideTooltip(); }
+
+    canvas.addEventListener('pointermove', onPointerMove);
+    canvas.addEventListener('pointerleave', onPointerLeave);
+
+    canvas.addEventListener('pointerdown', (ev) => {
+        const di = getDayIndexFromEvent(ev);
+        if (di == null) return;
+        selectDay(di);
+    });
+
+    // Wheel scroll rotates the names ring for scrolling through the dense text
+    canvas.addEventListener('wheel', (ev) => {
+        ev.preventDefault();
+        namesRotation = (namesRotation + ev.deltaY * 0.22) % 360;
+        const nr = document.getElementById('calNamesRot');
+        if (nr) nr.setAttribute('transform', `rotate(${namesRotation} 300 300)`);
+    }, { passive: false });
+
+    // handle resize -> rebuild dial for crispness
+    const onResize = debounce(() => {
+        buildCalendarDial();
+        updateSimulation();
+    }, 150);
+    window.addEventListener('resize', onResize);
+    // wire control buttons
+    const zoomBtn = document.getElementById('calZoomToggle');
+    const namesBtn = document.getElementById('calToggleNames');
+    const frame = document.getElementById('calendarFullWidthDial');
+    if (zoomBtn && frame) {
+        zoomBtn.addEventListener('click', () => {
+            frame.classList.toggle('zoomed');
+            // when zoomed, rebuild overlay to increase font sizes
+            buildCalendarDial();
+        });
+    }
+    if (namesBtn && frame) {
+        namesBtn.addEventListener('click', () => {
+            frame.classList.toggle('hide-names');
+            const nr = document.getElementById('calNamesRot');
+            if (nr) nr.style.display = frame.classList.contains('hide-names') ? 'none' : 'inline';
+        });
+    }
 }
 
 function getSunriseHour(dayOfYear) {
@@ -577,7 +1029,27 @@ function updateSimulation() {
     dom.calendarMonthName.textContent = currentMonth.name;
     dom.calendarDayNumber.textContent = String(snapshot.day);
     dom.calendarWeekday.textContent = currentWeekday.day;
-    dom.dayMnemonic.textContent = currentMonthDay.mnemonic || `Day ${snapshot.day}`;
+    const dayIndex = mapDayOfYearTo365Index(snapshot.dayOfYear, snapshot.year);
+    const saintToday = saintsCalendar[dayIndex] || `Day ${snapshot.dayOfYear}`;
+    dom.dayMnemonic.textContent = saintToday;
+    if (dom.calSaintToday) dom.calSaintToday.textContent = saintToday;
+    // ensure canvas overlay text updates
+    const overlay = document.getElementById('calendarOverlay');
+    if (overlay) {
+        const todayText = overlay.querySelector('#calSaintToday');
+        if (todayText) todayText.textContent = saintToday;
+    }
+    // update selection pointer (keeps pointer in sync across updates)
+    if (typeof updateSelectionPointer === 'function') {
+        if (state.selectedDayIndex != null) updateSelectionPointer(state.selectedDayIndex);
+        else {
+            const ov = document.getElementById('calendarOverlay');
+            if (ov) {
+                const pg = ov.querySelector('#calSelectionPointer');
+                if (pg) pg.style.display = 'none';
+            }
+        }
+    }
     dom.simulationNotes.textContent = `Zodiac: ${activeZodiac}. Old Czech hour: ${oldCzechHour} since sunset. Moon age: ${moonPhase.age.toFixed(1)} days.`;
 
     // Readout cards
@@ -594,10 +1066,11 @@ function updateSimulation() {
     updateImage(dom.dayImage, currentMonthDay.image, `Calendar day ${snapshot.day} illustration`);
     syncInputs(snapshot);
 
-    state.markers.forEach((marker, index) => {
-        marker.classList.toggle("is-active", index === snapshot.day - 1);
-        marker.classList.toggle("is-today-weekday", index === snapshot.day - 1);
-    });
+    // Rotate calendar disc so today lands at the top (angle 0)
+    if (dom.calDiscGroup) {
+        const calRot = -(dayIndex) * (360 / 365);
+        dom.calDiscGroup.setAttribute("transform", `rotate(${calRot.toFixed(2)} 300 300)`);
+    }
 }
 
 function tick(timestamp) {
@@ -697,7 +1170,9 @@ async function init() {
     state.speed = Number(dom.speedSelect.value);
     state.lastTick = performance.now();
 
-    buildCalendarRing();
+    buildCalendarDial();
+    buildSaintsList();
+    attachCalendarInteractions();
     wireControls();
     updateModeUi();
     updateSimulation();

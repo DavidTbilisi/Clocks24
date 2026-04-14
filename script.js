@@ -71,124 +71,29 @@ async function loadMonthDaysData() {
   }
 }
 
-// Carousel Component
-const ClockCarousel = {
-  props: {
-    clocks: {
-      type: Array,
-      required: true
-    }
-  },
-  setup(props) {
-    const currentIndex = ref(0);
-    const itemsPerPage = ref(5);
+// Note: thumbnail carousel removed. Main card will handle swipe navigation.
 
-    const updateItemsPerPage = () => {
-      if (window.innerWidth < 600) {
-        itemsPerPage.value = 1;
-      } else if (window.innerWidth < 1000) {
-        itemsPerPage.value = 3;
-      } else {
-        itemsPerPage.value = 5;
-      }
-    };
 
-    const totalPages = computed(() => {
-      return Math.ceil(props.clocks.length / itemsPerPage.value);
-    });
-
-    const visibleClocks = computed(() => {
-      const start = currentIndex.value * itemsPerPage.value;
-      return props.clocks.slice(start, start + itemsPerPage.value);
-    });
-
-    const nextSlide = () => {
-      currentIndex.value = (currentIndex.value + 1) % totalPages.value;
-    };
-
-    const prevSlide = () => {
-      currentIndex.value = currentIndex.value === 0 ? totalPages.value - 1 : currentIndex.value - 1;
-    };
-
-    const goToSlide = (index) => {
-      currentIndex.value = index;
-    };
-
-    const getHourLabel = (clock) => {
-      return clock.time; // Use the time directly from the clock data
-    };
-
-    onMounted(() => {
-      updateItemsPerPage();
-      window.addEventListener('resize', updateItemsPerPage);
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener('resize', updateItemsPerPage);
-    });
-
-    return {
-      currentIndex,
-      itemsPerPage,
-      totalPages,
-      visibleClocks,
-      nextSlide,
-      prevSlide,
-      goToSlide,
-      getHourLabel
-    };
-  },
-  template: `
-    <div class="carousel-container">
-      <div class="carousel-wrapper">
-        <button class="carousel-nav carousel-prev" @click="prevSlide" :disabled="totalPages <= 1">‹</button>
-        <div class="carousel-content">
-          <div class="carousel-track">
-            <div v-for="(clock, index) in visibleClocks" :key="index" class="carousel-item">
-              <a :href="clock.link" target="_blank" rel="noopener noreferrer">
-                <img :src="clock.src" :alt="clock.desc" />
-              </a>
-              <div class="carousel-desc">
-                {{ clock.desc }}
-                <br>
-                <span>(Shown at {{ getHourLabel(clock) }})</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-nav carousel-next" @click="nextSlide" :disabled="totalPages <= 1">›</button>
-      </div>
-      <div v-if="totalPages > 1" class="carousel-dots">
-        <button
-          v-for="page in totalPages"
-          :key="page"
-          class="carousel-dot"
-          :class="{ active: currentIndex === page - 1 }"
-          @click="goToSlide(page - 1)"
-        ></button>
-      </div>
-    </div>
-  `
-};
-
-// Main Clock Showcase Component
+// Main Clock Showcase Component (swipe-enabled)
 const ClockShowcase = {
-  components: {
-    ClockCarousel
-  },
   setup() {
     const currentTime = ref('');
-    const currentClock = ref({});
     const clocksData = ref([]);
     const isLoading = ref(true);
     const isDarkTheme = ref(false);
-    const showCarousel = ref(false);
+    const currentIndex = ref(0);
 
     // Sidebar data
     const monthsData = ref([]);
     const weekdaysData = ref([]);
     const monthDaysData = ref([]);
     const currentDate = ref(new Date());
+
+    // Pointer / swipe state
+    const pointerStartX = ref(null);
+    const pointerDeltaX = ref(0);
+    const isPointerDown = ref(false);
+    const dragging = ref(false);
 
     let interval = null;
 
@@ -198,7 +103,6 @@ const ClockShowcase = {
       if (savedTheme) {
         isDarkTheme.value = savedTheme === 'dark';
       } else {
-        // Default to system preference
         isDarkTheme.value = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       }
       applyTheme();
@@ -221,17 +125,10 @@ const ClockShowcase = {
       localStorage.setItem('theme', isDarkTheme.value ? 'dark' : 'light');
     };
 
-    const toggleCarousel = () => {
-      showCarousel.value = !showCarousel.value;
-      localStorage.setItem('showCarousel', showCarousel.value.toString());
-    };
-
-    const loadCarouselPreference = () => {
-      const savedPreference = localStorage.getItem('showCarousel');
-      if (savedPreference !== null) {
-        showCarousel.value = savedPreference === 'true';
-      }
-    };
+    // Derived current clock from index
+    const currentClock = computed(() => {
+      return clocksData.value.length > 0 ? (clocksData.value[currentIndex.value] || clocksData.value[0]) : {};
+    });
 
     const updateClock = () => {
       if (clocksData.value.length === 0) return;
@@ -241,13 +138,70 @@ const ClockShowcase = {
       const hour = now.getHours();
       const currentTimeString = hour.toString().padStart(2, '0') + ':00';
 
-      // Find the clock that matches the current hour
-      const clock = clocksData.value.find(clock => clock.time === currentTimeString);
-
-      if (clock) {
-        currentClock.value = clock;
+      // Find the index of the clock that matches the current hour
+      const index = clocksData.value.findIndex(clock => clock.time === currentTimeString);
+      if (index !== -1) {
+        currentIndex.value = index;
       }
+
       currentTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    };
+
+    const nextClock = () => {
+      if (clocksData.value.length === 0) return;
+      currentIndex.value = (currentIndex.value + 1) % clocksData.value.length;
+    };
+
+    const prevClock = () => {
+      if (clocksData.value.length === 0) return;
+      currentIndex.value = (currentIndex.value - 1 + clocksData.value.length) % clocksData.value.length;
+    };
+
+    // Pointer / swipe handlers
+    const onPointerDown = (e) => {
+      // Only handle primary pointer
+      if (e.pointerType && e.button && e.button !== 0) return;
+      isPointerDown.value = true;
+      dragging.value = true;
+      pointerStartX.value = e.clientX ?? (e.touches && e.touches[0] && e.touches[0].clientX) ?? null;
+      pointerDeltaX.value = 0;
+      if (e.pointerId && e.target && e.target.setPointerCapture) {
+        try { e.target.setPointerCapture(e.pointerId); } catch (err) { }
+      }
+    };
+
+    const onPointerMove = (e) => {
+      if (!isPointerDown.value) return;
+      const clientX = e.clientX ?? (e.touches && e.touches[0] && e.touches[0].clientX);
+      if (clientX == null) return;
+      pointerDeltaX.value = clientX - pointerStartX.value;
+    };
+
+    const onPointerUp = (e) => {
+      if (!isPointerDown.value) return;
+      isPointerDown.value = false;
+      dragging.value = false;
+      const threshold = 50; // px
+      if (pointerDeltaX.value > threshold) {
+        prevClock();
+      } else if (pointerDeltaX.value < -threshold) {
+        nextClock();
+      }
+      pointerDeltaX.value = 0;
+      if (e.pointerId && e.target && e.target.releasePointerCapture) {
+        try { e.target.releasePointerCapture(e.pointerId); } catch (err) { }
+      }
+    };
+
+    const onPointerCancel = () => {
+      isPointerDown.value = false;
+      dragging.value = false;
+      pointerDeltaX.value = 0;
+    };
+
+    const onKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') prevClock();
+      else if (e.key === 'ArrowRight') nextClock();
     };
 
     // Computed properties for sidebar data
@@ -286,6 +240,7 @@ const ClockShowcase = {
       monthDaysData.value = monthDays;
 
       if (clocksData.value.length > 0) {
+        // Initialize current index to the clock matching the current hour (if any)
         updateClock();
         // Refresh every minute to update time and date
         interval = setInterval(updateClock, 60 * 1000);
@@ -295,14 +250,15 @@ const ClockShowcase = {
 
     onMounted(() => {
       loadThemePreference();
-      loadCarouselPreference();
       initializeApp();
+      window.addEventListener('keydown', onKeyDown);
     });
 
     onUnmounted(() => {
       if (interval) {
         clearInterval(interval);
       }
+      window.removeEventListener('keydown', onKeyDown);
     });
 
     return {
@@ -311,12 +267,19 @@ const ClockShowcase = {
       clocksData,
       isLoading,
       isDarkTheme,
-      showCarousel,
+      currentIndex,
       currentMonth,
       currentWeekday,
       currentMonthDay,
       toggleTheme,
-      toggleCarousel
+      nextClock,
+      prevClock,
+      onPointerDown,
+      onPointerMove,
+      onPointerUp,
+      onPointerCancel,
+      pointerDeltaX,
+      dragging
     };
   },
   template: `
@@ -386,33 +349,27 @@ const ClockShowcase = {
           <h1>Error loading clocks data</h1>
           <p>Please check that clocks.json file is available.</p>
         </div>
-        <div v-else>
+        <div v-else
+             class="clock-card"
+             @pointerdown="onPointerDown"
+             @pointermove="onPointerMove"
+             @pointerup="onPointerUp"
+             @pointercancel="onPointerCancel"
+             @touchstart.passive="onPointerDown"
+             @touchmove.passive="onPointerMove"
+             @touchend.passive="onPointerUp"
+             :style="{ transform: dragging ? 'translateX(' + pointerDeltaX + 'px)' : 'translateX(0)', transition: dragging ? 'none' : 'transform 300ms ease' }"
+        >
           <h1>{{ currentTime }}</h1>
-          <img
-            :src="currentClock.src"
-            :alt="currentClock.desc"
-            class="clock-img"
-          />
+          <img :src="currentClock.src" :alt="currentClock.desc" class="clock-img" />
           <p class="clock-desc">
-            <a
-              v-if="currentClock.link"
-              :href="currentClock.link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a v-if="currentClock.link" :href="currentClock.link" target="_blank" rel="noopener noreferrer">
               {{ currentClock.desc }}
             </a>
             <span v-else>{{ currentClock.desc }}</span>
           </p>
           <p v-if="currentClock.mnemonic" class="clock-mnemonic">{{ currentClock.mnemonic }}</p>
           <p id="link-to-wiki">Every hour, a different clock from around the world is displayed.</p>
-          <button class="carousel-toggle" @click="toggleCarousel" :title="showCarousel ? 'Hide other clocks' : 'Show other clocks'">
-            <span v-if="showCarousel">🔼 Hide Other Clocks</span>
-            <span v-else>🔽 Show Other Clocks</span>
-          </button>
-          <div v-if="showCarousel" id="carousel-container">
-            <clock-carousel :clocks="clocksData" />
-          </div>
         </div>
       </div>
     </div>

@@ -238,38 +238,65 @@
                 </div>
             </article>
 
-            <article class="simulation-card calendar-card">
-                <div class="section-heading">
-                    <p class="eyebrow">Lower disc</p>
-                    <h2>Calendar days</h2>
-                </div>
-                <div class="calendar-disc" id="calendarDisc">
-                    <div class="calendar-ring" id="calendarRing"></div>
-                    <div class="calendar-center-card">
-                        <p class="calendar-month" id="calendarMonthName">Month</p>
-                        <p class="calendar-day-number" id="calendarDayNumber">--</p>
-                        <p class="calendar-weekday" id="calendarWeekday">Weekday</p>
-                    </div>
-                </div>
-                <div class="calendar-detail-grid">
-                    <article class="detail-card">
-                        <span class="detail-label">Month image</span>
-                        <img id="monthImage" class="detail-image" alt="Current month illustration">
-                    </article>
-                    <article class="detail-card">
-                        <span class="detail-label">Day image</span>
-                        <img id="dayImage" class="detail-image" alt="Current calendar day illustration">
-                    </article>
-                </div>
-                <article class="mnemonic-card">
-                    <p class="detail-label">Day mnemonic</p>
-                    <p id="dayMnemonic">Loading calendar mnemonic...</p>
-                </article>
-                <article class="mnemonic-card">
-                    <p class="detail-label">Simulation notes</p>
-                    <p id="simulationNotes">Loading simulation notes...</p>
-                </article>
-            </article>
+                        <article class="simulation-card calendar-card">
+                                <div class="calendar-dial-frame" id="calendarFullWidthDial" style="position:relative;">
+                                    <canvas id="calendarCanvas" width="600" height="600" style="width:100%;height:auto;display:block"></canvas>
+                                    <svg id="calendarOverlay" viewBox="0 0 600 600" role="img" aria-label="Calendar overlay" style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;">
+                                        <defs>
+                                            <linearGradient id="calMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#d8bc72"/>
+                                                <stop offset="50%" stop-color="#9b6f26"/>
+                                                <stop offset="100%" stop-color="#f4dd98"/>
+                                            </linearGradient>
+                                            <radialGradient id="calCenter" cx="50%" cy="42%" r="58%">
+                                                <stop offset="0%" stop-color="#243850"/>
+                                                <stop offset="100%" stop-color="#09131e"/>
+                                            </radialGradient>
+                                        </defs>
+                                        <!-- Fixed today pointer at 12 o'clock -->
+                                        <polygon points="300,6 293,22 307,22" class="cal-today-pointer"/>
+                                        <!-- Static centre overlay (does not rotate) -->
+                                        <circle cx="300" cy="300" r="114" fill="url(#calCenter)" stroke="url(#calMetal)" stroke-width="3"/>
+                                        <circle cx="300" cy="300" r="76" fill="rgba(0,0,0,0.35)" stroke="url(#calMetal)" stroke-width="1.5"/>
+                                        <text x="300" y="284" text-anchor="middle" class="cal-crest-symbol">✦</text>
+                                        <text x="300" y="300" text-anchor="middle" class="cal-crest-text">OLD TOWN</text>
+                                        <text x="300" y="313" text-anchor="middle" class="cal-crest-text">PRAGUE</text>
+                                        <text x="300" y="334" text-anchor="middle" id="calSaintToday" class="cal-saint-today">—</text>
+                                        <text x="300" y="358" text-anchor="middle" id="calendarMonthName" class="cal-center-month">---</text>
+                                        <text x="300" y="398" text-anchor="middle" id="calendarDayNumber" class="cal-center-day">--</text>
+                                        <text x="300" y="418" text-anchor="middle" id="calendarWeekday" class="cal-center-weekday">---</text>
+                                    </svg>
+                                </div>
+                                <div class="calendar-controls">
+                                    <button id="calZoomToggle" type="button">Zoom names</button>
+                                    <button id="calToggleNames" type="button">Toggle names</button>
+                                </div>
+                                <div class="calendar-content">
+                                    <div class="section-heading">
+                                        <p class="eyebrow">Lower disc — 1870 calendar dial</p>
+                                        <h2>365 Saint's Days</h2>
+                                    </div>
+                                    <div id="saintsList" class="saints-list" aria-label="Saints list"></div>
+                                    <div class="calendar-detail-grid">
+                                        <article class="detail-card">
+                                            <span class="detail-label">Month image</span>
+                                            <img id="monthImage" class="detail-image" alt="Current month illustration">
+                                        </article>
+                                        <article class="detail-card">
+                                            <span class="detail-label">Day image</span>
+                                            <img id="dayImage" class="detail-image" alt="Current calendar day illustration">
+                                        </article>
+                                    </div>
+                                    <article class="mnemonic-card">
+                                        <p class="detail-label">Today's saint</p>
+                                        <p id="dayMnemonic">Loading saint's day...</p>
+                                    </article>
+                                    <article class="mnemonic-card">
+                                        <p class="detail-label">Simulation notes</p>
+                                        <p id="simulationNotes">Loading simulation notes...</p>
+                                    </article>
+                                </div>
+                        </article>
         </section>
     </main>
 

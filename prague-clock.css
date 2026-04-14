@@ -269,6 +269,73 @@ body::before {
     padding: 28px;
 }
 
+/* Make the calendar card span the entire grid and remove its card padding so the dial can be edge-to-edge */
+.simulation-card.calendar-card {
+    grid-column: 1 / -1;
+    padding: 0;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.calendar-content {
+    padding: 28px;
+}
+
+/* Saints list styling */
+.saints-list {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    margin-bottom: 16px;
+}
+.saints-month {
+    min-width: 180px;
+    flex: 0 0 180px;
+}
+.saints-month h3 {
+    margin: 0 0 8px 0;
+    font-size: 0.95rem;
+    color: var(--accent-strong);
+    font-weight: 600;
+}
+.saint-list-month {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.saint-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 160ms ease, transform 120ms ease;
+}
+.saint-item:hover { transform: translateY(-2px); background: rgba(255,255,255,0.02); }
+.saint-item .day-num {
+    min-width: 32px;
+    font-weight: 700;
+    color: var(--accent-strong);
+}
+.saint-item .saint-name {
+    color: var(--text);
+    font-size: 0.88rem;
+}
+.saint-item.selected {
+    background: linear-gradient(180deg, rgba(255,209,109,0.08), rgba(255,209,109,0.04));
+    border-left: 4px solid var(--accent-strong);
+}
+
+/* Selection pointer on overlay */
+.cal-selection-pointer line { stroke: rgba(255,209,109,0.95); stroke-width: 2.6; stroke-linecap: round; }
+.cal-selection-pointer circle { stroke: rgba(0,0,0,0.25); stroke-width: 1; fill: rgba(255,209,109,0.95); }
+
 .dial-card {
     display: flex;
     flex-direction: column;
@@ -503,82 +570,168 @@ body::before {
 }
 
 .calendar-disc {
-    position: relative;
-    width: min(100%, 520px);
-    aspect-ratio: 1;
+.calendar-dial-frame {
+    width: 100%;
+    max-width: none;
     margin: 0 auto;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle, rgba(12, 30, 43, 0.92) 0 31%, rgba(11, 19, 28, 0.96) 31% 54%, rgba(154, 108, 35, 0.88) 54% 56%, rgba(55, 27, 9, 0.95) 56% 100%);
-    border: 1px solid rgba(255, 214, 132, 0.32);
-    box-shadow: inset 0 0 0 10px rgba(255, 214, 132, 0.08), inset 0 0 80px rgba(0, 0, 0, 0.36);
+    aspect-ratio: 1 / 1;
 }
 
-.calendar-ring {
-    position: absolute;
-    inset: 0;
-}
-
-.calendar-marker {
-    position: absolute;
+/* When the calendar card is the parent, allow the dial container to stretch viewport-wide */
+.simulation-card.calendar-card .calendar-dial-frame {
+    width: 100vw;
     left: 50%;
-    top: 50%;
-    width: 46px;
-    height: 46px;
-    margin: -23px 0 0 -23px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    border: 1px solid rgba(245, 234, 209, 0.1);
-    color: #f0e0b8;
-    background: rgba(255, 255, 255, 0.03);
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: transform 240ms ease, background-color 240ms ease, border-color 240ms ease, color 240ms ease;
+    transform: translateX(-50%);
+    position: relative;
+    margin: 0;
 }
 
-.calendar-marker.is-active {
-    color: #07121d;
-    background: var(--accent-strong);
-    border-color: rgba(255, 209, 109, 0.9);
-    box-shadow: 0 0 0 8px rgba(255, 209, 109, 0.16);
+/* Tooltip for calendar names */
+#calendarTooltip {
+    position: fixed;
+    z-index: 1900;
+    pointer-events: none;
+    padding: 6px 10px;
+    background: rgba(6, 10, 16, 0.92);
+    color: #ffdca8;
+    border-radius: 6px;
+    font-family: "Manrope", sans-serif;
+    font-size: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,209,109,0.08);
+    transform: translate(-50%, -120%);
+    white-space: nowrap;
+    display: none;
 }
 
-.calendar-marker.is-today-weekday {
-    border-color: var(--weekday-accent);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--weekday-accent) 25%, transparent);
+#calendarCanvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: transparent;
 }
 
-.calendar-center-card {
+#calendarOverlay {
     position: absolute;
-    inset: 50%;
-    width: 42%;
-    height: 42%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    text-align: center;
-    border-radius: 50%;
-    border: 1px solid var(--line-strong);
-    background:
-        radial-gradient(circle at top, rgba(36, 69, 100, 0.35), rgba(7, 17, 28, 0.92));
-    box-shadow: inset 0 0 26px rgba(255, 255, 255, 0.03);
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
 }
 
-.calendar-month,
-.calendar-weekday {
-    margin: 0;
-    color: var(--muted);
+.cal-outer-bg { fill: #100c06; }
+.cal-outer-ring { fill: none; stroke: url(#calMetal); stroke-width: 4; }
+.cal-day-ring-outer { fill: none; stroke: url(#calMetal); stroke-width: 1.5; }
+.cal-inner-ring { fill: none; stroke: url(#calMetal); stroke-width: 2; }
+
+.cal-today-sector {
+    fill: rgba(255, 209, 109, 0.18);
+    stroke: rgba(255, 209, 109, 0.55);
+    stroke-width: 0.8;
 }
 
-.calendar-day-number {
-    margin: 0;
+.cal-month-medal {
+    fill: rgba(0, 0, 0, 0.45);
+    stroke: url(#calMetal);
+    stroke-width: 1.2;
+}
+
+.cal-zodiac-glyph {
+    fill: rgba(248, 224, 168, 0.9);
+    font-family: serif;
+    font-size: 14px;
+    text-anchor: middle;
+}
+
+.cal-month-label {
+    fill: rgba(248, 220, 160, 0.88);
+    font-family: "Manrope", sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-anchor: middle;
+}
+
+.cal-day-tick {
+    stroke: rgba(212, 161, 69, 0.65);
+    stroke-width: 1;
+}
+
+.cal-month-tick {
+    stroke: rgba(255, 209, 109, 0.9);
+    stroke-width: 1.8;
+}
+
+.cal-saint-name {
+    fill: rgba(240, 218, 168, 0.72);
+    font-family: "Manrope", sans-serif;
+    font-size: 4.2px;
+    text-anchor: middle;
+}
+
+/* Dense names ring (very small) */
+.cal-names-text {
+    fill: rgba(250, 236, 200, 0.65);
+    font-family: "Manrope", sans-serif;
+    font-size: 7px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+/* Zoom control states */
+.calendar-dial-frame.zoomed .cal-names-text {
+    font-size: 13px;
+    fill: rgba(255, 244, 210, 0.95);
+}
+
+.cal-today-pointer { fill: #ffd463; }
+
+.cal-crest-symbol {
+    fill: rgba(255, 209, 109, 0.7);
+    font-family: serif;
+    font-size: 22px;
+    text-anchor: middle;
+}
+
+.cal-crest-text {
+    fill: rgba(200, 170, 110, 0.65);
+    font-family: "Manrope", sans-serif;
+    font-size: 7px;
+    letter-spacing: 0.22em;
+    text-anchor: middle;
+}
+
+.cal-saint-today {
+    fill: #ffd463;
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(3.4rem, 7vw, 5rem);
-    line-height: 0.9;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-anchor: middle;
+}
+
+.cal-center-month {
+    fill: var(--muted);
+    font-family: "Manrope", sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-anchor: middle;
+}
+
+.cal-center-day {
+    fill: #ffd16d;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px;
+    font-weight: 700;
+    text-anchor: middle;
+}
+
+.cal-center-weekday {
+    fill: var(--muted);
+    font-family: "Manrope", sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-anchor: middle;
 }
 
 .calendar-detail-grid {
