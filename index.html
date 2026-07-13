@@ -18,7 +18,10 @@
 
     <header class="stage-top">
       <span class="brand">Clocks24</span>
-      <a class="explain-link" href="explanation.html">How the calendar works →</a>
+      <div class="stage-links">
+        <a class="explain-link" href="archetypes.html">Archetype wheel →</a>
+        <a class="explain-link" href="explanation.html">How the calendar works →</a>
+      </div>
     </header>
 
     <div class="stage-main">
@@ -31,6 +34,10 @@
         <span class="stage-month" id="stageMonthName">—</span>
         <span class="stage-year" id="stageYear">—</span>
       </div>
+      <div class="stage-archetype" id="stageArchetype" title="—">
+        <span id="stageArchetypeName">—</span>
+        <span class="stage-coreidea" id="stageCoreIdea"></span>
+      </div>
     </div>
 
     <footer class="stage-bottom">
@@ -40,9 +47,18 @@
           <span class="stage-clockmnemonic" id="stageClockMnemonic"></span>
         </a>
       </div>
-      <div class="stage-daymnemonic">
-        <img id="stageDayImg" class="stage-daythumb" alt="" />
-        <span class="georgian" id="stageDayMnemonic">—</span>
+      <div class="stage-pills">
+        <div class="stage-pill">
+          <img id="stageWeekImg" class="stage-cardthumb" alt="" />
+          <span>
+            <span class="pill-label">Week <span id="stageWeekNum">—</span></span>
+            <span class="pill-value" id="stageWeekLabel">—</span>
+          </span>
+        </div>
+        <div class="stage-pill">
+          <img id="stageDayImg" class="stage-daythumb" alt="" />
+          <span class="pill-value georgian" id="stageDayMnemonic">—</span>
+        </div>
       </div>
     </footer>
   </main>

@@ -5,7 +5,14 @@
         "shortName": "Jan",
         "color": "#4f46e5",
         "emoji": "❄️🗓️",
-        "image": "images/months/1.jpg"
+        "image": "images/months/1.jpg",
+        "archetype": "Innocent",
+        "quadrant": "learning",
+        "coreIdea": "safety, hope, purity, simple goodness",
+        "mnemonicImage": "a child opening a clean white calendar",
+        "goal": "to be happy",
+        "flaw": "too trusting",
+        "skill": "open-minded"
     },
     {
         "month": 2,
@@ -13,7 +20,14 @@
         "shortName": "Feb",
         "color": "#dc2626",
         "emoji": "💖🌹",
-        "image": "images/months/2.jpg"
+        "image": "images/months/2.jpg",
+        "archetype": "Lover",
+        "quadrant": "belonging",
+        "coreIdea": "connection, beauty, affection, intimacy, belonging",
+        "mnemonicImage": "a warm heart glowing in winter",
+        "goal": "relationship",
+        "flaw": "pleasing all",
+        "skill": "friendship"
     },
     {
         "month": 3,
@@ -21,7 +35,14 @@
         "shortName": "Mar",
         "color": "#059669",
         "emoji": "🍀🌸",
-        "image": "images/months/3.jpg"
+        "image": "images/months/3.jpg",
+        "archetype": "Hero",
+        "quadrant": "risk",
+        "coreIdea": "courage, challenge, discipline, victory over obstacles",
+        "mnemonicImage": "a warrior marching into spring",
+        "goal": "to belong",
+        "flaw": "need to fight",
+        "skill": "courage"
     },
     {
         "month": 4,
@@ -29,7 +50,14 @@
         "shortName": "Apr",
         "color": "#7c3aed",
         "emoji": "🌷🌦️",
-        "image": "images/months/4.jpg"
+        "image": "images/months/4.jpg",
+        "archetype": "Caregiver",
+        "quadrant": "stability",
+        "coreIdea": "protection, support, healing, service",
+        "mnemonicImage": "someone holding an umbrella over another person",
+        "goal": "to help others",
+        "flaw": "martyrdom",
+        "skill": "compassion"
     },
     {
         "month": 5,
@@ -37,7 +65,14 @@
         "shortName": "May",
         "color": "#65a30d",
         "emoji": "🌺💐",
-        "image": "images/months/5.jpg"
+        "image": "images/months/5.jpg",
+        "archetype": "Explorer",
+        "quadrant": "learning",
+        "coreIdea": "freedom, discovery, independence, new horizons",
+        "mnemonicImage": "a traveler walking into green fields",
+        "goal": "a full life",
+        "flaw": "wandering",
+        "skill": "autonomy"
     },
     {
         "month": 6,
@@ -45,7 +80,14 @@
         "shortName": "Jun",
         "color": "#ea580c",
         "emoji": "☀️🏖️",
-        "image": "images/months/6.jpg"
+        "image": "images/months/6.jpg",
+        "archetype": "Creator",
+        "quadrant": "stability",
+        "coreIdea": "building, imagination, design, bringing things into reality",
+        "mnemonicImage": "an artist painting sunlight",
+        "goal": "realize a vision",
+        "flaw": "perfectionist",
+        "skill": "imagination"
     },
     {
         "month": 7,
@@ -53,7 +95,14 @@
         "shortName": "Jul",
         "color": "#dc2626",
         "emoji": "🎆🔥",
-        "image": "images/months/7.jpg"
+        "image": "images/months/7.jpg",
+        "archetype": "Ruler",
+        "quadrant": "stability",
+        "coreIdea": "order, leadership, responsibility, control",
+        "mnemonicImage": "a king or queen arranging a kingdom map",
+        "goal": "prosperity",
+        "flaw": "authoritarian",
+        "skill": "leadership"
     },
     {
         "month": 8,
@@ -61,7 +110,14 @@
         "shortName": "Aug",
         "color": "#d97706",
         "emoji": "🌻🏄",
-        "image": "images/months/8.jpg"
+        "image": "images/months/8.jpg",
+        "archetype": "Magician",
+        "quadrant": "risk",
+        "coreIdea": "transformation through insight, vision, hidden patterns",
+        "mnemonicImage": "a figure turning fire into stars",
+        "goal": "transforming",
+        "flaw": "egotistical",
+        "skill": "win-win"
     },
     {
         "month": 9,
@@ -69,7 +125,14 @@
         "shortName": "Sep",
         "color": "#b45309",
         "emoji": "🍂📚",
-        "image": "images/months/9.jpg"
+        "image": "images/months/9.jpg",
+        "archetype": "Sage",
+        "quadrant": "learning",
+        "coreIdea": "truth, knowledge, understanding, wisdom",
+        "mnemonicImage": "a scholar opening a heavy book",
+        "goal": "wisdom",
+        "flaw": "no action",
+        "skill": "intelligence"
     },
     {
         "month": 10,
@@ -77,7 +140,14 @@
         "shortName": "Oct",
         "color": "#ea580c",
         "emoji": "🎃🍁",
-        "image": "images/months/10.jpg"
+        "image": "images/months/10.jpg",
+        "archetype": "Everyman",
+        "quadrant": "belonging",
+        "coreIdea": "belonging, realism, humility, common human connection",
+        "mnemonicImage": "a friendly neighbor sharing bread",
+        "goal": "to belong",
+        "flaw": "cynical",
+        "skill": "open, realist"
     },
     {
         "month": 11,
@@ -85,7 +155,14 @@
         "shortName": "Nov",
         "color": "#92400e",
         "emoji": "🦃🍽️",
-        "image": "images/months/11.jpg"
+        "image": "images/months/11.jpg",
+        "archetype": "Jester",
+        "quadrant": "belonging",
+        "coreIdea": "joy, play, humor, disruption, lightness",
+        "mnemonicImage": "a fool juggling autumn leaves",
+        "goal": "lighten up",
+        "flaw": "wasting time",
+        "skill": "humor"
     },
     {
         "month": 12,
@@ -93,6 +170,13 @@
         "shortName": "Dec",
         "color": "#166534",
         "emoji": "🎄❄️",
-        "image": "images/months/12.jpg"
+        "image": "images/months/12.jpg",
+        "archetype": "Outlaw",
+        "quadrant": "risk",
+        "coreIdea": "rebellion, disruption, forced change, breaking stale rules",
+        "mnemonicImage": "a cloaked rebel cutting chains before the new year",
+        "goal": "change norms",
+        "flaw": "crime",
+        "skill": "wild freedom"
     }
 ]

@@ -1,6 +1,6 @@
 # Clocks24
 
-A two-page static site: a live kiosk display of the current time paired with a historic clock, and an interactive simulator that teaches Conway's Doomsday algorithm.
+A three-page static site: a live kiosk display of the current time paired with a historic clock, an interactive simulator that teaches Conway's Doomsday algorithm, and a clickable wheel of the 12 monthly brand archetypes connected to a deck-of-cards mnemonic for the week of the year.
 
 ## Pages
 
@@ -19,6 +19,10 @@ An interactive teacher for Conway's Doomsday algorithm: given any month and year
 - **BRIDGE**: cross-domain analogies for the same underlying mechanism (Antikythera gears, casting out nines, the cyclic group ℤ₇) — plus one intentionally-blank slot for you to fill in your own.
 - Light/dark theme follows the system `prefers-color-scheme` automatically.
 
+### `archetypes.html` — the Archetype Wheel
+
+A 12-segment SVG wheel — the classic 4-quadrant brand-archetype model (Stability/Control, Learning/Freedom, Risk/Achievement, Belonging) — where each segment is one month. Click a segment to see that month's archetype, its goal/flaw/skill and mnemonic image, and the actual playing cards its ISO weeks draw this year.
+
 ## Technology
 
 Pure vanilla JavaScript and hand-written CSS — no framework, no build step. Each page is a self-contained HTML/CSS/JS triplet.
@@ -29,17 +33,19 @@ Serve the repo root statically:
 
 ```bash
 python3 -m http.server 8080
-# then open http://localhost:8080/index.html (kiosk) or /explanation.html (simulator)
+# then open http://localhost:8080/index.html (kiosk), /explanation.html (simulator), or /archetypes.html (wheel)
 ```
 
-Both pages `fetch()` JSON data files (`clocks.json`, `weekdays.json`, `monthDays.json`, `months.json`), so open them via a local server rather than `file://`.
+All three pages `fetch()` JSON data files (`clocks.json`, `weekdays.json`, `monthDays.json`, `months.json`, `weekCards.json`), so open them via a local server rather than `file://`.
 
 ## File Structure
 
 ```
-index.html / index.js / index.css                   - kiosk presentation page
-explanation.html / explanation.js / explanation.css  - Doomsday algorithm simulator
-clocks.json, weekdays.json, monthDays.json, months.json - shared data (24 historic clocks, weekday/month names+colors, day-of-month mnemonics)
+index.html / index.js / index.css                     - kiosk presentation page
+explanation.html / explanation.js / explanation.css    - Doomsday algorithm simulator
+archetypes.html / archetypes.js / archetypes.css       - the Archetype Wheel
+clocks.json, weekdays.json, monthDays.json, months.json - shared data (24 historic clocks, weekday/month names+colors+archetypes, day-of-month mnemonics)
+weekCards.json, images/cards/                          - ISO week 1-52 -> playing card mnemonic (52 vendored card images)
 ```
 
 ## Development

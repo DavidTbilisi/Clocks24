@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archetype Wheel — Clocks24</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="archetypes.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow"><a class="back-link" href="index.html">‹ Clocks24</a> · Twelve months, twelve archetypes</p>
+      <h1>The Archetype Wheel</h1>
+      <p class="lede">Each month carries one of the twelve brand archetypes. Pick a wedge to see its goal, flaw, and skill — and which playing cards its weeks draw this year.</p>
+      <div class="ornament" aria-hidden="true"><span></span><i></i><span></span></div>
+    </header>
+
+    <div class="wheel-layout">
+      <div class="wheel-card">
+        <svg id="wheelSvg" class="wheel-svg" viewBox="0 0 500 500" role="group" aria-label="Twelve month archetypes, arranged as a wheel">
+          <circle class="wheel-center-bg" cx="250" cy="250" r="112"></circle>
+          <text class="wheel-center-label" x="250" y="243">MOTIVATION</text>
+          <text class="wheel-center-sub" id="wheelCenterSub" x="250" y="264">select a wedge</text>
+        </svg>
+        <div class="wheel-legend">
+          <span class="legend-item q-stability"><i></i>Stability · Control</span>
+          <span class="legend-item q-learning"><i></i>Learning · Freedom</span>
+          <span class="legend-item q-risk"><i></i>Risk · Achievement</span>
+          <span class="legend-item q-belonging"><i></i>Belonging</span>
+        </div>
+      </div>
+
+      <div class="archetype-detail" id="archetypeDetail">
+        <div class="detail-quadrant" id="detailQuadrant">—</div>
+        <h2 id="detailArchetype">—</h2>
+        <p class="detail-month" id="detailMonth">—</p>
+        <p class="detail-coreidea" id="detailCoreIdea">—</p>
+        <dl class="detail-gfs">
+          <div><dt>Goal</dt><dd id="detailGoal">—</dd></div>
+          <div><dt>Flaw</dt><dd id="detailFlaw">—</dd></div>
+          <div><dt>Skill</dt><dd id="detailSkill">—</dd></div>
+        </dl>
+        <p class="detail-mnemonic" id="detailMnemonic">—</p>
+        <div class="detail-cards">
+          <div class="detail-cards-label">This month's weeks, in cards</div>
+          <div class="detail-cards-row" id="detailCardsRow"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="archetypes.js"></script>
+</body>
+
+</html>
