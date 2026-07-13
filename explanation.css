@@ -161,9 +161,13 @@ header .lede { margin: 0; max-width: 56ch; color: var(--muted); font-size: 15.5p
   border-right: 1px solid var(--line); }
 .rail .mo:last-child { border-right: none; }
 .rail .mo.on { color: var(--pick); }
-.rail .tab { position: absolute; top: -15px; height: 30px; width: calc(100%/12 - 6px);
+/* height 45 (not 30) so the raised tab fully covers the rail's own month label as it
+   rises 15px above — a 30px tab only overlaps the top half, leaving the rail label
+   poking out below (a doubled "Jul"). line-height 41 = 45 − 2·2px border, to keep the
+   label vertically centred. */
+.rail .tab { position: absolute; top: -15px; height: 45px; width: calc(100%/12 - 6px);
   transform: translateX(-50%); left: calc(100%/24); border-radius: 8px; background: var(--panel);
-  border: 2px solid var(--pick); color: var(--pick); font: 700 11px/26px ui-monospace, monospace; text-align: center;
+  border: 2px solid var(--pick); color: var(--pick); font: 700 11px/41px ui-monospace, monospace; text-align: center;
   transition: left .42s cubic-bezier(.2,.8,.2,1); box-shadow: 0 4px 10px -4px rgba(42,32,21,.4); }
 
 .track { position: relative; }
