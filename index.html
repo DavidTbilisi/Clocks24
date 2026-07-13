@@ -4,16 +4,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hourly Clock Showcase</title>
+  <title>Clocks24</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Noto+Sans+Georgian:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
 <body>
-  <div id="app">
-    <clock-showcase></clock-showcase>
-  </div>
-  <script src="script.js"></script>
+  <main class="stage">
+    <img class="stage-bg" id="stageBg" alt="" />
+    <div class="stage-scrim" aria-hidden="true"></div>
+
+    <header class="stage-top">
+      <span class="brand">Clocks24</span>
+      <a class="explain-link" href="explanation.html">How the calendar works →</a>
+    </header>
+
+    <div class="stage-main">
+      <div class="stage-time" id="stageTime">--:--<span class="secs" id="stageSecs">:--</span></div>
+      <div class="stage-date">
+        <span class="stage-weekday" id="stageWeekdayEn">—</span>
+        <span class="stage-weekday georgian" id="stageWeekdayKa">—</span>
+        <span class="stage-sep">·</span>
+        <span class="stage-daynum" id="stageDayNum">—</span>
+        <span class="stage-month" id="stageMonthName">—</span>
+        <span class="stage-year" id="stageYear">—</span>
+      </div>
+    </div>
+
+    <footer class="stage-bottom">
+      <div class="stage-clockinfo">
+        <a id="stageClockLink" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="stage-clockname" id="stageClockName">—</span>
+          <span class="stage-clockmnemonic" id="stageClockMnemonic"></span>
+        </a>
+      </div>
+      <div class="stage-daymnemonic">
+        <img id="stageDayImg" class="stage-daythumb" alt="" />
+        <span class="georgian" id="stageDayMnemonic">—</span>
+      </div>
+    </footer>
+  </main>
+  <script src="index.js"></script>
 </body>
 
 </html>

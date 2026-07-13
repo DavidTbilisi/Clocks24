@@ -1,783 +1,104 @@
-/* ===== RESET ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Inter", "Segoe UI", sans-serif;
+/* ===== PALETTE — cinematic display: a screen meant to be read across a room ===== */
+:root {
+  color-scheme: dark;
+
+  --bg:     #14100b;
+  --panel:  rgba(36,28,20,.55);
+  --line:   rgba(255,255,255,.16);
+  --text:   #f4ecdc;
+  --muted:  #cabfa4;
+  --accent: #d99a4e;
+  --pick:   #5fb8ae;
+  --wood:   #d9a561;
+
+  --wd-0: #e08b78; --wd-1: #dba05c; --wd-2: #c9b95a; --wd-3: #8fb892;
+  --wd-4: #8bb0dd; --wd-5: #a09fd6; --wd-6: #c39fce;
+
+  --mo-0: #a09fd6; --mo-1: #dd8ba0; --mo-2: #8fb892; --mo-3: #c39fce;
+  --mo-4: #b8c46e; --mo-5: #dba05c; --mo-6: #e08b78; --mo-7: #d9bd5e;
+  --mo-8: #d9a561; --mo-9: #de9a5c; --mo-10:#b58f6a; --mo-11:#6fae82;
 }
 
+* { box-sizing: border-box; }
+html, body { min-height: 100%; margin: 0; }
 body {
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: #e2e8f0;
-    min-height: 100vh;
-    overflow-x: hidden;
+  background: var(--bg); color: var(--text);
+  font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
 }
 
-/* ===== LAYOUT ===== */
-.app-container {
-    display: flex;
-    min-height: 100vh;
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar {
-    width: 280px;
-    padding: 20px;
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.stage { position: relative; min-height: 100vh; width: 100%; display: flex; flex-direction: column; }
+.stage-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: opacity .8s ease; opacity: 0;
+}
+.stage-bg.loaded { opacity: 1; }
+.stage-scrim {
+  position: absolute; inset: 0;
+  /* radial hot-spot behind the big clock text, on top of a top/bottom vignette that never drops too light in
+     the middle — the text has to stay legible over 24 different, unpredictable background photos, not just one */
+  background:
+    radial-gradient(ellipse 62% 46% at 50% 52%, rgba(6,5,3,.58) 0%, rgba(6,5,3,.2) 60%, transparent 100%),
+    linear-gradient(180deg, rgba(10,8,5,.82) 0%, rgba(10,8,5,.42) 26%, rgba(10,8,5,.46) 60%, rgba(10,8,5,.94) 100%);
 }
 
-/* SECTION */
-.sidebar-section {
-    display: flex;
-    flex-direction: column;
+.stage-top, .stage-main, .stage-bottom { position: relative; z-index: 1; }
+
+.stage-top { display: flex; justify-content: space-between; align-items: center; padding: 28px 40px; gap: 16px; flex-wrap: wrap; }
+.brand { font: 700 13px/1 ui-monospace, monospace; letter-spacing: .22em; text-transform: uppercase; color: var(--wood); text-shadow: 0 1px 3px rgba(0,0,0,.9); }
+.explain-link {
+  color: var(--text); text-decoration: none; font: 14px/1 -apple-system, sans-serif;
+  border: 1px solid var(--line); padding: 10px 16px; border-radius: 999px;
+  backdrop-filter: blur(6px); background: var(--panel);
 }
+.explain-link:hover { border-color: var(--pick); color: var(--pick); }
+.explain-link:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
 
-/* CARD */
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 14px;
-    border-radius: 16px;
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.6));
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    transition: 0.3s ease;
+.stage-main {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: 16px; padding: 40px 20px;
 }
-
-.sidebar-item:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+.stage-time {
+  font: 700 clamp(64px, 14vw, 168px)/1 ui-monospace, monospace; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 4px rgba(0,0,0,.9), 0 8px 28px rgba(0,0,0,.7), 0 22px 60px rgba(0,0,0,.5);
 }
-
-/* IMAGE */
-.sidebar-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+.stage-time .secs { font-size: .4em; color: var(--muted); }
+.stage-date {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 10px 14px;
+  font: 600 clamp(16px,2.4vw,26px)/1 "Fraunces", Georgia, serif;
+  text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 4px 18px rgba(0,0,0,.6);
 }
+.stage-sep, .stage-year { color: var(--muted); }
+.georgian { font-family: "Noto Sans Georgian", "Fraunces", sans-serif; }
 
-/* TEXT */
-.sidebar-content {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+.stage-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 20px;
+  padding: 28px 40px 40px; flex-wrap: wrap;
 }
+.stage-clockinfo a { color: inherit; text-decoration: none; display: block; }
+.stage-clockname { display: block; font: 600 clamp(18px,2.6vw,28px)/1.25 "Fraunces", Georgia, serif; text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 4px 16px rgba(0,0,0,.6); }
+.stage-clockinfo a:hover .stage-clockname { color: var(--accent); }
+.stage-clockmnemonic { display: block; margin-top: 4px; font: 13px ui-monospace, monospace; color: var(--muted); text-shadow: 0 1px 3px rgba(0,0,0,.9); }
 
-.sidebar-label {
-    font-size: 12px;
-    color: #94a3b8;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.stage-daymnemonic {
+  display: flex; align-items: center; gap: 10px; max-width: 360px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  padding: 10px 14px; backdrop-filter: blur(6px);
 }
-
-.sidebar-value {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.weekday-name {
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.day-number {
-    font-size: 26px;
-    font-weight: 800;
-}
-
-.sidebar-mnemonic {
-    font-size: 13px;
-    color: #cbd5f5;
-    opacity: 0.8;
-}
-
-.sidebar-emoji {
-    font-size: 20px;
-    margin-top: 4px;
-}
-
-/* ===== MAIN CONTENT ===== */
-#clock-display {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: clamp(10px, 3vw, 40px);
-}
-
-/* CLOCK CARD */
-#clock-display>div {
-    width: min(100%, 760px);
-    text-align: center;
-    padding: clamp(1rem, 4vw, 2.5rem);
-    border-radius: 24px;
-
-    background: rgba(30, 41, 59, 0.6);
-    backdrop-filter: blur(30px);
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-
-    /* layout as grid so meta can sit top/left/right of the image */
-    display: grid;
-    grid-template-columns: minmax(80px, 160px) 1fr minmax(80px, 160px);
-    grid-template-rows: auto auto 1fr auto;
-    grid-template-areas:
-        "meta-top meta-top meta-top"
-        "time time time"
-        "meta-left image meta-right"
-        ". desc .";
-    gap: 14px;
-    align-items: start;
-}
-
-/* TIME */
-h1 {
-    font-size: clamp(2.25rem, 6.5vw, 4.25rem);
-    font-weight: 800;
-    background: linear-gradient(90deg, #f472b6, #60a5fa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-    grid-area: time;
-    justify-self: center;
-}
-
-/* IMAGE */
-.clock-img {
-    display: block;
-    width: 100%;
-    max-width: min(520px, 90vw);
-    /* never exceed viewport width (smaller cap) */
-    height: auto;
-    max-height: 55vh;
-    /* never exceed viewport height (reduced) */
-    object-fit: contain;
-    /* preserve aspect ratio while fitting */
-    border-radius: 16px;
-    margin-bottom: 12px;
-    transition: 0.3s ease;
-}
-
-.clock-img:hover {
-    transform: scale(1.03);
-}
-
-/* Image wrapper and overlay meta styles */
-.image-wrap {
-    position: relative;
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: 100%;
-    max-width: min(520px, 100%);
-    margin: 0 auto;
-    display: block;
-}
-
-.image-wrap .clock-img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 55vh;
-    object-fit: cover;
-    border-radius: 14px;
-}
-
-.image-wrap .meta-item.overlay {
-    position: absolute;
-    pointer-events: auto;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-    border-radius: 12px;
-    padding: 8px 10px;
-    box-shadow: 0 10px 28px rgba(2, 6, 23, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(8px);
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    min-width: 0;
-    transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.image-wrap .meta-top.overlay {
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.image-wrap .meta-left.overlay {
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    flex-direction: column;
-    align-items: center;
-}
-
-.image-wrap .meta-right.overlay {
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    flex-direction: column;
-    align-items: center;
-}
-
-.image-wrap .meta-left .meta-image,
-.image-wrap .meta-right .meta-image {
-    width: 40px;
-    height: 40px;
-}
-
-.image-wrap .meta-top .meta-image {
-    width: 36px;
-    height: 36px;
-}
-
-.image-wrap .meta-top:hover,
-.image-wrap .meta-left:hover,
-.image-wrap .meta-right:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.6);
-}
-
-/* Hide side overlays on small screens to reduce clutter, keep top pill */
-@media (max-width: 700px) {
-
-    .image-wrap .meta-left.overlay,
-    .image-wrap .meta-right.overlay {
-        display: none;
-    }
-
-    .image-wrap .meta-top.overlay {
-        padding: 8px 12px;
-        top: 10px;
-    }
-}
-
-/* On very wide screens make overlays slightly larger and more separated */
-@media (min-width: 1200px) {
-    .image-wrap .meta-item.overlay {
-        padding: 10px 14px;
-    }
-
-    .image-wrap .meta-left.overlay,
-    .image-wrap .meta-right.overlay {
-        left: 18px;
-        right: 18px;
-    }
-}
-
-/* Centered clock overlay on image and bottom glassy meta bar */
-.image-wrap .clock-overlay-time {
-    position: absolute;
-    z-index: 30;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: clamp(2rem, 6.5vw, 3.5rem);
-    font-weight: 800;
-    color: #ffffff;
-    -webkit-text-fill-color: #ffffff;
-    -webkit-background-clip: border-box;
-    background-clip: border-box;
-    padding: 8px 14px;
-    border-radius: 12px;
-    text-align: center;
-    text-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.28));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(6px);
-}
-
-.image-wrap .meta-bottom {
-    position: absolute;
-    left: 50%;
-    bottom: 14px;
-    transform: translateX(-50%);
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 28;
-    padding: 8px;
-    width: calc(100% - 24px);
-    max-width: 460px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 12px 32px rgba(2, 6, 23, 0.6);
-    backdrop-filter: blur(10px);
-}
-
-.meta-bottom-item {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    flex: 1 1 0;
-    padding: 6px 10px;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.18);
-}
-
-.meta-bottom-item .meta-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.meta-bottom-item .meta-label {
-    font-size: 10px;
-    color: #cbd5f5;
-}
-
-.meta-bottom-item .meta-value {
-    font-size: clamp(0.75rem, 2.3vw, 0.95rem);
-    font-weight: 700;
-    color: #fff;
-}
-
-.meta-bottom .meta-image {
-    width: clamp(22px, 6.2vw, 36px);
-    height: clamp(22px, 6.2vw, 36px);
-}
-
-.meta-bottom .weekday-name {
-    font-size: clamp(0.85rem, 3.2vw, 1.05rem);
-}
-
-.meta-bottom .day-number {
-    font-size: clamp(0.95rem, 3.8vw, 1.2rem);
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
-}
-
-@media (max-width: 480px) {
-    .image-wrap .clock-overlay-time {
-        font-size: clamp(1.5rem, 8vw, 2rem);
-        padding: 6px 10px;
-    }
-
-    .image-wrap .meta-bottom {
-        gap: 6px;
-        padding: 6px;
-        bottom: 8px;
-        width: calc(100% - 12px);
-        max-width: none;
-    }
-
-    .meta-bottom-item {
-        gap: 6px;
-        padding: 4px 6px;
-    }
-
-    .meta-bottom-item .meta-label {
-        font-size: 9px;
-    }
-}
-
-.meta-item {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    min-width: 0;
-    width: 100%;
-    padding: 10px 12px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-    border-radius: 12px;
-    box-shadow: 0 8px 22px rgba(2, 6, 23, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(6px);
-    transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.meta-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.55);
-}
-
-.meta-image {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.06);
-    flex-shrink: 0;
-}
-
-.meta-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-    overflow: hidden;
-}
-
-.meta-label {
-    font-size: 11px;
-    color: #94a3b8;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-}
-
-.meta-value {
-    font-size: 15px;
-    font-weight: 700;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.meta-emoji {
-    font-size: 18px;
-}
-
-.meta-mnemonic {
-    font-size: 12px;
-    color: #cbd5f5;
-    opacity: 0.9;
-}
-
-.day-number {
-    font-size: 18px;
-    font-weight: 800;
-    background: rgba(255, 255, 255, 0.02);
-    padding: 6px 10px;
-    border-radius: 8px;
-}
-
-/* On wider screens show meta items in a row */
-@media (min-width: 700px) {
-
-    /* switch to grid placement on wide screens */
-    .meta-top {
-        grid-area: meta-top;
-        justify-self: center;
-    }
-
-    .meta-left {
-        grid-area: meta-left;
-        justify-self: end;
-    }
-
-    .meta-right {
-        grid-area: meta-right;
-        justify-self: start;
-    }
-
-    .clock-img {
-        grid-area: image;
-        justify-self: center;
-        align-self: center;
-    }
-
-    .clock-card .clock-desc,
-    .clock-card .clock-mnemonic,
-    .clock-card #link-to-wiki {
-        grid-column: 1 / -1;
-        grid-row: 4;
-    }
-
-    .meta-item {
-        width: auto;
-    }
-
-    .meta-top {
-        width: 100%;
-    }
-
-    .meta-left,
-    .meta-right {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 8px 10px;
-        min-width: 100px;
-    }
-}
-
-/* For medium and small screens we'll keep stacked layout using the mobile media query below */
-
-/* TEXT */
-.clock-desc a {
-    color: #93c5fd;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.clock-desc a:hover {
-    text-decoration: underline;
-}
-
-.clock-mnemonic {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #cbd5f5;
-}
-
-/* BUTTON */
-.carousel-toggle {
-    margin-top: 20px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-
-    background: linear-gradient(135deg, #7c3aed, #0ea5e9);
-    color: white;
-    font-weight: 600;
-
-    transition: 0.3s ease;
-}
-
-.carousel-toggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
-}
-
-/* ===== SMALL DETAILS ===== */
-#link-to-wiki {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #94a3b8;
-}
-
-
-/* ===== MOBILE FIRST ===== */
-@media (max-width: 768px) {
-
-    body {
-        overflow: auto;
-    }
-
-    .app-container {
-        flex-direction: column;
-        height: auto;
-    }
-
-    /* ===== TOP SLIDES (sidebar becomes horizontal scroll) ===== */
-    .sidebar {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 12px;
-        padding: 12px;
-
-        scroll-snap-type: x mandatory;
-    }
-
-    .sidebar-section {
-        min-width: 80%;
-        scroll-snap-align: center;
-    }
-
-    .sidebar-item {
-        min-width: 100%;
-        padding: 12px;
-        border-radius: 14px;
-    }
-
-    .sidebar-image {
-        width: 50px;
-        height: 50px;
-    }
-
-    /* ===== MAIN SLIDE ===== */
-    #clock-display {
-        width: 100%;
-        padding: clamp(8px, 3vw, 16px);
-    }
-
-    #clock-display>div {
-        width: 100%;
-        height: auto;
-
-        border-radius: clamp(14px, 3.5vw, 24px);
-        padding: clamp(12px, 4vw, 20px);
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        scroll-snap-align: center;
-    }
-
-    /* ===== TIME BIGGER FOR MOBILE ===== */
-    h1 {
-        font-size: clamp(2rem, 12vw, 4rem);
-    }
-
-    .clock-img {
-        max-height: min(58vh, 480px);
-        max-width: 100%;
-        object-fit: contain;
-    }
-
-    /* ===== BUTTON FULL WIDTH ===== */
-    .carousel-toggle {
-        width: 100%;
-        padding: 14px;
-        font-size: 16px;
-    }
-}
-
-/* Compact side columns override for cleaner, narrow vertical stacks */
-@media (min-width: 700px) {
-    .clock-card .meta-top {
-        grid-area: meta-top;
-        justify-self: center;
-        align-self: start;
-        width: auto;
-        padding: 6px 12px;
-        border-radius: 9999px;
-        background: linear-gradient(90deg, rgba(167, 139, 250, 0.10), rgba(56, 189, 248, 0.05));
-        border: 1px solid rgba(167, 139, 250, 0.06);
-        box-shadow: 0 8px 18px rgba(2, 6, 23, 0.35);
-        font-size: 13px;
-        font-weight: 700;
-        display: inline-flex;
-        gap: 8px;
-    }
-
-    .clock-card .meta-left,
-    .clock-card .meta-right {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 6px;
-        min-width: 56px;
-        max-width: 110px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 10px;
-        box-shadow: 0 6px 12px rgba(2, 6, 23, 0.12);
-    }
-
-    .clock-card .meta-left {
-        grid-area: meta-left;
-        justify-self: end;
-        align-self: center;
-    }
-
-    .clock-card .meta-right {
-        grid-area: meta-right;
-        justify-self: start;
-        align-self: center;
-    }
-
-    .clock-card .meta-left .meta-image,
-    .clock-card .meta-right .meta-image {
-        width: 34px;
-        height: 34px;
-    }
-
-    .clock-card .meta-left .meta-label,
-    .clock-card .meta-right .meta-label {
-        font-size: 10px;
-        color: #94a3b8;
-    }
-
-    .clock-card .meta-left .meta-value,
-    .clock-card .meta-right .meta-value {
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-    .clock-card .meta-left .day-number,
-    .clock-card .meta-right .day-number {
-        font-size: 15px;
-        padding: 4px 8px;
-    }
-
-    .clock-card .meta-item {
-        padding: 6px 8px;
-    }
-}
-
-/* Absolute-position side columns on very wide screens for compact vertical stacks */
-@media (min-width: 900px) {
-    .clock-card {
-        position: relative;
-    }
-
-    .clock-card .meta-left {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: auto;
-        padding: 6px 6px;
-    }
-
-    .clock-card .meta-right {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: auto;
-        padding: 6px 6px;
-    }
-
-    .clock-card .meta-left .meta-item,
-    .clock-card .meta-right .meta-item {
-        margin: 6px 0;
-    }
-}
-
-/* Post-image container centered horizontally */
-.post-image {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 8px;
-    width: 100%;
-    max-width: 760px;
-    margin: 12px auto 0 auto;
-    padding: 0 12px;
-}
-
-.post-image .clock-desc {
-    margin: 0;
-}
-
-.post-image .clock-mnemonic {
-    margin: 0;
-}
-
-@media (max-width: 360px) {
-    #clock-display>div {
-        padding: 10px;
-    }
-
-    .image-wrap .meta-bottom {
-        gap: 4px;
-        padding: 5px;
-    }
-
-    .meta-bottom-item {
-        padding: 4px;
-    }
-
-    .meta-bottom-item .meta-label {
-        letter-spacing: 0.4px;
-    }
+.stage-daythumb { width: 38px; height: 38px; border-radius: 8px; object-fit: cover; flex: none; border: 1px solid var(--line); }
+
+/* ── weekday rainbow / month season — no competing "selected" state on this page, so plain classes suffice ── */
+.wd-0 { color: var(--wd-0); } .wd-1 { color: var(--wd-1); } .wd-2 { color: var(--wd-2); } .wd-3 { color: var(--wd-3); }
+.wd-4 { color: var(--wd-4); } .wd-5 { color: var(--wd-5); } .wd-6 { color: var(--wd-6); }
+.mo-0 { color: var(--mo-0); } .mo-1 { color: var(--mo-1); } .mo-2 { color: var(--mo-2); } .mo-3 { color: var(--mo-3); }
+.mo-4 { color: var(--mo-4); } .mo-5 { color: var(--mo-5); } .mo-6 { color: var(--mo-6); } .mo-7 { color: var(--mo-7); }
+.mo-8 { color: var(--mo-8); } .mo-9 { color: var(--mo-9); } .mo-10 { color: var(--mo-10); } .mo-11 { color: var(--mo-11); }
+
+@media (max-width: 640px) {
+  .stage-bottom { flex-direction: column; align-items: flex-start; }
 }

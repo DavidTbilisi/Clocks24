@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perpetual Calendar — Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="explanation.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow"><a class="back-link" href="index.html">‹ Clocks24</a> · An interactive almanac</p>
+      <h1>Perpetual Calendar</h1>
+      <p class="lede">Pick any month and year. Watch where the day panel has to slide, and see the weekday of the 1st worked out by hand.</p>
+      <div class="ornament" aria-hidden="true"><span></span><i></i><span></span></div>
+    </header>
+
+    <div class="controls">
+      <button id="pm">‹ prev</button>
+      <select id="mo"></select>
+      <span class="sep">·</span>
+      <button id="ym">–</button>
+      <input id="yr" type="number" min="1700" max="2099" step="1">
+      <button id="yp">+</button>
+      <button id="nm">next ›</button>
+      <button class="auto" id="auto">Auto-set</button>
+      <button class="today" id="today">Today</button>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>The mechanism</h2>
+        <div class="mech">
+          <div class="rail"><div class="months" id="railMonths"></div><div class="tab" id="tab"></div></div>
+          <div class="track">
+            <div class="heads" id="heads"></div>
+            <div class="slots" id="slots">
+              <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+              <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+              <div class="panel" id="panel"><span class="grip l">‹</span>1<span class="grip r">›</span><small id="panelLbl"></small></div>
+            </div>
+          </div>
+        </div>
+        <div class="readout" id="readout"></div>
+        <div class="feedbk" id="feedbk"></div>
+        <div class="draghint">↔ Grab the brass panel and drag it — snap it to the column where you think the 1st belongs. Use the controls or <b>Auto-set</b> to solve it.</div>
+      </div>
+
+      <div class="card">
+        <h2>Resulting month</h2>
+        <div class="cal" id="cal"></div>
+        <div class="legend">
+          <span class="sw sw-pick"></span>the 1st
+          <span class="sw sw-today"></span>today
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Doing it in your head — Conway's Doomsday</h2>
+      <div class="math" id="math"></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>Fast paths to the year offset — Vedic · Conway · Odd+11</h2>
+      <div class="fphead">
+        <button class="race" id="race">▶ Race the methods</button>
+        <span class="lead" id="fplead"></span>
+      </div>
+      <div class="fp" id="fp"></div>
+      <div class="fp-foot" id="fpfoot"></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>BRIDGE — the same shape in other domains</h2>
+      <div class="br-tabs" id="brTabs"></div>
+      <div class="br-detail" id="brDetail"></div>
+    </div>
+  </div>
+  <script src="explanation.js"></script>
+</body>
+
+</html>

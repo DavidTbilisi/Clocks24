@@ -1,36 +1,43 @@
 [
     {
         "day": "Sunday",
+        "georgian": "კვირა",
         "color": "red",
         "emoji": "🌞🍅"
     },
     {
         "day": "Monday",
+        "georgian": "ორშაბათი",
         "color": "orange",
         "emoji": "🥕🌙"
     },
     {
         "day": "Tuesday",
+        "georgian": "სამშაბათი",
         "color": "yellow",
         "emoji": "🍑🍋🍑"
     },
     {
         "day": "Wednesday",
+        "georgian": "ოთხშაბათი",
         "color": "green",
         "emoji": "🤵🏻👰🏻💒👰🏻🤵🏻🍏"
     },
     {
         "day": "Thursday",
+        "georgian": "ხუთშაბათი",
         "color": "blue",
         "emoji": "🐕🐕💧🐕🐕"
     },
     {
         "day": "Friday",
+        "georgian": "პარასკევი",
         "color": "indigo",
         "emoji": "🍟🦋"
     },
     {
         "day": "Saturday",
+        "georgian": "შაბათი",
         "color": "violet",
         "emoji": "🪐🍆"
     }
