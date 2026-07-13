@@ -259,7 +259,6 @@ header .lede { margin: 0; max-width: 56ch; color: var(--muted); font-size: 15.5p
 .sw-pick { background: var(--pick-tint); border: 1px solid var(--pick); }
 .sw-today { border: 1px solid var(--line); box-shadow: 0 0 0 2px var(--accent) inset; }
 
-/* ── "Right now" live panel ── */
 /* ── mental math ── */
 .math { font: 13px/1.45 ui-monospace, monospace; }
 .math .row { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
@@ -291,3 +290,27 @@ header .lede { margin: 0; max-width: 56ch; color: var(--muted); font-size: 15.5p
 .mo-9.mo-9 { color: var(--mo-9); }
 .mo-10.mo-10 { color: var(--mo-10); }
 .mo-11.mo-11 { color: var(--mo-11); }
+
+/* ── "This month's archetype" — mixes the Archetype Wheel's data into the simulator ── */
+.archetype-panel h2 { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.wheel-link { text-transform: none; letter-spacing: normal; font: 600 12.5px -apple-system, sans-serif; color: var(--accent); text-decoration: none; }
+.wheel-link:hover { text-decoration: underline; }
+.wheel-link:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+
+.archetype-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-bottom: 14px; }
+.archetype-name { font: 600 22px/1.2 "Fraunces", Georgia, serif; }
+.archetype-idea { color: var(--muted); font-size: 14px; }
+
+.archetype-gfs { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 0 0 16px; }
+.archetype-gfs dt { font: 700 10px/1 ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.archetype-gfs dd { margin: 0; font-size: 14px; }
+@media (max-width: 480px) { .archetype-gfs { grid-template-columns: 1fr; } }
+
+.archetype-mnemonic { margin: 0 0 18px; font-style: italic; color: var(--muted); font-size: 13.5px; }
+
+.archetype-cards-label { font: 700 10.5px/1 ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--wood); margin-bottom: 10px; }
+.archetype-cards-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.archetype-card { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.archetype-card img { width: 40px; height: 56px; border-radius: 5px; object-fit: cover; border: 1px solid var(--line); background: #fff; }
+.archetype-card-empty { width: 40px; height: 56px; border-radius: 5px; border: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; }
+.archetype-card span { font: 10px ui-monospace, monospace; color: var(--muted); }

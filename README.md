@@ -17,6 +17,7 @@ An interactive teacher for Conway's Doomsday algorithm: given any month and year
 - **Doing it in your head**: a step-by-step breakdown of the algorithm (leap year → century anchor → year offset → year doomsday → step to the 1st).
 - **Fast paths**: four different ways to compute the year offset side by side (Standard, Conway's Dozens, Odd+11, Vedic cast-out-sevens), with a "race the methods" animation.
 - **BRIDGE**: cross-domain analogies for the same underlying mechanism (Antikythera gears, casting out nines, the cyclic group ℤ₇) — plus one intentionally-blank slot for you to fill in your own.
+- **This month's archetype**: mixes in the Archetype Wheel's data — as you page through months/years, this panel updates live to show that month's brand archetype (goal/flaw/skill) and the playing cards its weeks draw.
 - Light/dark theme follows the system `prefers-color-scheme` automatically.
 
 ### `archetypes.html` — the Archetype Wheel

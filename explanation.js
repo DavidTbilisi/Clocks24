@@ -33,6 +33,60 @@ function positionPanel(col, animate) {
   panel.style.transform = `translateX(${(col * stepPx).toFixed(2)}px)`;
 }
 
+// ── "This month's archetype" panel — mixes in the Archetype Wheel's data (months.json,
+// weekCards.json) so it tracks whatever month/year the simulator above is browsing ──
+let expMonths = [], expWeekCards = [];
+
+async function loadArchetypeData() {
+  try {
+    const [monthsRes, weekCardsRes] = await Promise.all([fetch('months.json'), fetch('weekCards.json')]);
+    expMonths = await monthsRes.json();
+    expWeekCards = await weekCardsRes.json();
+  } catch (err) {
+    console.error('Error loading archetype panel data:', err);
+  }
+  renderArchetypePanel();
+}
+
+// ISO 8601 week number — same algorithm used on the kiosk and wheel pages
+function getISOWeek(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = (d.getUTCDay() + 6) % 7;
+  d.setUTCDate(d.getUTCDate() - dayNum + 3);
+  const firstThursday = new Date(Date.UTC(d.getUTCFullYear(), 0, 4));
+  const firstDayNum = (firstThursday.getUTCDay() + 6) % 7;
+  firstThursday.setUTCDate(firstThursday.getUTCDate() - firstDayNum + 3);
+  return 1 + Math.round((d - firstThursday) / (7 * 24 * 3600 * 1000));
+}
+
+function renderArchetypePanel() {
+  if (!expMonths.length) return; // data not loaded yet — render() calls this eagerly, that's fine
+  const m = expMonths.find(x => x.month === st.m + 1);
+  if (!m) return;
+
+  const nameEl = document.getElementById('expArchetypeName');
+  nameEl.textContent = `The ${m.archetype}`;
+  nameEl.className = `archetype-name mo-${st.m}`;
+  document.getElementById('expArchetypeIdea').textContent = m.coreIdea;
+  document.getElementById('expGoal').textContent = m.goal;
+  document.getElementById('expFlaw').textContent = m.flaw;
+  document.getElementById('expSkill').textContent = m.skill;
+  document.getElementById('expMnemonic').textContent = `“${m.mnemonicImage}”`;
+
+  // JS Date only supports years 0–275760, but this simulator's year input already
+  // clamps to 1700–2099, so st.y is always safely in range here.
+  const daysInMonth = new Date(st.y, st.m + 1, 0).getDate();
+  const weekNums = new Set();
+  for (let d = 1; d <= daysInMonth; d++) weekNums.add(getISOWeek(new Date(st.y, st.m, d)));
+
+  document.getElementById('expCardsRow').innerHTML = [...weekNums].sort((a, b) => a - b).map(w => {
+    const card = expWeekCards.find(c => c.week === w);
+    return card
+      ? `<div class="archetype-card"><img src="${card.image}" alt="${card.label}" title="Week ${w} — ${card.label}"><span>W${w}</span></div>`
+      : `<div class="archetype-card archetype-card-empty"><span>W${w}</span></div>`;
+  }).join('');
+}
+
 function render() {
   const { y, m } = st;
   const correct = weekday(y, m, 1);         // the right column for the 1st
@@ -83,6 +137,7 @@ function render() {
 
   renderMath(y, m, correct);
   renderFast(y);
+  renderArchetypePanel();
 }
 
 // ── fast paths to the year offset (Vedic / Conway / Odd+11) ──
@@ -269,3 +324,4 @@ let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTime
 
 render();
 renderBridges();
+loadArchetypeData();
