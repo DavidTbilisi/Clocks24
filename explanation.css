@@ -247,15 +247,47 @@ header .lede { margin: 0; max-width: 56ch; color: var(--muted); font-size: 15.5p
 .br-cand { margin-top: 11px; font: 11px ui-monospace, monospace; color: var(--muted); font-style: italic; }
 .br-cand.todo { color: var(--wood); }
 
-/* ── actual month calendar ── */
+/* ── actual month calendar — a peg-image mosaic (one memorable picture per date) ── */
 .cal { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; }
 .cal .h { text-align: center; font: 700 11px/1 sans-serif; color: var(--muted); padding: 6px 0 8px; }
-.cal .d { aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--line); border-radius: 9px; background: var(--bg);
-  font: 600 15px ui-monospace, monospace; color: var(--text); transition: background .2s; }
+.cal .d { position: relative; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); border-radius: 9px; background: var(--bg); overflow: hidden;
+  font: 600 15px ui-monospace, monospace; color: var(--text);
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s; }
 .cal .d.blank { background: transparent; border-style: dashed; opacity: .4; }
-.cal .d.one { border-color: var(--pick); border-width: 2px; background: var(--pick-tint); color: var(--pick); font-weight: 800; }
-.cal .d.today { box-shadow: 0 0 0 2px var(--accent) inset; color: var(--accent); }
+
+/* the peg fills the cell, muted at rest so the mosaic stays calm against the paper palette;
+   the number rides in a corner chip so the picture, not the digit, is what you read */
+.cal .d .peg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(.8) brightness(.9) contrast(.96);
+  transition: filter .22s, transform .22s cubic-bezier(.2,.8,.2,1); }
+.cal .d .dn { position: absolute; top: 3px; left: 3px; z-index: 2; min-width: 15px; padding: 0 4px;
+  border-radius: 5px; text-align: center; font: 700 11px/16px ui-monospace, monospace;
+  color: #fff; background: rgba(24,16,8,.6); }
+
+/* hover "develops" the day: it lifts, the picture saturates and pushes in close */
+.cal .d[data-day]:not(.blank):hover { transform: translateY(-3px); box-shadow: 0 10px 20px -10px rgba(42,32,21,.65); z-index: 3; }
+.cal .d[data-day]:not(.blank):hover .peg { filter: saturate(1.12) brightness(1.04) contrast(1); transform: scale(1.09); }
+
+/* the 1st and today keep their rings, now stroked over the picture (retained on hover) */
+.cal .d.one { box-shadow: 0 0 0 2px var(--pick) inset; }
+.cal .d.one .dn { background: var(--pick); }
+.cal .d.today { box-shadow: 0 0 0 2px var(--accent) inset; }
+.cal .d.today .dn { background: var(--accent); }
+.cal .d.one:hover   { box-shadow: 0 0 0 2px var(--pick) inset,   0 10px 20px -10px rgba(42,32,21,.65); }
+.cal .d.today:hover { box-shadow: 0 0 0 2px var(--accent) inset, 0 10px 20px -10px rgba(42,32,21,.65); }
+
+/* readout strip — hovering a day pulls its peg up large, like drawing an index card */
+.peg-readout { display: flex; align-items: center; gap: 12px; min-height: 52px; margin-top: 14px;
+  padding: 8px 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel-2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03); }
+.peg-readout-img { width: 44px; height: 44px; flex: none; border-radius: 8px; object-fit: cover;
+  border: 1px solid var(--line); box-shadow: 0 3px 8px -4px rgba(42,32,21,.5);
+  animation: pegpop .22s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes pegpop { from { opacity: 0; transform: scale(.82) rotate(-3deg); } to { opacity: 1; transform: none; } }
+.peg-readout-txt { font: 14.5px/1.4 -apple-system, sans-serif; color: var(--text); }
+.peg-readout-txt b { font: 700 15px ui-monospace, monospace; color: var(--pick); margin-right: 2px; }
+.peg-hint { font: 12.5px/1.4 ui-monospace, monospace; color: var(--muted); font-style: italic; }
 
 .legend { margin-top: 16px; font: 12px/1.5 ui-monospace, monospace; color: var(--muted); }
 .legend .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin: 0 5px 0 12px; }

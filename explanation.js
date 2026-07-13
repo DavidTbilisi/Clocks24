@@ -33,20 +33,45 @@ function positionPanel(col, animate) {
   panel.style.transform = `translateX(${(col * stepPx).toFixed(2)}px)`;
 }
 
-// ── "This month's archetype" panel — mixes in the Archetype Wheel's data (months.json,
-// weekCards.json) so it tracks whatever month/year the simulator above is browsing ──
-let expMonths = [], expWeekCards = [];
+// ── Extra data folded into the simulator ──
+//  · months.json / weekCards.json feed the "This month's archetype" panel (Archetype Wheel data)
+//  · monthDays.json feeds the resulting-month calendar's day-of-month "peg" images (1=eagle,
+//    2=owl, … — the same mnemonic set the kiosk uses), turning the grid from bare numbers into
+//    a visual memory-palace of the month.
+let expMonths = [], expWeekCards = [], expMonthDays = [];
 
 async function loadArchetypeData() {
   try {
-    const [monthsRes, weekCardsRes] = await Promise.all([fetch('months.json'), fetch('weekCards.json')]);
+    const [monthsRes, weekCardsRes, monthDaysRes] = await Promise.all([
+      fetch('months.json'), fetch('weekCards.json'), fetch('monthDays.json')]);
     expMonths = await monthsRes.json();
     expWeekCards = await weekCardsRes.json();
+    expMonthDays = await monthDaysRes.json();
   } catch (err) {
-    console.error('Error loading archetype panel data:', err);
+    console.error('Error loading simulator data:', err);
   }
-  renderArchetypePanel();
+  resetPegReadout();
+  render();   // re-render so the calendar picks up the day-peg images now that they've loaded
 }
+
+// ── peg readout: hovering a day "pulls" its peg image + mnemonic into a strip below the grid,
+// so the cells themselves stay purely visual (image + a small number) ──
+const pegReadout = document.getElementById('pegReadout');
+const PEG_HINT = 'Hover a day to develop its peg — a picture for each date, 1–31.';
+function resetPegReadout() { pegReadout.innerHTML = `<span class="peg-hint">${PEG_HINT}</span>`; }
+function showPeg(d) {
+  const peg = expMonthDays.find(x => x.day === d);
+  if (!peg) return resetPegReadout();
+  pegReadout.innerHTML =
+    `<img class="peg-readout-img" src="images/days/thumb/${d}.jpg" alt="">` +
+    `<span class="peg-readout-txt"><b>${d}</b> · ${peg.mnemonic}</span>`;
+}
+document.getElementById('cal').addEventListener('mouseover', e => {
+  const cell = e.target.closest('.d');
+  if (cell && !cell.classList.contains('blank') && cell.dataset.day) showPeg(+cell.dataset.day);
+});
+document.getElementById('cal').addEventListener('mouseleave', resetPegReadout);
+resetPegReadout();   // show the hint immediately, before the peg data finishes loading
 
 // ISO 8601 week number — same algorithm used on the kiosk and wheel pages
 function getISOWeek(date) {
@@ -126,12 +151,19 @@ function render() {
     fb.innerHTML = `✗ As set, “1” sits under <b>${WD[shown]}</b> (shift ${shown}). The 1st is really a <b>${WD[correct]}</b> → shift ${correct}.`;
   }
 
-  // resulting calendar — follows the panel, so a wrong drag shows the misalignment
+  // resulting calendar — follows the panel, so a wrong drag shows the misalignment. Each day
+  // carries its day-of-month peg image with the number shrunk to a corner chip; the mnemonic
+  // rides along in the title + the readout strip below. Falls back to a plain number pre-load.
   let cells = WD3.map((n, i) => `<div class="h wd-${i}">${n}</div>`).join('');
   for (let i = 0; i < shown; i++) cells += `<div class="d blank"></div>`;
   for (let d = 1; d <= dim; d++) {
     const cls = ['d', d === 1 ? 'one' : '', (y === TODAY.y && m === TODAY.m && d === TODAY.d) ? 'today' : ''].join(' ').trim();
-    cells += `<div class="${cls}">${d}</div>`;
+    const peg = expMonthDays.find(x => x.day === d);
+    const inner = peg
+      ? `<img class="peg" src="images/days/thumb/${d}.jpg" alt="" decoding="async"><span class="dn">${d}</span>`
+      : `${d}`;
+    const title = peg ? ` title="${d} — ${peg.mnemonic}"` : '';
+    cells += `<div class="${cls}" data-day="${d}"${title}>${inner}</div>`;
   }
   document.getElementById('cal').innerHTML = cells;
 
