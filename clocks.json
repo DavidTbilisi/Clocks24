@@ -127,7 +127,7 @@
   },
   {
     "time": "03:00",
-    "date": "1910-01-01",
+    "date": "1913-01-01",
     "src": "images/0300.jpg",
     "desc": "Grand Central Terminal Clock – 1913",
     "link": "https://en.wikipedia.org/wiki/Grand_Central_Terminal",
@@ -163,10 +163,10 @@
   },
   {
     "time": "07:00",
-    "date": "1969-01-01",
+    "date": "1960-01-01",
     "src": "images/0700.jpg",
-    "desc": "World Clock (Urania, Berlin) – 1969",
-    "link": "https://en.wikipedia.org/wiki/World_clock",
+    "desc": "Binns Clock (Edinburgh, Scotland) – 1960",
+    "link": "https://www.atlasobscura.com/places/binns-clock",
     "mnemonic": "1960 (Top Jazz)",
     "poetry": "Jazz notes drip like rain.\nEvery sound is a memory\nhe cannot hold.\nHe dances with shadows,\npretending they are her."
   },
@@ -208,10 +208,10 @@
   },
   {
     "time": "12:00",
-    "date": "1960-01-01",
+    "date": "1392-01-01",
     "src": "images/1200.jpg",
-    "desc": "Wells Cathedral clock – 1960",
-    "link": "https://www.atlasobscura.com/places/binns-clock",
+    "desc": "Wells Cathedral clock (England) – 1392",
+    "link": "https://en.wikipedia.org/wiki/Wells_Cathedral_clock",
     "mnemonic": "1392 (DuMB Nun)",
     "poetry": "Old knights circle endlessly.\nOne stops.\nRust flakes away from its jaw.\nIt points.\nVenice."
   }
