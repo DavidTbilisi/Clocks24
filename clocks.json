@@ -2,7 +2,7 @@
   {
     "time": "13:00",
     "date": "1405-01-01",
-    "src": "images/1300.jpg",
+    "src": "images/paintings/1300.jpg",
     "desc": "Zytglogge (Bern, Switzerland) – c. 1405",
     "link": "https://en.wikipedia.org/wiki/Zytglogge",
     "mnemonic": "1405 (Tears Lollipop)",
@@ -11,7 +11,7 @@
   {
     "time": "14:00",
     "date": "1410-01-01",
-    "src": "images/1400.jpg",
+    "src": "images/paintings/1400.jpg",
     "desc": "Prague Astronomical Clock – 1410",
     "link": "https://en.wikipedia.org/wiki/Prague_astronomical_clock",
     "mnemonic": "1410 (Tart sauce)",
@@ -20,7 +20,7 @@
   {
     "time": "15:00",
     "date": "1499-01-01",
-    "src": "images/1500.jpg",
+    "src": "images/paintings/1500.jpg",
     "desc": "St Mark's Clock (Venice, Italy) – 1499",
     "link": "https://en.wikipedia.org/wiki/St_Mark%27s_Clocktower",
     "mnemonic": "1499 (Drop Baby)",
@@ -29,7 +29,7 @@
   {
     "time": "16:00",
     "date": "1520-01-01",
-    "src": "images/1600.jpg",
+    "src": "images/paintings/1600.jpg",
     "desc": "Ulm Town Hall Astronomical Clock – 1520",
     "link": "https://en.wikipedia.org/wiki/Ulm_Town_Hall",
     "mnemonic": "1520 (TeLeNewS)",
@@ -38,7 +38,7 @@
   {
     "time": "17:00",
     "date": "1648-01-01",
-    "src": "images/1700.jpg",
+    "src": "images/paintings/1700.jpg",
     "desc": "Sighișoara Clock Tower – 1648",
     "link": "https://en.wikipedia.org/wiki/Sighi%C8%99oara_Clock_Tower",
     "mnemonic": "1648 (DJ roof)",
@@ -47,7 +47,7 @@
   {
     "time": "18:00",
     "date": "1661-01-01",
-    "src": "images/1800.jpg",
+    "src": "images/paintings/1800.jpg",
     "desc": "Astronomical Clock of Lyon – 1661",
     "link": "https://en.wikipedia.org/wiki/Astronomical_clock_of_Lyon",
     "mnemonic": "1661 (Attach Judah)",
@@ -56,7 +56,7 @@
   {
     "time": "19:00",
     "date": "1852-01-01",
-    "src": "images/1900.jpg",
+    "src": "images/paintings/1900.jpg",
     "desc": "Spasskaya Tower Clock – 1852",
     "link": "https://en.wikipedia.org/wiki/Spasskaya_Tower",
     "mnemonic": "1852 (Devil Nail)",
@@ -65,7 +65,7 @@
   {
     "time": "20:00",
     "date": "1853-01-01",
-    "src": "images/2000.jpg",
+    "src": "images/paintings/2000.jpg",
     "desc": "Atlas Clock (Tiffany, NYC) – 1853",
     "link": "https://en.wikipedia.org/wiki/Atlas_Clock",
     "mnemonic": "1853 (Diva Lamb)",
@@ -74,7 +74,7 @@
   {
     "time": "21:00",
     "date": "1859-01-01",
-    "src": "images/2100.jpg",
+    "src": "images/paintings/2100.jpg",
     "desc": "Big Ben (London) – 1859",
     "link": "https://en.wikipedia.org/wiki/Big_Ben",
     "mnemonic": "1859 (Tough Lip)",
@@ -83,7 +83,7 @@
   {
     "time": "22:00",
     "date": "1860-01-01",
-    "src": "images/2200.jpg",
+    "src": "images/paintings/2200.jpg",
     "desc": "Église Sainte-Croix Clock (Nantes) – 1860",
     "link": "https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Croix_de_Nantes",
     "mnemonic": "1860 (TV jazz)",
@@ -92,7 +92,7 @@
   {
     "time": "23:00",
     "date": "1895-01-01",
-    "src": "images/2300.jpg",
+    "src": "images/paintings/2300.jpg",
     "desc": "Dolmabahçe Clock Tower – 1895",
     "link": "https://en.wikipedia.org/wiki/Dolmabah%C3%A7e_Clock_Tower",
     "mnemonic": "1895 (Diva Pail)",
@@ -101,7 +101,7 @@
   {
     "time": "00:00",
     "date": "1898-01-01",
-    "src": "images/0000.jpeg",
+    "src": "images/paintings/0000.jpg",
     "desc": "Philadelphia City Hall Clock – 1898",
     "link": "https://en.wikipedia.org/wiki/Philadelphia_City_Hall",
     "mnemonic": "1898 (Dive Buffet)",
@@ -110,7 +110,7 @@
   {
     "time": "01:00",
     "date": "1900-01-01",
-    "src": "images/0100.jpg",
+    "src": "images/paintings/0100.jpg",
     "desc": "Orsay Station Clock (Paris) – 1900",
     "link": "https://en.wikipedia.org/wiki/Mus%C3%A9e_d%27Orsay",
     "mnemonic": "1900 (Top Sauce)",
@@ -119,7 +119,7 @@
   {
     "time": "02:00",
     "date": "1905-01-01",
-    "src": "images/0200.jpg",
+    "src": "images/paintings/0200.jpg",
     "desc": "Edwardian Clock & Tower (Dorchester) – 1905",
     "link": "https://en.wikipedia.org/wiki/Dorchester,_Dorset",
     "mnemonic": "1905 (shTePSeLi)",
@@ -128,7 +128,7 @@
   {
     "time": "03:00",
     "date": "1913-01-01",
-    "src": "images/0300.jpg",
+    "src": "images/paintings/0300.jpg",
     "desc": "Grand Central Terminal Clock – 1913",
     "link": "https://en.wikipedia.org/wiki/Grand_Central_Terminal",
     "mnemonic": "1913 (Top Dome)",
@@ -137,7 +137,7 @@
   {
     "time": "04:00",
     "date": "1914-01-01",
-    "src": "images/0400.jpg",
+    "src": "images/paintings/0400.jpg",
     "desc": "Anker Clock (Vienna) – 1914",
     "link": "https://en.wikipedia.org/wiki/Ankeruhr",
     "mnemonic": "1914 (Debater)",
@@ -146,7 +146,7 @@
   {
     "time": "05:00",
     "date": "1920-01-01",
-    "src": "images/0500.webp",
+    "src": "images/paintings/0500.jpg",
     "desc": "Peace Tower (Ottawa) – 1920",
     "link": "https://en.wikipedia.org/wiki/Peace_Tower",
     "mnemonic": "1920 (Top news)",
@@ -155,7 +155,7 @@
   {
     "time": "06:00",
     "date": "1931-01-01",
-    "src": "images/0600.jpg",
+    "src": "images/paintings/0600.jpg",
     "desc": "Selfridges Clock, Oxford St – 1931",
     "link": "https://en.wikipedia.org/wiki/Selfridges,_Oxford_Street",
     "mnemonic": "1931 (Dope mad)",
@@ -164,7 +164,7 @@
   {
     "time": "07:00",
     "date": "1960-01-01",
-    "src": "images/0700.jpg",
+    "src": "images/paintings/0700.jpg",
     "desc": "Binns Clock (Edinburgh, Scotland) – 1960",
     "link": "https://www.atlasobscura.com/places/binns-clock",
     "mnemonic": "1960 (Top Jazz)",
@@ -173,7 +173,7 @@
   {
     "time": "08:00",
     "date": "1962-01-01",
-    "src": "images/0800.jpg",
+    "src": "images/paintings/0800.jpg",
     "desc": "Allen-Bradley Clock Tower – 1962",
     "link": "https://en.wikipedia.org/wiki/Allen-Bradley_Clock_Tower",
     "mnemonic": "1962 (BaBaJaN)",
@@ -182,7 +182,7 @@
   {
     "time": "09:00",
     "date": "1969-01-01",
-    "src": "images/0900.jpg",
+    "src": "images/paintings/0900.jpg",
     "desc": "World Clock (Alexanderplatz) Urania, Berlin – 1969",
     "link": "https://en.wikipedia.org/wiki/World_Clock_(Alexanderplatz)",
     "mnemonic": "1969 (Top Shop)",
@@ -191,7 +191,7 @@
   {
     "time": "10:00",
     "date": "2011-01-01",
-    "src": "images/1000.jpg",
+    "src": "images/paintings/1000.jpg",
     "desc": "Leaning Clock Tower (Tbilisi) – 2011",
     "link": "https://en.wikipedia.org/wiki/Leaning_Clock_Tower_(Tbilisi)",
     "mnemonic": "2011 (Nasty Date)",
@@ -200,7 +200,7 @@
   {
     "time": "11:00",
     "date": "2011-01-01",
-    "src": "images/1100.jpg",
+    "src": "images/paintings/1100.jpg",
     "desc": "Makkah Royal Clock Tower – 2011",
     "link": "https://en.wikipedia.org/wiki/Abraj_Al_Bait",
     "mnemonic": "2011 (Nasty Date)",
@@ -209,7 +209,7 @@
   {
     "time": "12:00",
     "date": "1392-01-01",
-    "src": "images/1200.jpg",
+    "src": "images/paintings/1200.jpg",
     "desc": "Wells Cathedral clock (England) – 1392",
     "link": "https://en.wikipedia.org/wiki/Wells_Cathedral_clock",
     "mnemonic": "1392 (DuMB Nun)",
