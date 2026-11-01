@@ -1,0 +1,124 @@
+/* ===== PALETTE — same "paper & brass" almanac system as explanation.css / archetypes.css ===== */
+:root {
+  color-scheme: light dark;
+
+  --bg:     #f4eee0;
+  --panel:  #fbf7ec;
+  --panel-2:#f0e7d2;
+  --line:   #ddcda2;
+  --text:   #2a2015;
+  --muted:  #8a7a5c;
+  --accent: #a8611f;
+  --pick:   #2f6f6a;
+  --wood:   #8a5a1f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:     #1c1610;
+    --panel:  #241c14;
+    --panel-2:#2b2117;
+    --line:   #40331f;
+    --text:   #ede3d0;
+    --muted:  #a8987a;
+    --accent: #d99a4e;
+    --pick:   #5fb8ae;
+    --wood:   #d9a561;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--text);
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 48px 22px 56px; }
+
+header { animation: rise .5s cubic-bezier(.2,.8,.2,1) both; }
+.eyebrow { margin: 0 0 10px; font: 700 11px/1.6 ui-monospace, monospace; letter-spacing: .18em; text-transform: uppercase; color: var(--wood); }
+.back-link { color: var(--wood); text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+.back-link:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+header h1 { margin: 0 0 10px; font: 600 clamp(32px, 4.6vw, 48px)/1.05 "Fraunces", Georgia, serif; letter-spacing: -.01em; }
+header .lede { margin: 0; max-width: 62ch; color: var(--muted); font-size: 15.5px; }
+.ornament { display: flex; align-items: center; gap: 10px; margin: 22px 0 30px; }
+.ornament span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent); }
+.ornament i { width: 6px; height: 6px; border-radius: 1px; background: var(--wood); transform: rotate(45deg); flex: none; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ===== GRID ===== */
+.hours-grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+
+.hour-btn {
+  position: relative; display: block; width: 100%; padding: 0; margin: 0;
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  background: var(--panel); color: #f4ead6; cursor: pointer; text-align: left; font: inherit;
+  box-shadow: 0 18px 36px -30px rgba(42,32,21,.55);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.hour-btn img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .4s; }
+.hour-btn:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -26px rgba(42,32,21,.7); }
+.hour-btn:hover img { transform: scale(1.03); }
+.hour-btn:focus-visible { outline: 3px solid var(--pick); outline-offset: 3px; }
+
+.hour-time {
+  position: absolute; top: 10px; left: 10px;
+  font: 700 22px/1 "Fraunces", Georgia, serif; letter-spacing: .01em;
+  padding: 6px 10px; border-radius: 8px;
+  background: rgba(20,14,8,.62); backdrop-filter: blur(4px);
+  font-variant-numeric: tabular-nums;
+}
+.hour-now {
+  position: absolute; top: 12px; right: 10px; display: none;
+  font: 700 10px/1 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase;
+  padding: 6px 9px; border-radius: 999px; background: var(--pick); color: #fff;
+}
+.hour-info {
+  position: absolute; inset: auto 0 0 0; display: flex; flex-direction: column; gap: 2px;
+  padding: 28px 12px 10px;
+  background: linear-gradient(to top, rgba(14,10,6,.88), rgba(14,10,6,.55) 60%, transparent);
+}
+.hour-name { font: 600 14.5px/1.25 "Fraunces", Georgia, serif; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+.hour-mnemonic { font-size: 12.5px; color: #e2c895; }
+
+.hour-tile.now .hour-btn { border-color: var(--pick); box-shadow: 0 0 0 3px var(--pick), 0 22px 40px -26px rgba(42,32,21,.7); }
+.hour-tile.now .hour-now { display: inline-block; }
+
+/* ===== FULL-SIZE VIEWER ===== */
+.hour-view {
+  width: min(1100px, calc(100vw - 24px)); max-height: calc(100dvh - 24px);
+  padding: 0; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--panel); color: var(--text); overflow: auto;
+}
+.hour-view::backdrop { background: rgba(10,7,4,.78); backdrop-filter: blur(3px); }
+.hour-view figure { margin: 0; }
+.hour-view img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: #1c1610; }
+.hour-view figcaption { padding: 18px 22px 8px; }
+.view-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.view-time { font: 700 28px/1 "Fraunces", Georgia, serif; color: var(--accent); font-variant-numeric: tabular-nums; }
+.view-mnemonic { color: var(--muted); font-size: 14px; }
+.hour-view h2 { margin: 8px 0 10px; font: 600 clamp(20px, 2.6vw, 26px)/1.2 "Fraunces", Georgia, serif; }
+.view-poetry { margin: 0 0 12px; white-space: pre-line; font: italic 15px/1.6 "Fraunces", Georgia, serif; color: var(--muted); }
+.view-link { color: var(--pick); text-decoration: none; font-size: 14px; }
+.view-link:hover { text-decoration: underline; }
+.view-link:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+
+.view-nav { display: flex; justify-content: center; gap: 10px; padding: 10px 22px 20px; }
+.view-nav button {
+  min-width: 48px; height: 44px; padding: 0 16px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--panel-2); color: var(--text); cursor: pointer;
+  font: 600 20px/1 -apple-system, sans-serif;
+}
+.view-nav button:hover { border-color: var(--pick); color: var(--pick); }
+.view-nav button:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  header, .hour-btn, .hour-btn img { animation: none; transition: none; }
+}

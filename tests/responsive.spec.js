@@ -69,6 +69,20 @@ for (const viewport of viewports) {
         });
         expect(horizontalOverflow).toBeFalsy();
     });
+
+    test(`responsive hours gallery layout on ${viewport.name}`, async ({ page }) => {
+        await page.setViewportSize({ width: viewport.width, height: viewport.height });
+        await page.goto('/hours.html', { waitUntil: 'networkidle' });
+
+        await expect(page.locator('.hour-tile')).toHaveCount(24);
+        await expect(page.locator('.hour-tile').first()).toBeVisible();
+
+        const horizontalOverflow = await page.evaluate(() => {
+            const doc = document.documentElement;
+            return doc.scrollWidth > doc.clientWidth;
+        });
+        expect(horizontalOverflow).toBeFalsy();
+    });
 }
 
 test('the day panel highlights the correct weekday for the 1st', async ({ page }) => {
@@ -115,4 +129,36 @@ test('clicking a wheel segment updates the archetype detail panel', async ({ pag
 
     await expect(page.locator('#detailArchetype')).not.toHaveText(initialArchetype || '');
     await expect(page.locator('.detail-card').first()).toBeVisible();
+});
+
+test('the stage links to the hours gallery', async ({ page }) => {
+    await page.goto('/index.html', { waitUntil: 'networkidle' });
+    await page.click('a.explain-link[href="hours.html"]');
+    await expect(page).toHaveURL(/hours\.html$/);
+    await expect(page.locator('.hour-tile')).toHaveCount(24);
+});
+
+test('the hours gallery orders tiles by hour, marks the current one, and opens a viewer', async ({ page }) => {
+    await page.clock.install({ time: new Date(2026, 10, 1, 7, 30, 0) });
+    await page.goto('/hours.html', { waitUntil: 'networkidle' });
+
+    await expect(page.locator('.hour-time').first()).toHaveText('00:00');
+    await expect(page.locator('.hour-time').last()).toHaveText('23:00');
+    await expect(page.locator('.hour-tile.now')).toHaveCount(1);
+    await expect(page.locator('.hour-tile.now .hour-time')).toHaveText('07:00');
+    await expect(page.locator('.hour-tile img').first()).toHaveAttribute('src', 'images/paintings/thumb/0000.jpg');
+
+    await page.locator('.hour-tile.now button').click();
+    await expect(page.locator('#hourView')).toBeVisible();
+    await expect(page.locator('#viewImg')).toHaveAttribute('src', 'images/paintings/0700.jpg');
+    await expect(page.locator('#viewName')).toContainText('Binns');
+
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#viewTime')).toHaveText('08:00');
+    await page.locator('#viewPrev').click();
+    await page.locator('#viewPrev').click();
+    await expect(page.locator('#viewTime')).toHaveText('06:00');
+
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#hourView')).toBeHidden();
 });

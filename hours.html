@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All 24 Hours — Clocks24</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="hours.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow"><a class="back-link" href="index.html">‹ Clocks24</a> · Twenty-four hours, twenty-four clocks</p>
+      <h1>All 24 Hours</h1>
+      <p class="lede">Every hour of the day has its own historic clock, painted with its year-mnemonic hidden in the scene. The hour you're in now is highlighted. Pick a painting to see it full-size.</p>
+      <div class="ornament" aria-hidden="true"><span></span><i></i><span></span></div>
+    </header>
+
+    <ol class="hours-grid" id="hoursGrid" aria-label="The 24 hourly clocks"></ol>
+  </div>
+
+  <dialog class="hour-view" id="hourView" aria-labelledby="viewName">
+    <figure>
+      <img id="viewImg" alt="" />
+      <figcaption>
+        <div class="view-head">
+          <span class="view-time" id="viewTime">—</span>
+          <span class="view-mnemonic" id="viewMnemonic"></span>
+        </div>
+        <h2 id="viewName">—</h2>
+        <p class="view-poetry" id="viewPoetry"></p>
+        <a class="view-link" id="viewLink" href="#" target="_blank" rel="noopener noreferrer">Read about this clock →</a>
+      </figcaption>
+    </figure>
+    <div class="view-nav">
+      <button type="button" id="viewPrev" aria-label="Previous hour">‹</button>
+      <button type="button" id="viewClose" aria-label="Close">✕</button>
+      <button type="button" id="viewNext" aria-label="Next hour">›</button>
+    </div>
+  </dialog>
+
+  <script src="hours.js"></script>
+</body>
+
+</html>
