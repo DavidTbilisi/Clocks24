@@ -1,1 +1,8 @@
 node_modules/
+
+# Playwright output
+test-results/
+playwright-report/
+
+# Remotion render output (video/ sources are tracked separately)
+video/out/

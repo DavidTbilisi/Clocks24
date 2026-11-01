@@ -79,11 +79,22 @@ test('the day panel highlights the correct weekday for the 1st', async ({ page }
 test('the stage shows a live clock and links to the explanation page', async ({ page }) => {
     await page.goto('/index.html', { waitUntil: 'networkidle' });
     await expect(page.locator('#stageTime')).toContainText(/\d{2}:\d{2}/);
-    await expect(page.locator('.stage-bg')).toHaveClass(/loaded/);
+    await expect(page.locator('.stage-bg.loaded')).toHaveCount(1);
 
     await page.click('a.explain-link[href="explanation.html"]');
     await expect(page).toHaveURL(/explanation\.html$/);
     await expect(page.locator('.wrap')).toBeVisible();
+});
+
+test('the stage crossfades to the next hour\'s painting without dropping to black', async ({ page }) => {
+    await page.clock.install({ time: new Date(2026, 10, 1, 10, 59, 57) });
+    await page.goto('/index.html', { waitUntil: 'networkidle' });
+    await expect(page.locator('.stage-bg.loaded')).toHaveAttribute('src', 'images/paintings/1000.jpg');
+
+    await page.clock.runFor(4000); // tick past 11:00
+    await expect(page.locator('.stage-bg.loaded')).toHaveAttribute('src', 'images/paintings/1100.jpg');
+    await expect(page.locator('.stage-bg.loaded')).toHaveCount(1);
+    await expect(page.locator('#stageDayImg')).toHaveAttribute('src', 'images/days/thumb/1.jpg');
 });
 
 test('the stage links to the archetype wheel', async ({ page }) => {

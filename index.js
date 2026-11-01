@@ -2,7 +2,22 @@ const STAGE_WD = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','S
 const STAGE_MO = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 let stageClocks = [], stageWeekdays = [], stageMonthDays = [], stageMonths = [], stageWeekCards = [];
-let currentHourKey = null, currentWeekKey = null;
+let currentHourKey = null, currentWeekKey = null, currentDayKey = null;
+
+// Two stacked <img class="stage-bg"> layers: the next hour's painting loads into the hidden one and only then
+// crossfades over the old one, so the hour change never dips to black while the new image is in flight.
+let bgFront = null;
+function showBackground(src, alt) {
+  const a = document.getElementById('stageBg'), b = document.getElementById('stageBgB');
+  const next = bgFront === a ? b : a, prev = bgFront;
+  next.onload = () => {
+    next.classList.add('loaded');
+    if (prev) { prev.classList.remove('loaded'); prev.alt = ''; }
+    bgFront = next;
+  };
+  next.src = src;
+  next.alt = alt;
+}
 
 async function loadStageData() {
   try {
@@ -73,11 +88,7 @@ function renderStage() {
     currentHourKey = hourKey;
     const hourClock = stageClocks.find(c => c.time === hourKey);
     if (hourClock) {
-      const bg = document.getElementById('stageBg');
-      bg.classList.remove('loaded');
-      bg.onload = () => bg.classList.add('loaded');
-      bg.src = hourClock.src;
-      bg.alt = hourClock.desc;
+      showBackground(hourClock.src, hourClock.desc);
       document.getElementById('stageClockName').textContent = hourClock.desc;
       document.getElementById('stageClockMnemonic').textContent = hourClock.mnemonic || '';
       document.getElementById('stageClockLink').href = hourClock.link || '#';
@@ -103,9 +114,11 @@ function renderStage() {
   }
 
   const dayEntry = stageMonthDays.find(d => d.day === now.getDate());
-  if (dayEntry) {
+  if (dayEntry && dayEntry.day !== currentDayKey) {
+    currentDayKey = dayEntry.day;
     const dayImg = document.getElementById('stageDayImg');
-    dayImg.src = dayEntry.image;
+    // 38px badge: use the 220px thumbnail, not the full-size peg art in dayEntry.image (up to several MB)
+    dayImg.src = `images/days/thumb/${dayEntry.day}.jpg`;
     dayImg.alt = `Day ${dayEntry.day}`;
     document.getElementById('stageDayMnemonic').textContent = dayEntry.mnemonic;
   }
